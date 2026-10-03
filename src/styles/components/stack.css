@@ -1,0 +1,283 @@
+/* ---------- moment stack (the “正在做” stage) ---------- */
+.stack-zone { display: flex; flex-direction: column; min-width: 0; }
+.stack-head { font-size: var(--f13); font-weight: 700; color: var(--ink-2); display: flex; align-items: baseline; gap: var(--s10); margin-bottom: 10px; }
+.stack-hint { font-size: var(--f11); font-weight: 400; color: var(--ink-3); }
+.stack { display: flex; flex-direction: column; gap: var(--s8); min-height: 320px; }
+/* iteration 69: demo 栈的滚动口（运营方指令「将 stack-zone 改为带滚动条的界面」——
+ * 栈帧累积不再撑大外层：插针 pushIn 逐字不变，容器加限高 + overflow-y: auto；
+ * player 侧 #plStack 硬线不动 ⇒ 修饰类 .stack-demo 只挂 demo 栈 #runStack 一处）。
+ * 高度档 700px（px 定档，非 vh——vh 在 dynamic-toolbar 移动浏览器按最大视口径
+ * 漂移；仓内 px 先例 = responsive.css 的 .subs-list 340px 同族语言）：实测对齐
+ * pipeline 列最富相位中段内容高（s2@0.5 = body 630 + head 42 + padding 40 = 712，
+ * 取整十档对齐，两栏差 19px = 2.7%）；读作约 15 张紧凑卡的可读量（44px pitch）+
+ * sticky foot。min-height 320 基础规则逐字存活：演示早期帧少时窗口不被压低 */
+.stack-demo { max-height: 700px; overflow-y: auto; }
+/* 限高的必生效补丁：flex 列子项默认 flex-shrink:1 ⇒ 限高容器会把帧卡**压缩**
+ * 到容器高（实测 scrollHeight == clientHeight == 700、零滚动条——插针语义被压
+ * 变形）。flex:none 钊死子项高度 ⇒ 内容自然高溢出 ⇒ overflow 生效、滚动条在位、
+ * 卡片几何逐字不变（player 侧无限高，shrink 本就不触发，作用域只钉 demo 栈） */
+.stack-demo > .stack-card { flex: none; }
+/* stack-foot 在容器内 DOM 末位（stack.js ensureFoot 机制零改——不动append目标），
+ * sticky 钉滚动口底沿常驻 = 「保持在滚动区外可见」的等效达成：用户滚到历史读
+ * 「▲ 更早还有 N 个动作」不被卷走；player 侧无 .stack-demo ⇒ 容器非滚动体，
+ * sticky 退化为静态（视觉零变）。纸底遮衬防帧卡透底 */
+.stack-demo > .stack-foot {
+  position: sticky; bottom: 0;
+  background: var(--paper);
+  padding-top: var(--s4);
+  border-top: var(--hairline);
+}
+.stack-foot { text-align: center; font-size: var(--f11); color: var(--ink-3); font-family: var(--font-mono); padding: var(--s6) 0; }
+.stack-card { border: var(--hairline); border-radius: var(--r12); background: var(--paper); overflow: hidden; }
+.stack-card.enter { animation: pushIn var(--d45) var(--ease-out) both; }
+@keyframes pushIn { from { opacity: 0; transform: translateY(-18px) scale(.985); } to { opacity: 1; transform: none; } }
+.stack-card.collapsed { opacity: .68; cursor: pointer; }
+.stack-card.collapsed:hover { opacity: 1; border-color: var(--accent); }
+.stack-card.expanded { border-color: #c9cdfb; box-shadow: var(--shadow-raised-accent); background: linear-gradient(180deg,#fbfbff,var(--paper)); }
+.stack-card.compact .sc-head { padding: 7px var(--s10); }
+.sc-head { display: flex; align-items: center; gap: var(--s8); padding: 9px var(--s12); flex-wrap: wrap; }
+.stack-card.expanded .sc-head .m-text { font-size: 13.5px; font-weight: 700; }
+.stack-card.collapsed .sc-head .m-text { font-weight: 400; color: var(--ink-2); font-size: var(--f12); }
+/* iteration 12: the type pills. stack.js composes the card class as
+   `stack-card st-${m.kind} ...` and the head as span.m-time + span.m-tag +
+   span.m-text, so these selectors match the real markup (the pre-iteration
+   .moment/.m-<kind> rules never did — they were deleted). Colour is never the
+   only code: each pill carries its STACK_TAGS text label (执行/关卡/判断/
+   恢复/标记/交付), which is SC 1.4.1's G14 ("information conveyed by color
+   differences is also available in text"), and the six hues also separate by
+   lightness — and since iteration 29 that lightness separation is a measured
+   ladder, not a side effect: the six tokens' relative luminances are
+   .034/.050/.066/.082/.098/.113 (uniform ~.016 gaps; every hue-confusable
+   pair >= .031 — see the :root iteration-29 comment and docs/Explore_29.md).
+   Every text/fill pair is >= 4.5:1 for the 10px/600 normal text (min = green
+   5.734 after the iteration-29 ladder; the 20th-tier >=5.0 holds for all six);
+   --amber/--red were deepened off the 4.57 edge — numbers and method in
+   docs/Explore_12.md. */
+.sc-head .m-time { font-family: var(--font-mono); font-size: var(--f10); color: var(--ink-3); margin-right: 8px; }
+.sc-head .m-tag { font-size: var(--f10); border-radius: var(--r8); padding: var(--s1) 7px; margin-right: 6px; font-weight: 600; }
+.st-activity .m-tag { background: var(--accent-soft); color: var(--accent); }
+.st-quality .m-tag { background: var(--green-soft); color: var(--green); }
+.st-decision .m-tag { background: var(--amber-soft); color: var(--amber); }
+.st-recovery .m-tag { background: var(--red-soft); color: var(--red); }
+.st-milestone .m-tag { background: var(--cyan-soft); color: var(--cyan); }
+.st-done .m-tag { background: var(--violet-soft); color: var(--violet); }
+.sc-body { padding: 0 var(--s12) var(--s12); }
+.sc-detail { font-size: 12.5px; color: var(--ink-2); line-height: 1.75; white-space: pre-wrap; }
+.sc-detail.typing::after { content: "▍"; color: var(--accent); animation: blink var(--d8) steps(1) infinite; margin-left: 2px; }
+@keyframes blink { 50% { opacity: 0; } }
+.sc-evidence { }
+/* pending items occupy ZERO space — nothing is pre-allocated; each item grows
+   into existence on its turn, so the frame expands as content is generated */
+.sc-evidence .pending-item { display: none; }
+/* the evidence frame materializes together with its first item (deferred insert) */
+.sc-evidence .ev-block { animation: blockIn var(--d45) both; }
+@keyframes blockIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.sc-evidence .ev-title.in { display: inline-block; animation: evGrow var(--d5) both; transform-origin: top left; }
+.sc-evidence .ev-thumb.in { display: block; animation: evGrow var(--d6) both; transform-origin: top left; }
+.sc-evidence .ev-wide.in { display: block; animation: evGrow var(--d6) both; transform-origin: top center; }
+.sc-evidence .ev-page.in { display: block; animation: evGrowPage var(--d6) both; transform-origin: top center; }
+.sc-evidence .kv-pair.in { display: inline-block; animation: evPop var(--d4) both; }
+.sc-evidence .sec-chip.in { display: inline-block; animation: evPop var(--d4) both; }
+.sc-evidence .ev-table thead tr.in { display: table-row; animation: evRowIn var(--d3) both; }
+.sc-evidence .ev-table tbody tr.in { display: table-row; animation: evRowIn var(--d4) both; }
+.sc-evidence .vline.in { display: block; animation: evLineIn var(--d5) both; }
+.sc-evidence .ev-quotes.in { display: block; animation: evLineIn var(--d5) both; }
+.sc-evidence .ev-caption.in { display: block; animation: evRowIn var(--d45) both; }
+@keyframes evGrow { from { opacity: 0; transform: scale(.55); } to { opacity: 1; transform: none; } }
+@keyframes evGrowPage { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@keyframes evPop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@keyframes evRowIn { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+@keyframes evLineIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
+@keyframes evPage { from { opacity: 0; transform: perspective(700px) rotateY(-20deg) translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes evPop { from { opacity: 0; transform: scale(.78); } to { opacity: 1; transform: none; } }
+@keyframes evSlide { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+@keyframes evPass { from { opacity: 0; transform: translateX(12px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes evQuote { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+@keyframes evTitle { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+/* the “working” label while the evidence sequence is running */
+.sc-evidence.loading::before {
+  content: "正在生成证据…";
+  display: block; font-size: var(--f11); color: var(--ink-3);
+  font-family: var(--font-mono); margin: var(--s4) 0 var(--s6);
+}
+.sc-evidence.fast, .sc-evidence.fast * { animation-duration: var(--d14) !important; animation-delay: 0s !important; transition-duration: var(--d14) !important; }
+
+/* ---------- evidence blocks ---------- */
+.ev-block { margin-top: 8px; border: var(--hairline); border-radius: var(--r10); padding: var(--s10) var(--s12); background: rgba(255,255,255,.7); }
+.ev-title { font-size: var(--f11); font-weight: 700; color: var(--ink-2); letter-spacing: .3px; }
+.thumb-strip { display: flex; gap: var(--s6); margin-top: 8px; overflow-x: auto; padding-bottom: 2px; }
+.ev-thumb { height: 72px; border-radius: var(--r8); border: var(--hairline); object-fit: cover; cursor: zoom-in; transition: transform var(--d12), box-shadow var(--d12); }
+.ev-thumb:hover { transform: translateY(-2px); box-shadow: var(--shadow-thumb); }
+.ev-page { height: 88px; border-radius: var(--r8); border: var(--hairline); object-fit: cover; cursor: zoom-in; transition: transform var(--d12), box-shadow var(--d12); }
+.ev-page:hover { transform: translateY(-2px); box-shadow: var(--shadow-thumb); }
+.ev-wide { width: 100%; max-height: 180px; object-fit: cover; border-radius: var(--r8); border: var(--hairline); margin-top: 8px; cursor: zoom-in; }
+.ev-caption { font-size: var(--f11); color: var(--ink-2); margin-top: 8px; line-height: 1.55; }
+.ev-meta { color: var(--ink-3); font-family: var(--font-mono); font-size: var(--f10); margin-left: 6px; }
+.ev-quotes { margin-top: 8px; border-left: 3px solid var(--accent); padding-left: 10px; font-size: 11.5px; color: var(--ink-2); line-height: 1.7; background: var(--accent-soft); border-radius: 0 var(--r8) var(--r8) 0; padding-top: 6px; padding-bottom: 6px; }
+.ev-quotes div + div { margin-top: 4px; }
+.ev-quotes.ev-small { background: var(--cyan-soft); border-left-color: var(--cyan); font-size: var(--f11); }
+.ev-kv { display: flex; flex-wrap: wrap; gap: var(--s6); margin-top: 8px; }
+.kv-pair { font-size: var(--f11); border: var(--hairline); border-radius: var(--r8); padding: var(--s4) 9px; background: var(--paper); }
+.kv-pair b { color: var(--accent); margin-right: 6px; }
+.kv-pair span { color: var(--ink-2); }
+.ev-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: var(--f11); }
+.ev-table th { text-align: left; color: var(--ink-3); font-weight: 600; padding: var(--s4) var(--s8); border-bottom: var(--hairline); }
+.ev-table td { padding: var(--s5) var(--s8); border-bottom: var(--divider); color: var(--ink-2); line-height: 1.5; }
+.ev-verify { background: var(--green-soft); border-color: #bbe3d2; }
+.ev-verify .ev-title { color: var(--green); }
+.verify-lines { margin-top: 6px; font-family: var(--font-mono); font-size: var(--f10); color: var(--ink-2); line-height: 1.8; }
+.verify-lines .vline.pass { color: var(--green); font-weight: 600; }
+.ev-sections { display: flex; flex-wrap: wrap; gap: var(--s5); margin-top: 8px; }
+.sec-chip { font-size: var(--f11); border: var(--hairline); border-radius: var(--r8); padding: var(--s3) 9px; color: var(--ink-2); background: var(--paper); }
+.sec-chip em { font-style: normal; color: var(--ink-3); font-family: var(--font-mono); font-size: var(--f10); margin-left: 4px; }
+/* iteration 12: the .now-ev family (3 rules) was deleted — the inline evidence
+   row it styled became .sc-evidence / .ev-block, and no such element exists. */
+.m-pages { display: flex; gap: var(--s6); overflow-x: auto; margin: var(--s14) 0; padding-bottom: 4px; }
+/* iteration 51: 弹层 16 页纸带的「发牌式」错峰到场（「动效表达」第七切面——内容的错峰
+   到场）。48 给了弹层容器揭幕（母盒淡入 + .modal-card 升纸 8px，入口 300ms）；本段
+   是揭幕之后的第二拍：#docModalBody 每次开层都被 openDocModal 整体重写（节点身份
+   不存活 ⇒ 46 的「transition 无前值」死代码面），故形态用 ANIMATION 而非 transition——
+   keyframe 在新建节点同样播放（49 的机制发现），恰好给出「每次开层重发牌」的语义
+   （无需 JS 序贯加 .in 类，纯 CSS 零 JS）。形态逐字复用证据块到场词汇 blockIn
+   （opacity 0→1 + translateY 8px，与 46 stepActivate / 47 qEarn / 49 dot 同家族，
+   位移取家族下端）——刻意不取 translateX：读点地图已证明横向位移在纸带内无 rect
+   读点风险（run-modal-narrow 只读 .modal-card/.mc-table/.m-claims，run-narrow 夹具
+   弹层恒 hidden），不选的理由是家族一致性（本仓内容到场一律 translateY，方向信息
+   由下面的 nth-child 时间错峰承载 = Material m1「grid items populate left to
+   right」）。错峰数值（须可溯源）：单页 --d3 = 300ms + --ease-out；基础延迟
+   var(--d12) = 120ms = 母拍 300ms 窗的 40% 点（--ease-out 前置极陡，45 实测母拍
+   150ms 处已达 0.928 ⇒ 第二拍起在母拍的到访尾部：两拍连续、无死区空档，也非
+   47 教训的「同帧同向叠加」——第二拍的信息量是 16 步错峰本身）；每步 30ms
+   （root 方案 C 指定的 30–60ms 带下端，最贴近 Material m1 的 ≤20ms 上限）⇒ 末页
+   120 + 15×30 = 570ms 起播、+300ms 落定 = 总窗 870ms（≤ root ~800ms 预算为 13 页
+   口径；第 72 次数据重锚 13→16 页后总窗随页数线性 +90ms/页——不压缩步长以
+   保 30–60ms 带下端不破，线性超出在此如实登记）。
+   fill 取 backwards（任务包点名的 fill 冲突显式处理）：延迟窗内保持首帧（错峰的
+   机制必需），活动窗结束后不保留任何帧 ⇒ .ev-page:hover 的 translateY(-2px)
+   及其 --d12 过渡逐字存活（若用 both/forwards，动画终值会压住 hover 声明）。
+   作用域钉在 :not(.hidden) 上（48 的防御性先例：闭层时动画实例移除、页面回落
+   自然态；narrow 夹具与一切闭层探针态零影响）。注意：基础规则有意只用 animation
+   的长手属性（不用 animation 简写）——简写会把 animation-delay 一并重置为 0，
+   其特异性高于下面的 nth-child 阶梯从而吃掉错峰；delay 只由阶梯声明。 */
+#docModal:not(.hidden) .m-pages .ev-page { animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out); animation-fill-mode: backwards; }
+.m-pages .ev-page:nth-child(1) { animation-delay: var(--d12); }
+.m-pages .ev-page:nth-child(2) { animation-delay: 150ms; }
+.m-pages .ev-page:nth-child(3) { animation-delay: 180ms; }
+.m-pages .ev-page:nth-child(4) { animation-delay: 210ms; }
+.m-pages .ev-page:nth-child(5) { animation-delay: 240ms; }
+.m-pages .ev-page:nth-child(6) { animation-delay: 270ms; }
+.m-pages .ev-page:nth-child(7) { animation-delay: 300ms; }
+.m-pages .ev-page:nth-child(8) { animation-delay: 330ms; }
+.m-pages .ev-page:nth-child(9) { animation-delay: 360ms; }
+.m-pages .ev-page:nth-child(10) { animation-delay: 390ms; }
+.m-pages .ev-page:nth-child(11) { animation-delay: 420ms; }
+.m-pages .ev-page:nth-child(12) { animation-delay: 450ms; }
+.m-pages .ev-page:nth-child(13) { animation-delay: 480ms; }
+.m-pages .ev-page:nth-child(14) { animation-delay: 510ms; }
+.m-pages .ev-page:nth-child(15) { animation-delay: 540ms; }
+.m-pages .ev-page:nth-child(16) { animation-delay: 570ms; }
+/* 第 72 次数据重锚 13→16 页后追 3 级（30ms/步同带）：本阶梯是机械追加式
+   （机制见上方注释）——页数超出已声明级数时超出页 delay 回落 0 = 反序落定，
+   故级数必须覆盖实际页数；页数再增时继续在此追加同级。 */
+
+/* ---------- lightbox ---------- */
+/* iteration 48: the lightbox's reveal beat — overlay language instance 2 (the
+   doc modal in modal.css is instance 1: same window, same curve, same exit
+   asymmetry, same mother-box/ surface-child discipline). The mother box
+   .lightbox carries the single fade for scrim + image + caption + close
+   together (one fade channel, one focal point: the surface); the surface
+   beat here is a ZOOM instead of a rise — the enlarged evidence image scales
+   .96 to 1, the restrained end of the scale vocabulary evPop/pushIn already
+   use, which reads as this overlay's own "magnify" semantics. transform on
+   the overlay <img> cannot change offsetWidth/offsetHeight (layout box, not
+   the painted box), so the iteration-8 box-reservation and lbBox ratio gates
+   stay exact. .lb-caption and .lb-close ride the mother fade without their
+   own declarations. EXIT: same asymmetric 150ms as the modal — opacity to 0
+   over --d15 with display behind allow-discrete (the none flip lands at the
+   end of the window; the class-based close/Escape/focus-return semantics in
+   evidence.js are class-level and verbatim), plus pointer-events:none so the
+   150ms fade never intercepts the page behind it. */
+.lightbox { position: fixed; inset: 0; z-index: var(--z-lightbox); display: flex; align-items: center; justify-content: center; flex-direction: column; transition: opacity var(--d3) var(--ease-out), display var(--d15) allow-discrete; }
+.lightbox.hidden { opacity: 0; pointer-events: none; transition: opacity var(--d15) var(--ease-out), display var(--d15) allow-discrete; }
+.lb-backdrop { position: absolute; inset: 0; background: rgba(16,18,30,.8); backdrop-filter: blur(4px); }
+.lightbox img { position: relative; max-width: 92vw; max-height: 82vh; border-radius: var(--r10); box-shadow: var(--shadow-lightbox); transition: transform var(--d3) var(--ease-out), opacity var(--d3) var(--ease-out); }
+/* iteration 48: entrance starting points — see the analogous block in
+   modal.css for the :not(.hidden) scoping rationale (a hidden lightbox never
+   matches; the narrow fixture keeps it hidden, so its 0x0 rect is skipped by
+   the body-wide scan). */
+@starting-style {
+  .lightbox:not(.hidden) { opacity: 0; }
+  .lightbox:not(.hidden) img { transform: scale(.96); }
+}
+.lb-caption { position: relative; color: #e7e9f2; font-size: 12.5px; margin-top: 14px; max-width: 80vw; line-height: 1.6; text-align: center; transition: opacity var(--d3) var(--ease-out); }
+.lb-close { position: absolute; top: 18px; right: 26px; border: none; background: none; color: #cfd4e6; font-size: 30px; z-index: 1; }
+.lb-close:focus-visible { outline: 3px solid #e7e9f2; outline-offset: var(--s2); }
+/* iteration 75: on-screen prev/next — the pointer half of the 30 keyboard
+   contract. Vertically centered on the viewport's left/right edges, the same
+   chrome language as .lb-close (borderless, #cfd4e6 on scrim, house
+   focus-visible outline). Hidden (base .hidden) for a singleton group and
+   disabled at a boundary — a disabled button leaves focus-trap's FOCUSABLE
+   set, so Tab and the keyboard clamp tell the same story. Disabled uses
+   opacity only: a disabled control must not gain a second cue that reads as
+   "the other kind of hidden" (color is the state carrier, 50's ruling). */
+.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); border: none; background: none; color: #cfd4e6; font-size: 44px; line-height: 1; padding: 10px 16px; z-index: 1; cursor: pointer; transition: color var(--d15) var(--ease-out), opacity var(--d15) var(--ease-out); }
+.lb-nav:hover:not(:disabled) { color: #fff; }
+.lb-nav:disabled { opacity: 0.3; cursor: default; }
+.lb-nav:focus-visible { outline: 3px solid #e7e9f2; outline-offset: var(--s2); }
+.lb-prev { left: 20px; }
+.lb-next { right: 20px; }
+[data-lightbox]:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+
+/* iteration 53: the sequence-replacement beat — the lightbox's last beatless
+   surface. ←/→/Home/End swap (lbNavigate, evidence.js) is no longer a hard
+   src exchange on the same <img>. The held OLD frame is .lightbox::after:
+   lbHold (evidence.js) pins it at the pre-swap box via five custom
+   properties — --lb-gimg and a left/top/width/height quad — and the
+   data-lb-hold attribute turns it on. The pinned quad is where the box WAS,
+   which is also where the box still is for the 13 same-ratio pages; for a
+   changed-ratio member (the ln* gate's synthetic 960x540) the quad is the
+   release target and the transition morphs the held frame into the new box
+   as it fades.
+   Both the old and the new surface run one window, var(--d3) = 300ms, on
+   var(--ease-out): the open (48) and the replace are the two moments of ONE
+   surface, so one window (Atlassian Transitions 150-400ms, "larger elements
+   require longer durations to feel proportional"; PhotoSwipe, the kindred
+   lightbox, defaults to 333ms). Symmetric, single-window, no exit asymmetry —
+   a replacement is a covering state flip, the iteration-50 ruling for
+   nav/speeds applied here; the caption rides the same window (its text is
+   written synchronously in the keypress, then fades in with the image).
+   image and caption fade in. The HOLD state pins with transition: none — the
+   old frame appears instantly instead of fading in, and the live image and
+   caption jump to opacity 0 rather than fading out; the release
+   (lbRelease, after the new image is decodable) then runs the crossfade by
+   taking the attribute off, with the base transition list carrying opacity
+   and the quad in the same 300ms window. No keyframe is added. The state is a data
+   attribute (data-lb-hold), not a class: the dead-rule audit keys off class
+   atoms, and a class that is only ever present mid-swap is indistinguishable
+   from a dead rule there. The pseudo-element is not an element: it is
+   invisible to the body-wide geometry scan, to the contrast scan's
+   parentElement background chain, and to the iteration-27 single-tab-stop
+   count. prefers-reduced-motion is guarded in JS (lbSwap), which skips the
+   hold; the 43 收口块 also carries these rules, so both guards land. */
+.lightbox::after {
+  content: ""; position: absolute; pointer-events: none; border-radius: var(--r10);
+  left: var(--lb-gx, 0px); top: var(--lb-gy, 0px); width: var(--lb-gw, 0px); height: var(--lb-gh, 0px);
+  background: var(--lb-gimg, none) no-repeat center / contain;
+  opacity: 0;
+  transition: opacity var(--d3) var(--ease-out),
+    left var(--d3) var(--ease-out), top var(--d3) var(--ease-out),
+    width var(--d3) var(--ease-out), height var(--d3) var(--ease-out);
+}
+.lightbox[data-lb-hold]::after { opacity: 1; transition: none; }
+.lightbox[data-lb-hold] img, .lightbox[data-lb-hold] .lb-caption { opacity: 0; transition: none; }
+
+::view-transition-group(lb-image),
+::view-transition-old(lb-image),
+::view-transition-new(lb-image),
+::view-transition-group(lb-caption),
+::view-transition-old(lb-caption),
+::view-transition-new(lb-caption) {
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+}
+

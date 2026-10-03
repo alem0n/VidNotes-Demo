@@ -1,0 +1,53 @@
+# 视记 VidNotes
+
+> 视频链接 → 中文笔记 + 可回放轨迹。展示型 MVP：给人看（演示 / 汇报 / 评审），
+> 不是给人用的日常工具。
+
+本文件是 `llms.txt` 约定（部署后供 LLM/agent 消费的静态自述）。产物为**自包含
+本地静态站**：`dist/` 下双击 `index.html` 即可完整演示，file:// 零服务端、
+零网络请求。
+
+## 页面（4 页 + 共享束）
+
+- `index.html` —— 首页 / 落地入口：粘贴视频链接提交转换（视图 token `convert`）
+- `run.html` —— 转换演示：阶段步进 + 「正在做」时刻栈 + 管道车间 + 交付卡
+  （演示是转换流的延续；顶栏归属转换）
+- `library.html` —— 文档库：成稿卡片 + 摘要弹层 + 数字出处表 + 灯箱翻页
+- `history.html` —— 历史轨迹：回放器（1/2/4/8/16× 五档调速，8×/16× 为瞬时档），
+  220 时刻与 10 项自动验收清单随回放位置逐项揭示
+
+## 数据事实（构建产物，非人工摆拍）
+
+轨迹、阶段、交付物与验收项的数据模型固化为 `data/product-data.json`
+（仓库内唯一数据真源；原始会话 jsonl 因含隐私已删除），由两层构建管线落物：
+`build.js`（数据暂存层：data/ → build/ 逐字节校验拷贝）→ `build-inlined.js`
+（打包层）。当前：220 时刻 / 95 张证据图 / 10 项验收 / 27 条数字出处 / 33 页笔记。
+
+## 构建 / 验证 / 运行（零第三方依赖，纯 Node ESM）
+
+```
+node pipeline/build.js && node pipeline/build-inlined.js                    # → build/ + dist/
+node pipeline/serve.mjs                                            # 分体版 http://127.0.0.1:8811
+node tests/probe/run-all.js                                        # 六组机器门（契约/窄屏/弹层/boot/级联）
+```
+
+- 产物硬约束：file:// 双击即开、零模块引用、零 fetch（经典脚本束 + CSS 拼接）；
+  运行时依赖随产物自携（`dist/assets/`，含 20 成图 + 20 成图源帧与 33 页笔记 PDF；83 期起无视频字节——无播放功能）。
+
+## 目录
+
+- `public/` —— 原样拷贝到 `dist/` 根、不经构建（`assets/`、`favicon.svg`、
+  `robots.txt`、本文件）
+- `src/styles/` —— 样式表（`main.css` 为 @import 入口，级联序 = import 序）
+- `src/scripts/` —— 原生 ES Modules（`main.js` 为入口）
+- `index.html` / `run.html` / `library.html` / `history.html` —— 页面（根目录）
+- `pipeline/` —— 构建管线（读取 / 映射 / 打包三层 + 分体服务 + 素材打包）
+- `data/` —— 数据源（session 运行记录 jsonl，构建管线唯一输入）
+- `tests/probe/` —— 双路页级探针与机器门
+- `docs/` —— 人类向文档：探索迭代证据链 + 早期研究链 `docs/notes/`（01-inference → 05-pacing）
+
+## 人类文档入口
+
+- `README.md` —— 交付说明与维护者须知（机器对账标记、目录结构、各门方法学）
+- `docs/INDEX.md` —— 逐轮入口表与主题切片
+- `docs/Explore_*.md` / `docs/iterations.jsonl` —— 每次迭代的全量证据链

@@ -1,0 +1,3791 @@
+1
+00:00:31,439 --> 00:00:33,030
+I warning tonight about the scope of a massive cyber attack.
+
+2
+00:00:33,040 --> 00:00:35,190
+massive cyber attack. >> Already believed to be the largest
+
+3
+00:00:35,200 --> 00:01:12,070
+>> Already believed to be the largest >> America under virtual invasion.
+
+4
+00:01:14,000 --> 00:01:17,270
+Please welcome to the Black Hat main stage the president of Black Hat, Susie
+
+5
+00:01:17,280 --> 00:01:26,450
+stage the president of Black Hat, Susie Pallet.
+
+6
+00:01:33,759 --> 00:01:36,789
+>> Good morning and welcome to the final day of Black Hat. We've made it and I
+
+7
+00:01:36,799 --> 00:01:39,429
+day of Black Hat. We've made it and I wanted to say start by saying thank you.
+
+8
+00:01:39,439 --> 00:01:41,590
+wanted to say start by saying thank you. Thank you for showing up, for bringing
+
+9
+00:01:41,600 --> 00:01:44,789
+Thank you for showing up, for bringing your expertise, your curiosity, and your
+
+10
+00:01:44,799 --> 00:01:47,429
+your expertise, your curiosity, and your willingness to engage. for asking the
+
+11
+00:01:47,439 --> 00:01:49,510
+willingness to engage. for asking the hard questions, for sharing your
+
+12
+00:01:49,520 --> 00:01:51,910
+hard questions, for sharing your research, and for making the connections
+
+13
+00:01:51,920 --> 00:01:55,510
+research, and for making the connections that turn ideas into action.
+
+14
+00:01:55,520 --> 00:01:57,109
+that turn ideas into action. Before I say anything else, I want you
+
+15
+00:01:57,119 --> 00:01:59,670
+Before I say anything else, I want you to look around. Look at the people
+
+16
+00:01:59,680 --> 00:02:02,149
+to look around. Look at the people sitting next to you, behind you, across
+
+17
+00:02:02,159 --> 00:02:03,910
+sitting next to you, behind you, across the aisle.
+
+18
+00:02:03,920 --> 00:02:05,670
+the aisle. These are the people who've been solving
+
+19
+00:02:05,680 --> 00:02:08,469
+These are the people who've been solving problems with you all week, challenging
+
+20
+00:02:08,479 --> 00:02:10,469
+problems with you all week, challenging your assump ass assumptions, sharing
+
+21
+00:02:10,479 --> 00:02:12,550
+your assump ass assumptions, sharing what you've learned, and staying up too
+
+22
+00:02:12,560 --> 00:02:14,550
+what you've learned, and staying up too late because the conversation was too
+
+23
+00:02:14,560 --> 00:02:16,949
+late because the conversation was too good to walk away from. This is what
+
+24
+00:02:16,959 --> 00:02:20,229
+good to walk away from. This is what Black Hat is really about.
+
+25
+00:02:20,239 --> 00:02:22,150
+Black Hat is really about. Over the past few days, thousands of
+
+26
+00:02:22,160 --> 00:02:24,229
+Over the past few days, thousands of people from around the world have come
+
+27
+00:02:24,239 --> 00:02:26,790
+people from around the world have come together to do what this community does
+
+28
+00:02:26,800 --> 00:02:29,270
+together to do what this community does best. exchange ideas, challenge
+
+29
+00:02:29,280 --> 00:02:31,670
+best. exchange ideas, challenge assumptions, explore new technologies,
+
+30
+00:02:31,680 --> 00:02:34,070
+assumptions, explore new technologies, and build relationships that last long
+
+31
+00:02:34,080 --> 00:02:36,790
+and build relationships that last long after we leave Las Vegas.
+
+32
+00:02:36,800 --> 00:02:38,470
+after we leave Las Vegas. From the groundbreaking research
+
+33
+00:02:38,480 --> 00:02:40,949
+From the groundbreaking research presented in briefings to the expert
+
+34
+00:02:40,959 --> 00:02:43,350
+presented in briefings to the expert insights shared at our summits, from the
+
+35
+00:02:43,360 --> 00:02:45,910
+insights shared at our summits, from the hands-on experiences across the event to
+
+36
+00:02:45,920 --> 00:02:47,670
+hands-on experiences across the event to the hallway conversations that went
+
+37
+00:02:47,680 --> 00:02:50,790
+the hallway conversations that went deeper than any session ever could, you
+
+38
+00:02:50,800 --> 00:02:53,990
+deeper than any session ever could, you made this week what it was.
+
+39
+00:02:54,000 --> 00:02:56,150
+made this week what it was. Black Hat has always been at its best
+
+40
+00:02:56,160 --> 00:02:59,270
+Black Hat has always been at its best when discovery leads to collaboration
+
+41
+00:02:59,280 --> 00:03:02,470
+when discovery leads to collaboration and that collaboration leads to growth.
+
+42
+00:03:02,480 --> 00:03:04,070
+and that collaboration leads to growth. And this week we've seen that happen
+
+43
+00:03:04,080 --> 00:03:07,110
+And this week we've seen that happen over and over again.
+
+44
+00:03:07,120 --> 00:03:08,710
+over and over again. Whether you've spent your time learning
+
+45
+00:03:08,720 --> 00:03:11,270
+Whether you've spent your time learning from researchers or testing tools in
+
+46
+00:03:11,280 --> 00:03:13,270
+from researchers or testing tools in Arsenal, exploring emerging
+
+47
+00:03:13,280 --> 00:03:15,270
+Arsenal, exploring emerging technologies, or reconnecting with
+
+48
+00:03:15,280 --> 00:03:17,830
+technologies, or reconnecting with colleagues or meeting someone new who's
+
+49
+00:03:17,840 --> 00:03:19,750
+colleagues or meeting someone new who's going to change the trajectory of your
+
+50
+00:03:19,760 --> 00:03:22,309
+going to change the trajectory of your work and how you think. I hope you're
+
+51
+00:03:22,319 --> 00:03:24,550
+work and how you think. I hope you're leaving with new skills, new insights,
+
+52
+00:03:24,560 --> 00:03:27,030
+leaving with new skills, new insights, and new opportunities.
+
+53
+00:03:27,040 --> 00:03:28,869
+and new opportunities. But there's one thing that keeps
+
+54
+00:03:28,879 --> 00:03:32,550
+But there's one thing that keeps surfing. One question we can't ignore.
+
+55
+00:03:32,560 --> 00:03:35,350
+surfing. One question we can't ignore. AI is fundamentally changing how we find
+
+56
+00:03:35,360 --> 00:03:37,509
+AI is fundamentally changing how we find vulnerabilities,
+
+57
+00:03:37,519 --> 00:03:39,750
+vulnerabilities, how fast threats move, and how we
+
+58
+00:03:39,760 --> 00:03:42,390
+how fast threats move, and how we analyze them. Today's keynote will
+
+59
+00:03:42,400 --> 00:03:44,630
+analyze them. Today's keynote will tackle that head on.
+
+60
+00:03:44,640 --> 00:03:46,869
+tackle that head on. As AI becomes more capable, more
+
+61
+00:03:46,879 --> 00:03:48,390
+As AI becomes more capable, more autonomous, what happens to
+
+62
+00:03:48,400 --> 00:03:50,869
+autonomous, what happens to vulnerability research? Where does human
+
+63
+00:03:50,879 --> 00:03:53,030
+vulnerability research? Where does human ingenuity fit in a world where machines
+
+64
+00:03:53,040 --> 00:03:55,270
+ingenuity fit in a world where machines can hunt for flaws faster than we ever
+
+65
+00:03:55,280 --> 00:03:57,589
+can hunt for flaws faster than we ever could? And what does it mean for this
+
+66
+00:03:57,599 --> 00:03:59,509
+could? And what does it mean for this community, for the researchers, the
+
+67
+00:03:59,519 --> 00:04:02,630
+community, for the researchers, the defenders, the builders all in this room
+
+68
+00:04:02,640 --> 00:04:04,869
+defenders, the builders all in this room when the tools when that we rely on
+
+69
+00:04:04,879 --> 00:04:07,110
+when the tools when that we rely on start to think for themselves? They're
+
+70
+00:04:07,120 --> 00:04:09,110
+start to think for themselves? They're not hypothetical questions. They're the
+
+71
+00:04:09,120 --> 00:04:12,550
+not hypothetical questions. They're the reality we're facing live right now.
+
+72
+00:04:12,560 --> 00:04:14,309
+reality we're facing live right now. But before before we bring up today's
+
+73
+00:04:14,319 --> 00:04:15,830
+But before before we bring up today's keynote speaker to explore those
+
+74
+00:04:15,840 --> 00:04:18,310
+keynote speaker to explore those questions, please join me in welcoming
+
+75
+00:04:18,320 --> 00:04:20,789
+questions, please join me in welcoming an amazing person, the founder of Black
+
+76
+00:04:20,799 --> 00:04:30,629
+an amazing person, the founder of Black Hat and president of Defcon, Jeff Moss.
+
+77
+00:04:33,680 --> 00:04:35,749
+Hey, good morning. Glad uh we all made it here today. I've
+
+78
+00:04:35,759 --> 00:04:38,629
+Glad uh we all made it here today. I've got uh just a little bit of a backstory
+
+79
+00:04:38,639 --> 00:04:41,350
+got uh just a little bit of a backstory I want to share with you uh for today's
+
+80
+00:04:41,360 --> 00:04:45,189
+I want to share with you uh for today's uh keynote speaker and maybe put it a
+
+81
+00:04:45,199 --> 00:04:47,909
+uh keynote speaker and maybe put it a little bit into context.
+
+82
+00:04:47,919 --> 00:04:51,590
+little bit into context. Um so
+
+83
+00:04:51,600 --> 00:04:54,390
+Um so about 30 years ago almost 30 years to
+
+84
+00:04:54,400 --> 00:04:58,310
+about 30 years ago almost 30 years to this month ago the concept of a capture
+
+85
+00:04:58,320 --> 00:05:02,150
+this month ago the concept of a capture the flag CTF was accidentally invented
+
+86
+00:05:02,160 --> 00:05:05,670
+the flag CTF was accidentally invented at Defcon. The origin of CTF was
+
+87
+00:05:05,680 --> 00:05:07,510
+at Defcon. The origin of CTF was essentially a network fight that
+
+88
+00:05:07,520 --> 00:05:10,629
+essentially a network fight that happened at Defcon about 31 years ago.
+
+89
+00:05:10,639 --> 00:05:14,469
+happened at Defcon about 31 years ago. And since then, CTFs have evolved to
+
+90
+00:05:14,479 --> 00:05:17,670
+And since then, CTFs have evolved to like run the world. CTFs everywhere all
+
+91
+00:05:17,680 --> 00:05:20,950
+like run the world. CTFs everywhere all the time. But it wasn't purpose-built to
+
+92
+00:05:20,960 --> 00:05:24,469
+the time. But it wasn't purpose-built to do that. It's grown because CTFs are
+
+93
+00:05:24,479 --> 00:05:27,670
+do that. It's grown because CTFs are incredibly useful. And due to the nature
+
+94
+00:05:27,680 --> 00:05:29,670
+incredibly useful. And due to the nature of how Capture the Flag started at
+
+95
+00:05:29,680 --> 00:05:33,189
+of how Capture the Flag started at Defcon, it was purely an offensive
+
+96
+00:05:33,199 --> 00:05:36,790
+Defcon, it was purely an offensive defensive full combat. Only rule was
+
+97
+00:05:36,800 --> 00:05:38,550
+defensive full combat. Only rule was after the first year, you couldn't take
+
+98
+00:05:38,560 --> 00:05:41,029
+after the first year, you couldn't take over the scoring system or the router
+
+99
+00:05:41,039 --> 00:05:42,310
+over the scoring system or the router because that's what the attackers did
+
+100
+00:05:42,320 --> 00:05:44,870
+because that's what the attackers did the first year. [laughter]
+
+101
+00:05:44,880 --> 00:05:45,990
+the first year. [laughter] So we're [snorts] like, oh, maybe we
+
+102
+00:05:46,000 --> 00:05:47,909
+So we're [snorts] like, oh, maybe we need rules.
+
+103
+00:05:47,919 --> 00:05:51,430
+need rules. Um, and it so many lessons were learned,
+
+104
+00:05:51,440 --> 00:05:53,670
+Um, and it so many lessons were learned, right? Because how can you defend if you
+
+105
+00:05:53,680 --> 00:05:56,070
+right? Because how can you defend if you don't know how people attack? attack
+
+106
+00:05:56,080 --> 00:05:58,790
+don't know how people attack? attack informs defense.
+
+107
+00:05:58,800 --> 00:06:00,790
+informs defense. And so if you don't have a sort of
+
+108
+00:06:00,800 --> 00:06:04,390
+And so if you don't have a sort of ground truth of how attacks and exploits
+
+109
+00:06:04,400 --> 00:06:06,150
+ground truth of how attacks and exploits are being developed, it's probably going
+
+110
+00:06:06,160 --> 00:06:08,710
+are being developed, it's probably going to be pretty hard to create an effective
+
+111
+00:06:08,720 --> 00:06:13,350
+to be pretty hard to create an effective defense. So um that's a way of sort of
+
+112
+00:06:13,360 --> 00:06:18,870
+defense. So um that's a way of sort of tying into our keynote uh Yan who
+
+113
+00:06:18,880 --> 00:06:21,830
+tying into our keynote uh Yan who as an origin story for his superpowers
+
+114
+00:06:21,840 --> 00:06:27,350
+as an origin story for his superpowers in reversing. He uh his mom had a PhD
+
+115
+00:06:27,360 --> 00:06:30,390
+in reversing. He uh his mom had a PhD essentially in uh computer science in
+
+116
+00:06:30,400 --> 00:06:34,790
+essentially in uh computer science in Russia before that was really a thing.
+
+117
+00:06:34,800 --> 00:06:37,670
+Russia before that was really a thing. Then the fall of the wall happened and
+
+118
+00:06:37,680 --> 00:06:39,749
+Then the fall of the wall happened and all of a sudden academics in Russia were
+
+119
+00:06:39,759 --> 00:06:41,749
+all of a sudden academics in Russia were starting to be pressured to endorse
+
+120
+00:06:41,759 --> 00:06:44,469
+starting to be pressured to endorse political candidates. And when the KGB
+
+121
+00:06:44,479 --> 00:06:46,230
+political candidates. And when the KGB came around and started pressuring the
+
+122
+00:06:46,240 --> 00:06:49,110
+came around and started pressuring the family to endorse the KGB candidate,
+
+123
+00:06:49,120 --> 00:06:51,909
+family to endorse the KGB candidate, they fled Russia. He fled to America.
+
+124
+00:06:51,919 --> 00:06:54,070
+they fled Russia. He fled to America. He's 8 years old.
+
+125
+00:06:54,080 --> 00:06:56,309
+He's 8 years old. Um, and never thought he'd be an
+
+126
+00:06:56,319 --> 00:06:58,629
+Um, and never thought he'd be an academic like his parents until he gets
+
+127
+00:06:58,639 --> 00:07:01,990
+academic like his parents until he gets to university and he starts playing
+
+128
+00:07:02,000 --> 00:07:04,629
+to university and he starts playing capture the flag and he loves hacking
+
+129
+00:07:04,639 --> 00:07:07,270
+capture the flag and he loves hacking and he can't stop hacking
+
+130
+00:07:07,280 --> 00:07:09,909
+and he can't stop hacking and then he realizes as a graduate
+
+131
+00:07:09,919 --> 00:07:12,870
+and then he realizes as a graduate student he's getting paid to essentially
+
+132
+00:07:12,880 --> 00:07:16,629
+student he's getting paid to essentially hack all the time and he's doing a lot
+
+133
+00:07:16,639 --> 00:07:19,270
+hack all the time and he's doing a lot of these tasks manually. He's like,
+
+134
+00:07:19,280 --> 00:07:21,110
+of these tasks manually. He's like, well, what if I automate this as much as
+
+135
+00:07:21,120 --> 00:07:24,150
+well, what if I automate this as much as I can? So, he goes and he creates this
+
+136
+00:07:24,160 --> 00:07:26,469
+I can? So, he goes and he creates this multimodal framing fuzzwork called
+
+137
+00:07:26,479 --> 00:07:31,350
+multimodal framing fuzzwork called anger. And with anger, he and his CTF
+
+138
+00:07:31,360 --> 00:07:35,029
+anger. And with anger, he and his CTF team, Shellfish, basically run the board
+
+139
+00:07:35,039 --> 00:07:38,469
+team, Shellfish, basically run the board worldwide contests for about two years
+
+140
+00:07:38,479 --> 00:07:41,350
+worldwide contests for about two years because Anger allowed them to reverse
+
+141
+00:07:41,360 --> 00:07:43,909
+because Anger allowed them to reverse and exploit in other ways that the
+
+142
+00:07:43,919 --> 00:07:46,710
+and exploit in other ways that the existing tooling could not do.
+
+143
+00:07:46,720 --> 00:07:48,390
+existing tooling could not do. Since then, Anger's probably been used
+
+144
+00:07:48,400 --> 00:07:50,550
+Since then, Anger's probably been used in over a thousand different research
+
+145
+00:07:50,560 --> 00:07:55,670
+in over a thousand different research and academic and product tooling.
+
+146
+00:07:59,440 --> 00:08:03,029
+This uh highly contributo uh mindset of an academic, right, giving
+
+147
+00:08:03,039 --> 00:08:04,710
+uh mindset of an academic, right, giving away the tooling, advancing the
+
+148
+00:08:04,720 --> 00:08:07,189
+away the tooling, advancing the state-of-the-art
+
+149
+00:08:07,199 --> 00:08:10,070
+state-of-the-art led team shellfish then to organize and
+
+150
+00:08:10,080 --> 00:08:12,629
+led team shellfish then to organize and run Order of the Overflow, which was an
+
+151
+00:08:12,639 --> 00:08:14,550
+run Order of the Overflow, which was an organizer of the Defcon capture the
+
+152
+00:08:14,560 --> 00:08:18,230
+organizer of the Defcon capture the flag. So his whole career started with
+
+153
+00:08:18,240 --> 00:08:20,469
+flag. So his whole career started with capture the flag and they ended up
+
+154
+00:08:20,479 --> 00:08:23,990
+capture the flag and they ended up running capture the flag and through
+
+155
+00:08:24,000 --> 00:08:27,909
+running capture the flag and through this whole process and now uh being at
+
+156
+00:08:27,919 --> 00:08:29,749
+this whole process and now uh being at uh Arizona State University with his
+
+157
+00:08:29,759 --> 00:08:31,189
+uh Arizona State University with his students and graduate students
+
+158
+00:08:31,199 --> 00:08:33,589
+students and graduate students developing new exploits and new agent
+
+159
+00:08:33,599 --> 00:08:37,430
+developing new exploits and new agent tools, he's seeing how the exploit
+
+160
+00:08:37,440 --> 00:08:38,949
+tools, he's seeing how the exploit development
+
+161
+00:08:38,959 --> 00:08:41,589
+development trajectory has kind of changed from art
+
+162
+00:08:41,599 --> 00:08:44,870
+trajectory has kind of changed from art into science. And so I'm really looking
+
+163
+00:08:44,880 --> 00:08:47,990
+into science. And so I'm really looking forward to hearing his story and uh and
+
+164
+00:08:48,000 --> 00:08:49,829
+forward to hearing his story and uh and and having him share it with you. It's
+
+165
+00:08:49,839 --> 00:08:51,990
+and having him share it with you. It's my pleasure to introduce Yan Shisho
+
+166
+00:08:52,000 --> 00:08:56,441
+my pleasure to introduce Yan Shisho Tash.
+
+167
+00:09:13,360 --> 00:09:17,190
+So, as Jeff said, I have quite an origin in the um capture the flag community. In
+
+168
+00:09:17,200 --> 00:09:21,509
+in the um capture the flag community. In my day job, I am an associate professor
+
+169
+00:09:21,519 --> 00:09:24,550
+my day job, I am an associate professor at Arizona State University where the
+
+170
+00:09:24,560 --> 00:09:27,670
+at Arizona State University where the biggest thing I do, my priority
+
+171
+00:09:27,680 --> 00:09:31,509
+biggest thing I do, my priority is research into vulnerability analysis
+
+172
+00:09:31,519 --> 00:09:36,630
+is research into vulnerability analysis and exploitation and uh repair and so on
+
+173
+00:09:36,640 --> 00:09:38,710
+and exploitation and uh repair and so on and then education of the next
+
+174
+00:09:38,720 --> 00:09:41,509
+and then education of the next generation. I'm very excited to talk
+
+175
+00:09:41,519 --> 00:09:44,470
+generation. I'm very excited to talk about this all today from the lens of
+
+176
+00:09:44,480 --> 00:09:47,030
+about this all today from the lens of the agentic age.
+
+177
+00:09:47,040 --> 00:09:49,750
+the agentic age. What does it mean to be an academic
+
+178
+00:09:49,760 --> 00:09:51,670
+What does it mean to be an academic researcher? Well, it means that I sit
+
+179
+00:09:51,680 --> 00:09:55,030
+researcher? Well, it means that I sit around and I have shower thoughts,
+
+180
+00:09:55,040 --> 00:09:58,470
+around and I have shower thoughts, bright ideas that I take and typically
+
+181
+00:09:58,480 --> 00:10:01,430
+bright ideas that I take and typically pass on to my bright graduate student
+
+182
+00:10:01,440 --> 00:10:02,949
+pass on to my bright graduate student researchers
+
+183
+00:10:02,959 --> 00:10:08,710
+researchers who then run with them and produce the
+
+184
+00:10:08,720 --> 00:10:11,269
+who then run with them and produce the research projects, the research papers,
+
+185
+00:10:11,279 --> 00:10:14,949
+research projects, the research papers, and the research prototypes that lead to
+
+186
+00:10:14,959 --> 00:10:16,870
+and the research prototypes that lead to the breakthroughs.
+
+187
+00:10:16,880 --> 00:10:19,030
+the breakthroughs. So what a lot of what Jeff was talking
+
+188
+00:10:19,040 --> 00:10:21,110
+So what a lot of what Jeff was talking about happened when I was this graduate
+
+189
+00:10:21,120 --> 00:10:23,990
+about happened when I was this graduate student and I was handed the bright idea
+
+190
+00:10:24,000 --> 00:10:28,710
+student and I was handed the bright idea and has kept going forward beyond that.
+
+191
+00:10:28,720 --> 00:10:31,509
+and has kept going forward beyond that. That means what I'm talking about today
+
+192
+00:10:31,519 --> 00:10:34,949
+That means what I'm talking about today isn't just my work. It is the work of an
+
+193
+00:10:34,959 --> 00:10:38,069
+isn't just my work. It is the work of an amazing team of colleagues without whom
+
+194
+00:10:38,079 --> 00:10:40,870
+amazing team of colleagues without whom I would not be here today. I'll try to
+
+195
+00:10:40,880 --> 00:10:44,150
+I would not be here today. I'll try to acknowledge them as we cover those parts
+
+196
+00:10:44,160 --> 00:10:46,310
+acknowledge them as we cover those parts of research where they contributed. They
+
+197
+00:10:46,320 --> 00:10:48,870
+of research where they contributed. They they led the the research. They were the
+
+198
+00:10:48,880 --> 00:10:50,710
+they led the the research. They were the brilliant graduate student. But I'll
+
+199
+00:10:50,720 --> 00:10:53,030
+brilliant graduate student. But I'll acknowledge them all cumulatively right
+
+200
+00:10:53,040 --> 00:10:55,829
+acknowledge them all cumulatively right now. The lab uh SECOM lab and the center
+
+201
+00:10:55,839 --> 00:10:57,350
+now. The lab uh SECOM lab and the center for cyber security and trusted
+
+202
+00:10:57,360 --> 00:10:59,350
+for cyber security and trusted foundations. Coincidentally, the CTF
+
+203
+00:10:59,360 --> 00:11:01,829
+foundations. Coincidentally, the CTF center at Arizona State University.
+
+204
+00:11:01,839 --> 00:11:03,590
+center at Arizona State University. Awesome group of people. If you're
+
+205
+00:11:03,600 --> 00:11:06,150
+Awesome group of people. If you're looking for graduate school, talk to us.
+
+206
+00:11:06,160 --> 00:11:10,790
+looking for graduate school, talk to us. Um all right. So these kids
+
+207
+00:11:10,800 --> 00:11:12,389
+Um all right. So these kids implement these brilliant ideas. They're
+
+208
+00:11:12,399 --> 00:11:14,069
+implement these brilliant ideas. They're not all brilliant. Sometimes these ideas
+
+209
+00:11:14,079 --> 00:11:16,389
+not all brilliant. Sometimes these ideas are terrible for the record. Uh but of
+
+210
+00:11:16,399 --> 00:11:17,670
+are terrible for the record. Uh but of course those don't make it into the
+
+211
+00:11:17,680 --> 00:11:20,790
+course those don't make it into the talks. Um they take the ideas, they
+
+212
+00:11:20,800 --> 00:11:23,110
+talks. Um they take the ideas, they implement them. They spend a lot of time
+
+213
+00:11:23,120 --> 00:11:25,990
+implement them. They spend a lot of time working on this and you can probably all
+
+214
+00:11:26,000 --> 00:11:28,949
+working on this and you can probably all start thinking wait a second you know
+
+215
+00:11:28,959 --> 00:11:32,710
+start thinking wait a second you know we're in the agentic age. Instead of the
+
+216
+00:11:32,720 --> 00:11:35,750
+we're in the agentic age. Instead of the graduate students we can prompt the
+
+217
+00:11:35,760 --> 00:11:38,069
+graduate students we can prompt the agents. The agents will generate really
+
+218
+00:11:38,079 --> 00:11:40,069
+agents. The agents will generate really infuriating text but you know they get
+
+219
+00:11:40,079 --> 00:11:43,350
+infuriating text but you know they get results. Realistically
+
+220
+00:11:43,360 --> 00:11:45,990
+results. Realistically this is what happens now.
+
+221
+00:11:46,000 --> 00:11:47,750
+this is what happens now. The students prompt the agents the
+
+222
+00:11:47,760 --> 00:11:49,269
+The students prompt the agents the students
+
+223
+00:11:49,279 --> 00:11:51,030
+students do the agentic prototype. The students
+
+224
+00:11:51,040 --> 00:11:53,190
+do the agentic prototype. The students get results and and and what's really
+
+225
+00:11:53,200 --> 00:11:56,470
+get results and and and what's really interesting about this is it
+
+226
+00:11:56,480 --> 00:12:01,430
+interesting about this is it puts me very far back from the the final
+
+227
+00:12:01,440 --> 00:12:04,949
+puts me very far back from the the final outcome of our research. In the abstract
+
+228
+00:12:04,959 --> 00:12:07,030
+outcome of our research. In the abstract for this talk, I mentioned my research
+
+229
+00:12:07,040 --> 00:12:09,110
+for this talk, I mentioned my research has led to the discovery of thousands of
+
+230
+00:12:09,120 --> 00:12:11,269
+has led to the discovery of thousands of vulnerabilities
+
+231
+00:12:11,279 --> 00:12:14,069
+vulnerabilities and many of them quite recently as the
+
+232
+00:12:14,079 --> 00:12:17,030
+and many of them quite recently as the agentic age hypercharged everything and
+
+233
+00:12:17,040 --> 00:12:19,829
+agentic age hypercharged everything and many of them
+
+234
+00:12:19,839 --> 00:12:22,470
+many of them allow us now to start stepping back and
+
+235
+00:12:22,480 --> 00:12:24,790
+allow us now to start stepping back and thinking about
+
+236
+00:12:24,800 --> 00:12:27,750
+thinking about this field in aggregate
+
+237
+00:12:27,760 --> 00:12:31,030
+this field in aggregate as modern AI transforms vulnerability
+
+238
+00:12:31,040 --> 00:12:34,230
+as modern AI transforms vulnerability research. Some people might say, "Okay,
+
+239
+00:12:34,240 --> 00:12:35,750
+research. Some people might say, "Okay, let's just paste everything into chat
+
+240
+00:12:35,760 --> 00:12:37,350
+let's just paste everything into chat GPT
+
+241
+00:12:37,360 --> 00:12:40,069
+GPT and solve the problem. Find all of the
+
+242
+00:12:40,079 --> 00:12:43,030
+and solve the problem. Find all of the bugs." Of course, the reason I'm talking
+
+243
+00:12:43,040 --> 00:12:45,590
+bugs." Of course, the reason I'm talking about the agentic age and not just the
+
+244
+00:12:45,600 --> 00:12:47,750
+about the agentic age and not just the age of LLMs,
+
+245
+00:12:47,760 --> 00:12:51,030
+age of LLMs, it's because there's a very very serious
+
+246
+00:12:51,040 --> 00:12:53,030
+it's because there's a very very serious difference between the two. We start
+
+247
+00:12:53,040 --> 00:12:55,829
+difference between the two. We start pasting things into GBT, asking it to
+
+248
+00:12:55,839 --> 00:12:57,990
+pasting things into GBT, asking it to find bugs, submitting those bugs to
+
+249
+00:12:58,000 --> 00:13:00,230
+find bugs, submitting those bugs to maintainers, and we get things like the
+
+250
+00:13:00,240 --> 00:13:03,509
+maintainers, and we get things like the headline I read yesterday that Apple is
+
+251
+00:13:03,519 --> 00:13:06,069
+headline I read yesterday that Apple is pushing back on their uh vulnerability
+
+252
+00:13:06,079 --> 00:13:08,230
+pushing back on their uh vulnerability research award program because they're
+
+253
+00:13:08,240 --> 00:13:10,629
+research award program because they're being overwhelmed by slop.
+
+254
+00:13:10,639 --> 00:13:13,030
+being overwhelmed by slop. And this slop is a result of AI
+
+255
+00:13:13,040 --> 00:13:14,550
+And this slop is a result of AI hallucination of people that don't
+
+256
+00:13:14,560 --> 00:13:17,430
+hallucination of people that don't really know what they're doing enough to
+
+257
+00:13:17,440 --> 00:13:19,910
+really know what they're doing enough to filter that AI hallucination. That's not
+
+258
+00:13:19,920 --> 00:13:22,069
+filter that AI hallucination. That's not what I'm going to talk about today.
+
+259
+00:13:22,079 --> 00:13:23,509
+what I'm going to talk about today. going to make the assumption that we're
+
+260
+00:13:23,519 --> 00:13:25,750
+going to make the assumption that we're going to work that out because back in
+
+261
+00:13:25,760 --> 00:13:28,150
+going to work that out because back in the days of fuzzing, back in every
+
+262
+00:13:28,160 --> 00:13:30,230
+the days of fuzzing, back in every advancement throughout the history of
+
+263
+00:13:30,240 --> 00:13:31,590
+advancement throughout the history of the vulnerability research field,
+
+264
+00:13:31,600 --> 00:13:33,829
+the vulnerability research field, especially the academic the automation
+
+265
+00:13:33,839 --> 00:13:36,230
+especially the academic the automation of vulnerability research, we ran into
+
+266
+00:13:36,240 --> 00:13:37,910
+of vulnerability research, we ran into similar issues. What I'm going to be
+
+267
+00:13:37,920 --> 00:13:41,590
+similar issues. What I'm going to be talking today is people that
+
+268
+00:13:41,600 --> 00:13:44,150
+talking today is people that eventually will know what they're doing
+
+269
+00:13:44,160 --> 00:13:46,389
+eventually will know what they're doing in this space enough to use these
+
+270
+00:13:46,399 --> 00:13:49,030
+in this space enough to use these technologies to create highquality bug
+
+271
+00:13:49,040 --> 00:13:51,430
+technologies to create highquality bug submissions to find actual bugs. We're
+
+272
+00:13:51,440 --> 00:13:54,069
+submissions to find actual bugs. We're not going to talk about hallucinations.
+
+273
+00:13:54,079 --> 00:13:57,110
+not going to talk about hallucinations. We're going to talk about vulnerability
+
+274
+00:13:57,120 --> 00:14:00,230
+We're going to talk about vulnerability research in the agentic age. We're going
+
+275
+00:14:00,240 --> 00:14:02,310
+research in the agentic age. We're going to step back
+
+276
+00:14:02,320 --> 00:14:04,949
+to step back and I'm going to show you three ways
+
+277
+00:14:04,959 --> 00:14:08,470
+and I'm going to show you three ways that we can find vulnerabilities
+
+278
+00:14:08,480 --> 00:14:10,150
+that we can find vulnerabilities autonomously.
+
+279
+00:14:10,160 --> 00:14:12,629
+autonomously. Three things that lead to headlines
+
+280
+00:14:12,639 --> 00:14:17,990
+Three things that lead to headlines where or research papers where approach
+
+281
+00:14:18,000 --> 00:14:23,110
+where or research papers where approach XYZ finds three, four, five digit bugs
+
+282
+00:14:23,120 --> 00:14:25,509
+XYZ finds three, four, five digit bugs in software. There's three ways to do
+
+283
+00:14:25,519 --> 00:14:29,910
+in software. There's three ways to do this. One, you can analyze better. You
+
+284
+00:14:29,920 --> 00:14:33,350
+this. One, you can analyze better. You take an analysis that existed before
+
+285
+00:14:33,360 --> 00:14:36,870
+take an analysis that existed before Jeff mentioned anger. It is a base a
+
+286
+00:14:36,880 --> 00:14:40,710
+Jeff mentioned anger. It is a base a research base of our um kind of research
+
+287
+00:14:40,720 --> 00:14:43,750
+research base of our um kind of research trajectory in static analysis of binary
+
+288
+00:14:43,760 --> 00:14:46,550
+trajectory in static analysis of binary software and we make it better and so it
+
+289
+00:14:46,560 --> 00:14:50,470
+software and we make it better and so it it it has fewer false posers. It is more
+
+290
+00:14:50,480 --> 00:14:52,629
+it it has fewer false posers. It is more performance faster so that before the
+
+291
+00:14:52,639 --> 00:14:54,550
+performance faster so that before the timeouts it can actually find the bugs.
+
+292
+00:14:54,560 --> 00:14:56,230
+timeouts it can actually find the bugs. Think a good example in the agentic age
+
+293
+00:14:56,240 --> 00:15:00,949
+Think a good example in the agentic age of this of course is mythos. It is more
+
+294
+00:15:00,959 --> 00:15:03,670
+of this of course is mythos. It is more capable models that find bugs that other
+
+295
+00:15:03,680 --> 00:15:06,069
+capable models that find bugs that other models would have missed. And we'll talk
+
+296
+00:15:06,079 --> 00:15:09,030
+models would have missed. And we'll talk about this again later.
+
+297
+00:15:09,040 --> 00:15:11,910
+about this again later. You can analyze more things.
+
+298
+00:15:11,920 --> 00:15:14,230
+You can analyze more things. So you say forget about being better.
+
+299
+00:15:14,240 --> 00:15:15,829
+So you say forget about being better. We're just going to make something that
+
+300
+00:15:15,839 --> 00:15:18,150
+We're just going to make something that is, you know, better in a way that's
+
+301
+00:15:18,160 --> 00:15:21,590
+is, you know, better in a way that's more resilient, that might scale farther
+
+302
+00:15:21,600 --> 00:15:23,430
+more resilient, that might scale farther and we're just going to analyze
+
+303
+00:15:23,440 --> 00:15:25,910
+and we're just going to analyze everything. Before we could analyze
+
+304
+00:15:25,920 --> 00:15:27,430
+everything. Before we could analyze eight programs, now we're going to
+
+305
+00:15:27,440 --> 00:15:29,590
+eight programs, now we're going to analyze 800. And of course, we're going
+
+306
+00:15:29,600 --> 00:15:32,550
+analyze 800. And of course, we're going to find lots and lots of bugs based on
+
+307
+00:15:32,560 --> 00:15:37,030
+to find lots and lots of bugs based on that. And I have research in this space.
+
+308
+00:15:37,040 --> 00:15:40,310
+that. And I have research in this space. One of my awesome uh former students now
+
+309
+00:15:40,320 --> 00:15:42,710
+One of my awesome uh former students now Dr. J. Varias
+
+310
+00:15:42,720 --> 00:15:46,230
+Dr. J. Varias created a platform a program an analysis
+
+311
+00:15:46,240 --> 00:15:49,110
+created a platform a program an analysis program called arbiter built on top of
+
+312
+00:15:49,120 --> 00:15:51,350
+program called arbiter built on top of anger that could analyze binaries at a
+
+313
+00:15:51,360 --> 00:15:53,269
+anger that could analyze binaries at a scale where we were analyzing for
+
+314
+00:15:53,279 --> 00:15:55,910
+scale where we were analyzing for example every program shipped into
+
+315
+00:15:55,920 --> 00:15:58,550
+example every program shipped into repositories for vulnerabilities. Now,
+
+316
+00:15:58,560 --> 00:16:01,110
+repositories for vulnerabilities. Now, often times you don't actually need to
+
+317
+00:16:01,120 --> 00:16:04,069
+often times you don't actually need to make this analyzer better. You just need
+
+318
+00:16:04,079 --> 00:16:07,910
+make this analyzer better. You just need to make it more applicable. And so then
+
+319
+00:16:07,920 --> 00:16:10,629
+to make it more applicable. And so then by casting a wider net, you find more
+
+320
+00:16:10,639 --> 00:16:14,870
+by casting a wider net, you find more bugs. Or, and this is the crazy thing,
+
+321
+00:16:14,880 --> 00:16:18,389
+bugs. Or, and this is the crazy thing, you just analyze things differently
+
+322
+00:16:18,399 --> 00:16:20,870
+you just analyze things differently than they used to be analyzed. And it
+
+323
+00:16:20,880 --> 00:16:24,150
+than they used to be analyzed. And it turns out if you just tweak how you're
+
+324
+00:16:24,160 --> 00:16:26,069
+turns out if you just tweak how you're analyzing,
+
+325
+00:16:26,079 --> 00:16:29,509
+analyzing, you find new bugs. Why?
+
+326
+00:16:29,519 --> 00:16:31,910
+you find new bugs. Why? Because bugs are everywhere. Let's say
+
+327
+00:16:31,920 --> 00:16:35,030
+Because bugs are everywhere. Let's say we want to make our CVE cookies and we
+
+328
+00:16:35,040 --> 00:16:37,670
+we want to make our CVE cookies and we have our rolled out dough of
+
+329
+00:16:37,680 --> 00:16:40,230
+have our rolled out dough of vulnerabilities. This dough is all
+
+330
+00:16:40,240 --> 00:16:42,710
+vulnerabilities. This dough is all vulnerabilities
+
+331
+00:16:42,720 --> 00:16:45,990
+vulnerabilities in a given program.
+
+332
+00:16:46,000 --> 00:16:47,990
+in a given program. And we take our research prototype
+
+333
+00:16:48,000 --> 00:16:51,430
+And we take our research prototype anger. It's our anger logo. We build
+
+334
+00:16:51,440 --> 00:16:54,230
+anger. It's our anger logo. We build some static analysis on top of it and we
+
+335
+00:16:54,240 --> 00:16:58,069
+some static analysis on top of it and we use it to analyze
+
+336
+00:16:58,079 --> 00:17:01,350
+use it to analyze the code for vulnerabilities and it
+
+337
+00:17:01,360 --> 00:17:04,789
+the code for vulnerabilities and it literally takes this substrate of
+
+338
+00:17:04,799 --> 00:17:08,390
+literally takes this substrate of vulnerabilities and stamps out. We find
+
+339
+00:17:08,400 --> 00:17:09,990
+vulnerabilities and stamps out. We find those vulnerabilities that Anger finds
+
+340
+00:17:10,000 --> 00:17:13,669
+those vulnerabilities that Anger finds and we fix them. They're gone.
+
+341
+00:17:13,679 --> 00:17:17,029
+and we fix them. They're gone. For a static analyzer, what this means
+
+342
+00:17:17,039 --> 00:17:19,669
+For a static analyzer, what this means is if we run this tool again,
+
+343
+00:17:19,679 --> 00:17:22,150
+is if we run this tool again, no new vulnerabilities.
+
+344
+00:17:22,160 --> 00:17:26,390
+no new vulnerabilities. Is the code perfect? No.
+
+345
+00:17:26,400 --> 00:17:27,909
+Is the code perfect? No. We just happen to have found the
+
+346
+00:17:27,919 --> 00:17:30,230
+We just happen to have found the vulnerabilities that we're going to find
+
+347
+00:17:30,240 --> 00:17:32,870
+vulnerabilities that we're going to find with this technique
+
+348
+00:17:32,880 --> 00:17:35,830
+with this technique and we can tweak the technique a bit. So
+
+349
+00:17:35,840 --> 00:17:38,870
+and we can tweak the technique a bit. So we build research prototype A on top of
+
+350
+00:17:38,880 --> 00:17:40,870
+we build research prototype A on top of our Angular research vehicle. We build
+
+351
+00:17:40,880 --> 00:17:44,230
+our Angular research vehicle. We build research prototype B and it's slightly
+
+352
+00:17:44,240 --> 00:17:47,110
+research prototype B and it's slightly different and that slight difference
+
+353
+00:17:47,120 --> 00:17:50,549
+different and that slight difference will find a tiny tiny additional set of
+
+354
+00:17:50,559 --> 00:17:52,789
+will find a tiny tiny additional set of bugs. What does that mean? Does that
+
+355
+00:17:52,799 --> 00:17:54,789
+bugs. What does that mean? Does that mean research prototype B is bad or
+
+356
+00:17:54,799 --> 00:17:57,029
+mean research prototype B is bad or research prototype A is better? No, it
+
+357
+00:17:57,039 --> 00:17:58,630
+research prototype A is better? No, it means we got unlucky. Research prototype
+
+358
+00:17:58,640 --> 00:18:01,430
+means we got unlucky. Research prototype B came in after A.
+
+359
+00:18:01,440 --> 00:18:05,510
+B came in after A. And this is something that
+
+360
+00:18:05,520 --> 00:18:09,430
+And this is something that because of the trajectory over time of
+
+361
+00:18:09,440 --> 00:18:11,830
+because of the trajectory over time of software development
+
+362
+00:18:11,840 --> 00:18:15,270
+software development and the development of analyzers to find
+
+363
+00:18:15,280 --> 00:18:17,430
+and the development of analyzers to find bugs in that software
+
+364
+00:18:17,440 --> 00:18:19,510
+bugs in that software makes it very difficult to really
+
+365
+00:18:19,520 --> 00:18:21,029
+makes it very difficult to really understand the efficacy of different
+
+366
+00:18:21,039 --> 00:18:23,029
+understand the efficacy of different tools.
+
+367
+00:18:23,039 --> 00:18:24,710
+tools. For example,
+
+368
+00:18:24,720 --> 00:18:26,549
+For example, let's say I go and manually look at
+
+369
+00:18:26,559 --> 00:18:29,270
+let's say I go and manually look at every binary in the Ubuntu repositories.
+
+370
+00:18:29,280 --> 00:18:30,789
+every binary in the Ubuntu repositories. I would of course also look at that
+
+371
+00:18:30,799 --> 00:18:34,470
+I would of course also look at that their source code. Um,
+
+372
+00:18:34,480 --> 00:18:36,549
+their source code. Um, and I go afterwards and I try to find
+
+373
+00:18:36,559 --> 00:18:39,350
+and I go afterwards and I try to find bugs and I find a bunch of bugs because
+
+374
+00:18:39,360 --> 00:18:42,070
+bugs and I find a bunch of bugs because as a cookie cutter, a vulnerability
+
+375
+00:18:42,080 --> 00:18:44,390
+as a cookie cutter, a vulnerability cutter, I will find different types of
+
+376
+00:18:44,400 --> 00:18:45,830
+cutter, I will find different types of vulnerabilities. I'll cut out a
+
+377
+00:18:45,840 --> 00:18:47,510
+vulnerabilities. I'll cut out a different shape in the vulnerability
+
+378
+00:18:47,520 --> 00:18:51,190
+different shape in the vulnerability landscape than anger did.
+
+379
+00:18:51,200 --> 00:18:53,110
+landscape than anger did. Does that mean the static analysis was
+
+380
+00:18:53,120 --> 00:18:55,350
+Does that mean the static analysis was bad? No. It means it was different than
+
+381
+00:18:55,360 --> 00:18:59,110
+bad? No. It means it was different than me. If he inverted the ordering, it
+
+382
+00:18:59,120 --> 00:19:01,510
+me. If he inverted the ordering, it would be
+
+383
+00:19:01,520 --> 00:19:03,510
+would be the static analyzer that comes after me
+
+384
+00:19:03,520 --> 00:19:06,789
+the static analyzer that comes after me and finds a ton of vulnerabilities.
+
+385
+00:19:06,799 --> 00:19:09,350
+and finds a ton of vulnerabilities. Now, let's go to something a little more
+
+386
+00:19:09,360 --> 00:19:12,630
+Now, let's go to something a little more fuzzy. This is dynamic analysis that's
+
+387
+00:19:12,640 --> 00:19:14,549
+fuzzy. This is dynamic analysis that's very stochastic. Fuzzers. This is the
+
+388
+00:19:14,559 --> 00:19:17,029
+very stochastic. Fuzzers. This is the logo of American Fuzzy Lop, which is the
+
+389
+00:19:17,039 --> 00:19:20,070
+logo of American Fuzzy Lop, which is the work of another amazing uh group of
+
+390
+00:19:20,080 --> 00:19:22,390
+work of another amazing uh group of people. nothing to do with with us, but
+
+391
+00:19:22,400 --> 00:19:25,430
+people. nothing to do with with us, but we also do research in the space.
+
+392
+00:19:25,440 --> 00:19:28,230
+we also do research in the space. And if you run a fuzzer on even well
+
+393
+00:19:28,240 --> 00:19:31,270
+And if you run a fuzzer on even well analyzed code that hasn't been fuzzed
+
+394
+00:19:31,280 --> 00:19:32,870
+analyzed code that hasn't been fuzzed before,
+
+395
+00:19:32,880 --> 00:19:34,470
+before, in part just because the fuzzer does
+
+396
+00:19:34,480 --> 00:19:37,350
+in part just because the fuzzer does different things, it will find new
+
+397
+00:19:37,360 --> 00:19:39,029
+different things, it will find new vulnerabilities.
+
+398
+00:19:39,039 --> 00:19:41,270
+vulnerabilities. And unlike a static analyzer, because
+
+399
+00:19:41,280 --> 00:19:44,070
+And unlike a static analyzer, because fuzzing is a very stochastic pro uh uh
+
+400
+00:19:44,080 --> 00:19:47,830
+fuzzing is a very stochastic pro uh uh process, you build random inputs and you
+
+401
+00:19:47,840 --> 00:19:50,390
+process, you build random inputs and you shove it into software and the software
+
+402
+00:19:50,400 --> 00:19:52,390
+shove it into software and the software crashes because you're triggering
+
+403
+00:19:52,400 --> 00:19:53,909
+crashes because you're triggering something that that people didn't think
+
+404
+00:19:53,919 --> 00:19:55,909
+something that that people didn't think about
+
+405
+00:19:55,919 --> 00:19:58,310
+about fuzzing. Unlike most static analyzers,
+
+406
+00:19:58,320 --> 00:20:00,870
+fuzzing. Unlike most static analyzers, if you just run it again,
+
+407
+00:20:00,880 --> 00:20:03,510
+if you just run it again, you're going to find something around
+
+408
+00:20:03,520 --> 00:20:05,190
+you're going to find something around those corner cases you missed the first
+
+409
+00:20:05,200 --> 00:20:08,070
+those corner cases you missed the first time. Okay?
+
+410
+00:20:08,080 --> 00:20:10,710
+time. Okay? And now
+
+411
+00:20:10,720 --> 00:20:14,950
+And now this brings us to this question. For the
+
+412
+00:20:14,960 --> 00:20:17,669
+this brings us to this question. For the last decade before the agentic age
+
+413
+00:20:17,679 --> 00:20:22,150
+last decade before the agentic age starting from around 2013, 2014, 2015,
+
+414
+00:20:22,160 --> 00:20:24,230
+starting from around 2013, 2014, 2015, which was the
+
+415
+00:20:24,240 --> 00:20:26,070
+which was the process of the DARPA cyber grand
+
+416
+00:20:26,080 --> 00:20:28,470
+process of the DARPA cyber grand challenge, pushing the world really
+
+417
+00:20:28,480 --> 00:20:30,390
+challenge, pushing the world really toward autonomy and vulnerability
+
+418
+00:20:30,400 --> 00:20:33,190
+toward autonomy and vulnerability research. Ever since then, we've been
+
+419
+00:20:33,200 --> 00:20:35,110
+research. Ever since then, we've been experiencing this fuzzing renaissance.
+
+420
+00:20:35,120 --> 00:20:37,750
+experiencing this fuzzing renaissance. new fuzzers coming out that say, "Hey,
+
+421
+00:20:37,760 --> 00:20:39,510
+new fuzzers coming out that say, "Hey, we fuzzed well fuzzed code. We fuzzed it
+
+422
+00:20:39,520 --> 00:20:42,070
+we fuzzed well fuzzed code. We fuzzed it a little differently. We found new bugs
+
+423
+00:20:42,080 --> 00:20:43,590
+a little differently. We found new bugs and so now we're claiming that we're
+
+424
+00:20:43,600 --> 00:20:45,909
+and so now we're claiming that we're better." It's actually very very
+
+425
+00:20:45,919 --> 00:20:48,549
+better." It's actually very very difficult to measure.
+
+426
+00:20:48,559 --> 00:20:51,909
+difficult to measure. Now after a decade of hearing this new
+
+427
+00:20:51,919 --> 00:20:53,510
+Now after a decade of hearing this new fuzzer is better, this new fuzzer is
+
+428
+00:20:53,520 --> 00:20:55,909
+fuzzer is better, this new fuzzer is better, this new fuzzer is better, we
+
+429
+00:20:55,919 --> 00:20:58,950
+better, this new fuzzer is better, we bring in large language models and we
+
+430
+00:20:58,960 --> 00:21:01,350
+bring in large language models and we apply that to code
+
+431
+00:21:01,360 --> 00:21:03,750
+apply that to code and that finds tons and tons and tons
+
+432
+00:21:03,760 --> 00:21:05,909
+and that finds tons and tons and tons and tons of vulnerabilities. Now we're
+
+433
+00:21:05,919 --> 00:21:07,830
+and tons of vulnerabilities. Now we're saying, "Oh,
+
+434
+00:21:07,840 --> 00:21:10,070
+saying, "Oh, large language models, that's the new
+
+435
+00:21:10,080 --> 00:21:12,549
+large language models, that's the new thing. They're better than fuzzers
+
+436
+00:21:12,559 --> 00:21:13,909
+thing. They're better than fuzzers because they're finding vulnerabilities
+
+437
+00:21:13,919 --> 00:21:16,070
+because they're finding vulnerabilities fuzzers aren't." and we ran the fuzzer
+
+438
+00:21:16,080 --> 00:21:18,310
+fuzzers aren't." and we ran the fuzzer on the same code and it didn't find more
+
+439
+00:21:18,320 --> 00:21:20,710
+on the same code and it didn't find more vulnerabilities. And so now we're
+
+440
+00:21:20,720 --> 00:21:23,830
+vulnerabilities. And so now we're switching all over
+
+441
+00:21:23,840 --> 00:21:26,470
+switching all over to pasting our code into GPT and asking
+
+442
+00:21:26,480 --> 00:21:28,470
+to pasting our code into GPT and asking for bugs.
+
+443
+00:21:28,480 --> 00:21:32,070
+for bugs. This ignores that evolutionary timeline
+
+444
+00:21:32,080 --> 00:21:34,710
+This ignores that evolutionary timeline and it ignores this this
+
+445
+00:21:34,720 --> 00:21:37,669
+and it ignores this this idea that what you really need is to
+
+446
+00:21:37,679 --> 00:21:41,350
+idea that what you really need is to rewind time which is very difficult
+
+447
+00:21:41,360 --> 00:21:43,510
+rewind time which is very difficult and probably the subject of a different
+
+448
+00:21:43,520 --> 00:21:45,590
+and probably the subject of a different keynote at a different conference and
+
+449
+00:21:45,600 --> 00:21:48,390
+keynote at a different conference and then you have to analyze from scratch.
+
+450
+00:21:48,400 --> 00:21:50,230
+then you have to analyze from scratch. Here's what the fuzzer does. Here's what
+
+451
+00:21:50,240 --> 00:21:51,510
+Here's what the fuzzer does. Here's what Ellen would do. Here's the static
+
+452
+00:21:51,520 --> 00:21:53,350
+Ellen would do. Here's the static analysis results. We're trying to do
+
+453
+00:21:53,360 --> 00:21:54,789
+analysis results. We're trying to do this in the lab right now. It's very
+
+454
+00:21:54,799 --> 00:21:57,750
+this in the lab right now. It's very very difficult to deal with you know
+
+455
+00:21:57,760 --> 00:22:00,390
+very difficult to deal with you know contamination of LLM training because
+
+456
+00:22:00,400 --> 00:22:02,549
+contamination of LLM training because the LLM knows about all the previous
+
+457
+00:22:02,559 --> 00:22:05,110
+the LLM knows about all the previous bugs the fuzzer found and so on. We're
+
+458
+00:22:05,120 --> 00:22:06,470
+bugs the fuzzer found and so on. We're trying to do this and we are getting
+
+459
+00:22:06,480 --> 00:22:09,029
+trying to do this and we are getting very interesting results
+
+460
+00:22:09,039 --> 00:22:12,950
+very interesting results in that point in this direction
+
+461
+00:22:12,960 --> 00:22:15,270
+in that point in this direction that what we're really cutting out isn't
+
+462
+00:22:15,280 --> 00:22:17,830
+that what we're really cutting out isn't just random shapes. Each analysis has a
+
+463
+00:22:17,840 --> 00:22:20,310
+just random shapes. Each analysis has a shape of vulnerabilities it cuts out.
+
+464
+00:22:20,320 --> 00:22:23,110
+shape of vulnerabilities it cuts out. Those shapes
+
+465
+00:22:23,120 --> 00:22:27,990
+Those shapes are created from the types of properties
+
+466
+00:22:28,000 --> 00:22:30,470
+are created from the types of properties of vulnerabilities
+
+467
+00:22:30,480 --> 00:22:32,710
+of vulnerabilities that implicitly
+
+468
+00:22:32,720 --> 00:22:35,830
+that implicitly the vulnerabilities have. For example, a
+
+469
+00:22:35,840 --> 00:22:37,669
+the vulnerabilities have. For example, a vulnerability might be a result of data
+
+470
+00:22:37,679 --> 00:22:40,549
+vulnerability might be a result of data flow, a result of injection of attack or
+
+471
+00:22:40,559 --> 00:22:43,270
+flow, a result of injection of attack or control content, might exhibit
+
+472
+00:22:43,280 --> 00:22:46,149
+control content, might exhibit multi-threaded behavior or require
+
+473
+00:22:46,159 --> 00:22:47,909
+multi-threaded behavior or require multi-to behavior. These are all
+
+474
+00:22:47,919 --> 00:22:49,909
+multi-to behavior. These are all properties of a vulnerability and
+
+475
+00:22:49,919 --> 00:22:52,390
+properties of a vulnerability and analyses either explicitly in this case
+
+476
+00:22:52,400 --> 00:22:55,590
+analyses either explicitly in this case of most static analyses or implicitly in
+
+477
+00:22:55,600 --> 00:22:59,110
+of most static analyses or implicitly in the case of pasting things into GPT
+
+478
+00:22:59,120 --> 00:23:01,590
+the case of pasting things into GPT and many fuzzing approaches.
+
+479
+00:23:01,600 --> 00:23:04,470
+and many fuzzing approaches. These analyzers target specific
+
+480
+00:23:04,480 --> 00:23:06,710
+These analyzers target specific vulnerability properties.
+
+481
+00:23:06,720 --> 00:23:10,710
+vulnerability properties. And kind of my thesis to you today is as
+
+482
+00:23:10,720 --> 00:23:12,230
+And kind of my thesis to you today is as we move into the agentic age of
+
+483
+00:23:12,240 --> 00:23:15,830
+we move into the agentic age of vulnerability research, we need to move
+
+484
+00:23:15,840 --> 00:23:20,710
+vulnerability research, we need to move into here with with an eye toward
+
+485
+00:23:20,720 --> 00:23:21,830
+into here with with an eye toward what are the properties of the
+
+486
+00:23:21,840 --> 00:23:23,669
+what are the properties of the vulnerabilities we're going to find. We
+
+487
+00:23:23,679 --> 00:23:25,909
+vulnerabilities we're going to find. We eventually want to find, fix, exploit
+
+488
+00:23:25,919 --> 00:23:27,669
+eventually want to find, fix, exploit depending on your line of work, all of
+
+489
+00:23:27,679 --> 00:23:32,149
+depending on your line of work, all of them. And how do we best create
+
+490
+00:23:32,159 --> 00:23:34,390
+them. And how do we best create analyzers? How do we even extract these
+
+491
+00:23:34,400 --> 00:23:37,190
+analyzers? How do we even extract these vulnerability properties?
+
+492
+00:23:37,200 --> 00:23:39,590
+vulnerability properties? to maximize the impact we can have in
+
+493
+00:23:39,600 --> 00:23:42,149
+to maximize the impact we can have in the agentic age. So, let me show you how
+
+494
+00:23:42,159 --> 00:23:44,230
+the agentic age. So, let me show you how we think about vulnerability properties.
+
+495
+00:23:44,240 --> 00:23:45,669
+we think about vulnerability properties. Not just finding the vulnerabilities,
+
+496
+00:23:45,679 --> 00:23:46,549
+Not just finding the vulnerabilities, but the properties of the
+
+497
+00:23:46,559 --> 00:23:48,390
+but the properties of the vulnerabilities. And I'll uh give you an
+
+498
+00:23:48,400 --> 00:23:51,510
+vulnerabilities. And I'll uh give you an example of a a paper we recently
+
+499
+00:23:51,520 --> 00:23:52,950
+example of a a paper we recently published. Actually, it is coming out
+
+500
+00:23:52,960 --> 00:23:54,310
+published. Actually, it is coming out next week. So, this is a bit of a
+
+501
+00:23:54,320 --> 00:24:00,630
+next week. So, this is a bit of a preview um of uh an analysis we did on
+
+502
+00:24:00,640 --> 00:24:02,710
+preview um of uh an analysis we did on Huawei's Open Harmony. This is the work
+
+503
+00:24:02,720 --> 00:24:05,590
+Huawei's Open Harmony. This is the work of my awesome student Hong Kai Chen. Um,
+
+504
+00:24:05,600 --> 00:24:08,230
+of my awesome student Hong Kai Chen. Um, of course, under my brilliant guidance,
+
+505
+00:24:08,240 --> 00:24:10,310
+of course, under my brilliant guidance, but you know, let's not kid ourselves.
+
+506
+00:24:10,320 --> 00:24:12,549
+but you know, let's not kid ourselves. Who who is the brilliant researcher?
+
+507
+00:24:12,559 --> 00:24:16,070
+Who who is the brilliant researcher? It's not me. Um,
+
+508
+00:24:16,080 --> 00:24:18,149
+It's not me. Um, Hankai
+
+509
+00:24:18,159 --> 00:24:23,669
+Hankai had this idea that we can
+
+510
+00:24:28,559 --> 00:24:30,549
+extract properties from wellstudied software
+
+511
+00:24:30,559 --> 00:24:32,470
+software and vulnerabilities that had arisen in
+
+512
+00:24:32,480 --> 00:24:33,909
+and vulnerabilities that had arisen in that software and then apply these
+
+513
+00:24:33,919 --> 00:24:37,430
+that software and then apply these properties to new software. So, who here
+
+514
+00:24:37,440 --> 00:24:41,510
+properties to new software. So, who here runs a phone on Huawei's open Harmony
+
+515
+00:24:41,520 --> 00:24:43,750
+runs a phone on Huawei's open Harmony OS? Especially maybe the government
+
+516
+00:24:43,760 --> 00:24:46,630
+OS? Especially maybe the government contractors.
+
+517
+00:24:46,640 --> 00:24:49,110
+contractors. Neither do I. But a lot of people use
+
+518
+00:24:49,120 --> 00:24:50,950
+Neither do I. But a lot of people use Harmony OS. Harmony OS is a relatively
+
+519
+00:24:50,960 --> 00:24:52,310
+Harmony OS. Harmony OS is a relatively new phenomenon. It's a complete
+
+520
+00:24:52,320 --> 00:24:54,630
+new phenomenon. It's a complete reimplementation of an Android inspired
+
+521
+00:24:54,640 --> 00:24:57,110
+reimplementation of an Android inspired operating system completely
+
+522
+00:24:57,120 --> 00:24:59,750
+operating system completely reimplemented from scratch and it is
+
+523
+00:24:59,760 --> 00:25:03,669
+reimplemented from scratch and it is used by a billion devices in the world.
+
+524
+00:25:03,679 --> 00:25:07,590
+used by a billion devices in the world. a billion devices and up until next week
+
+525
+00:25:07,600 --> 00:25:10,950
+a billion devices and up until next week there will have been no major academic
+
+526
+00:25:10,960 --> 00:25:13,190
+there will have been no major academic studies on the security of Harmony OS
+
+527
+00:25:13,200 --> 00:25:16,310
+studies on the security of Harmony OS which is crazy and so what we thought is
+
+528
+00:25:16,320 --> 00:25:18,630
+which is crazy and so what we thought is hey we can bootstrap this field we
+
+529
+00:25:18,640 --> 00:25:21,669
+hey we can bootstrap this field we looked at the last decade plus of
+
+530
+00:25:21,679 --> 00:25:26,070
+looked at the last decade plus of Android research we mind it and this was
+
+531
+00:25:26,080 --> 00:25:29,029
+Android research we mind it and this was uh agentically assisted for this mining
+
+532
+00:25:29,039 --> 00:25:32,470
+uh agentically assisted for this mining component we mind it to extract this
+
+533
+00:25:32,480 --> 00:25:36,710
+component we mind it to extract this recipe book of vulnerability properties.
+
+534
+00:25:36,720 --> 00:25:40,149
+recipe book of vulnerability properties. We analyzed those properties manually
+
+535
+00:25:40,159 --> 00:25:42,870
+We analyzed those properties manually and we manually guided by those
+
+536
+00:25:42,880 --> 00:25:45,669
+and we manually guided by those properties. We're now manually looked at
+
+537
+00:25:45,679 --> 00:25:47,190
+properties. We're now manually looked at the code of open harmony. We're talking
+
+538
+00:25:47,200 --> 00:25:49,190
+the code of open harmony. We're talking about millions and millions of lines of
+
+539
+00:25:49,200 --> 00:25:51,830
+about millions and millions of lines of code, tons of different parameters. It
+
+540
+00:25:51,840 --> 00:25:55,430
+code, tons of different parameters. It is a daunting task to analyze with just
+
+541
+00:25:55,440 --> 00:25:58,390
+is a daunting task to analyze with just a handful of people all this code. And
+
+542
+00:25:58,400 --> 00:26:02,070
+a handful of people all this code. And what happened? Well, we found that
+
+543
+00:26:02,080 --> 00:26:05,110
+what happened? Well, we found that every vulnerability property
+
+544
+00:26:05,120 --> 00:26:07,669
+every vulnerability property applied very specifically, roughly
+
+545
+00:26:07,679 --> 00:26:09,909
+applied very specifically, roughly speaking, led to a new zero day
+
+546
+00:26:09,919 --> 00:26:14,549
+speaking, led to a new zero day vulnerability in Open Harmony.
+
+547
+00:26:14,559 --> 00:26:19,669
+vulnerability in Open Harmony. We found dozens of flaws ranging from uh
+
+548
+00:26:19,679 --> 00:26:24,230
+We found dozens of flaws ranging from uh Bluetooth uh um device takeovers to
+
+549
+00:26:24,240 --> 00:26:27,110
+Bluetooth uh um device takeovers to privacy leaks, location, all of this
+
+550
+00:26:27,120 --> 00:26:29,110
+privacy leaks, location, all of this very fun stuff.
+
+551
+00:26:29,120 --> 00:26:31,430
+very fun stuff. in open harmony because we started from
+
+552
+00:26:31,440 --> 00:26:33,909
+in open harmony because we started from the vulnerability properties that we
+
+553
+00:26:33,919 --> 00:26:37,750
+the vulnerability properties that we extracted from Android bugs
+
+554
+00:26:37,760 --> 00:26:41,909
+extracted from Android bugs and now we're doing this agentically and
+
+555
+00:26:41,919 --> 00:26:44,310
+and now we're doing this agentically and the results are incredible. I'll save
+
+556
+00:26:44,320 --> 00:26:49,990
+the results are incredible. I'll save that for a later research talk. But this
+
+557
+00:26:50,000 --> 00:26:52,230
+that for a later research talk. But this property extraction and property
+
+558
+00:26:52,240 --> 00:26:54,149
+property extraction and property application, the understanding of
+
+559
+00:26:54,159 --> 00:26:55,990
+application, the understanding of vulnerability properties, this is the
+
+560
+00:26:56,000 --> 00:26:58,390
+vulnerability properties, this is the way. But then you might say, okay, Yan,
+
+561
+00:26:58,400 --> 00:27:02,549
+way. But then you might say, okay, Yan, but I can just tell Claude or Codeex
+
+562
+00:27:02,559 --> 00:27:05,350
+but I can just tell Claude or Codeex like go find me the bugs. Do I really
+
+563
+00:27:05,360 --> 00:27:07,830
+like go find me the bugs. Do I really need these properties? Especially as the
+
+564
+00:27:07,840 --> 00:27:09,830
+need these properties? Especially as the models keep getting better. Maybe it'll
+
+565
+00:27:09,840 --> 00:27:12,470
+models keep getting better. Maybe it'll be built into the properties. Maybe when
+
+566
+00:27:12,480 --> 00:27:15,190
+be built into the properties. Maybe when we all have mythos access,
+
+567
+00:27:15,200 --> 00:27:17,590
+we all have mythos access, this this will all be irrelevant. And
+
+568
+00:27:17,600 --> 00:27:20,870
+this this will all be irrelevant. And luckily, Arizona State University in
+
+569
+00:27:20,880 --> 00:27:23,590
+luckily, Arizona State University in their infinite wisdom allowed us a
+
+570
+00:27:23,600 --> 00:27:26,950
+their infinite wisdom allowed us a glimpse into whether this really matters
+
+571
+00:27:26,960 --> 00:27:29,510
+glimpse into whether this really matters because by accident, and we didn't
+
+572
+00:27:29,520 --> 00:27:31,190
+because by accident, and we didn't realize it was by accident, Arizona
+
+573
+00:27:31,200 --> 00:27:33,830
+realize it was by accident, Arizona State University gave every employee
+
+574
+00:27:33,840 --> 00:27:36,230
+State University gave every employee infinite codeex usage before it was cool
+
+575
+00:27:36,240 --> 00:27:38,310
+infinite codeex usage before it was cool to do so.
+
+576
+00:27:38,320 --> 00:27:40,230
+to do so. And it turned out that this was a
+
+577
+00:27:40,240 --> 00:27:42,870
+And it turned out that this was a misconfiguration on their part that we
+
+578
+00:27:42,880 --> 00:27:44,470
+misconfiguration on their part that we didn't realize until we spent a couple
+
+579
+00:27:44,480 --> 00:27:46,310
+didn't realize until we spent a couple million dollars of of the university's
+
+580
+00:27:46,320 --> 00:27:48,230
+million dollars of of the university's money and hope hopefully they had a good
+
+581
+00:27:48,240 --> 00:27:50,789
+money and hope hopefully they had a good deal with OpenAI. But anyways, around
+
+582
+00:27:50,799 --> 00:27:53,350
+deal with OpenAI. But anyways, around the same time, Methos came out and all
+
+583
+00:27:53,360 --> 00:27:57,430
+the same time, Methos came out and all of these headlines, Mythos is finding
+
+584
+00:27:57,440 --> 00:27:59,350
+of these headlines, Mythos is finding hundreds of vulnerabilities in Firefox,
+
+585
+00:27:59,360 --> 00:28:01,350
+hundreds of vulnerabilities in Firefox, in the Linux kernel, etc. And we were
+
+586
+00:28:01,360 --> 00:28:03,750
+in the Linux kernel, etc. And we were doing research in vulnerability analysis
+
+587
+00:28:03,760 --> 00:28:06,149
+doing research in vulnerability analysis in the Linux kernel.
+
+588
+00:28:06,159 --> 00:28:09,990
+in the Linux kernel. And so we had this question of like okay
+
+589
+00:28:10,000 --> 00:28:12,070
+And so we had this question of like okay mythos is a next generation model. If we
+
+590
+00:28:12,080 --> 00:28:14,950
+mythos is a next generation model. If we use kind of a last generation model how
+
+591
+00:28:14,960 --> 00:28:16,950
+use kind of a last generation model how many of those models can we pile into a
+
+592
+00:28:16,960 --> 00:28:18,470
+many of those models can we pile into a box
+
+593
+00:28:18,480 --> 00:28:22,470
+box to match methos performance? Now the
+
+594
+00:28:22,480 --> 00:28:24,630
+to match methos performance? Now the exact numbers of what methos finds, what
+
+595
+00:28:24,640 --> 00:28:26,310
+exact numbers of what methos finds, what it doesn't is is is very hard to come
+
+596
+00:28:26,320 --> 00:28:29,190
+it doesn't is is is very hard to come by. But in June there was a Washington
+
+597
+00:28:29,200 --> 00:28:32,149
+by. But in June there was a Washington Post article um that said that mythos
+
+598
+00:28:32,159 --> 00:28:35,190
+Post article um that said that mythos has found 479 vulnerabilities in the
+
+599
+00:28:35,200 --> 00:28:39,269
+has found 479 vulnerabilities in the Linux kernel. So let's take that as our
+
+600
+00:28:39,279 --> 00:28:42,389
+Linux kernel. So let's take that as our as our benchmark. our box of dozens and
+
+601
+00:28:42,399 --> 00:28:45,669
+as our benchmark. our box of dozens and dozens of GPTs and this was back in the
+
+602
+00:28:45,679 --> 00:28:48,950
+dozens of GPTs and this was back in the 54 55 days
+
+603
+00:28:48,960 --> 00:28:52,070
+54 55 days altogether thrown at the Linux kernel
+
+604
+00:28:52,080 --> 00:28:55,190
+altogether thrown at the Linux kernel produced 300 vulnerabilities.
+
+605
+00:28:55,200 --> 00:28:57,669
+produced 300 vulnerabilities. Now this is a bit of an apples to
+
+606
+00:28:57,679 --> 00:29:00,230
+Now this is a bit of an apples to oranges comparison because for our
+
+607
+00:29:00,240 --> 00:29:02,549
+oranges comparison because for our vulnerabilities we don't
+
+608
+00:29:02,559 --> 00:29:05,190
+vulnerabilities we don't we're very threat model aware. These are
+
+609
+00:29:05,200 --> 00:29:07,269
+we're very threat model aware. These are all vulnerabilities that are triggerable
+
+610
+00:29:07,279 --> 00:29:11,430
+all vulnerabilities that are triggerable from as an unprivileged user on a Linux
+
+611
+00:29:11,440 --> 00:29:14,870
+from as an unprivileged user on a Linux machine. So potential local privilege
+
+612
+00:29:14,880 --> 00:29:16,389
+machine. So potential local privilege escalations.
+
+613
+00:29:16,399 --> 00:29:17,909
+escalations. I don't know if that's the case for the
+
+614
+00:29:17,919 --> 00:29:21,029
+I don't know if that's the case for the Mythos ones. Typically people also
+
+615
+00:29:21,039 --> 00:29:25,590
+Mythos ones. Typically people also report the root only bugs, but we didn't
+
+616
+00:29:25,600 --> 00:29:28,389
+report the root only bugs, but we didn't beat it. Bummer. But then we looked into
+
+617
+00:29:28,399 --> 00:29:31,269
+beat it. Bummer. But then we looked into this and and mythos part of it according
+
+618
+00:29:31,279 --> 00:29:33,590
+this and and mythos part of it according to various reports online part of the
+
+619
+00:29:33,600 --> 00:29:36,230
+to various reports online part of the trick is a really clever workflow and
+
+620
+00:29:36,240 --> 00:29:38,070
+trick is a really clever workflow and workflows are kind of the the hip latest
+
+621
+00:29:38,080 --> 00:29:40,470
+workflows are kind of the the hip latest thing adversarial reviews and all of
+
+622
+00:29:40,480 --> 00:29:43,350
+thing adversarial reviews and all of this and planning and so on
+
+623
+00:29:43,360 --> 00:29:46,149
+this and planning and so on and that was one of the secrets of
+
+624
+00:29:46,159 --> 00:29:48,230
+and that was one of the secrets of mythos success. So then we integrated
+
+625
+00:29:48,240 --> 00:29:51,669
+mythos success. So then we integrated workflows and we stuffed infinite GPTs
+
+626
+00:29:51,679 --> 00:29:54,710
+workflows and we stuffed infinite GPTs into the workflows and ASU caught on to
+
+627
+00:29:54,720 --> 00:29:56,950
+into the workflows and ASU caught on to us and shut off our access. Then we just
+
+628
+00:29:56,960 --> 00:29:59,990
+us and shut off our access. Then we just got a couple of uh max plans and it
+
+629
+00:30:00,000 --> 00:30:03,750
+got a couple of uh max plans and it turns out that basically
+
+630
+00:30:03,760 --> 00:30:07,029
+turns out that basically three GPTs in a trench code with a good
+
+631
+00:30:07,039 --> 00:30:09,510
+three GPTs in a trench code with a good workflow
+
+632
+00:30:09,520 --> 00:30:13,750
+workflow can outperform those stated numbers.
+
+633
+00:30:13,760 --> 00:30:18,070
+can outperform those stated numbers. That got us to about 600
+
+634
+00:30:18,080 --> 00:30:20,389
+That got us to about 600 local potential local privilege
+
+635
+00:30:20,399 --> 00:30:22,230
+local potential local privilege escalation vulnerabilities in the Linux
+
+636
+00:30:22,240 --> 00:30:25,110
+escalation vulnerabilities in the Linux kernel. Triaged them all like these are
+
+637
+00:30:25,120 --> 00:30:27,909
+kernel. Triaged them all like these are real vulnerabilities.
+
+638
+00:30:27,919 --> 00:30:30,870
+real vulnerabilities. And then we applied the vulnerability
+
+639
+00:30:30,880 --> 00:30:33,029
+And then we applied the vulnerability properties. We looked at the
+
+640
+00:30:33,039 --> 00:30:34,549
+properties. We looked at the vulnerabilities we were finding. We
+
+641
+00:30:34,559 --> 00:30:35,590
+vulnerabilities we were finding. We looked at the vulnerabilities that
+
+642
+00:30:35,600 --> 00:30:37,430
+looked at the vulnerabilities that historically were found. We extracted
+
+643
+00:30:37,440 --> 00:30:41,110
+historically were found. We extracted these properties and we figured out the
+
+644
+00:30:41,120 --> 00:30:43,029
+these properties and we figured out the correct format, the correct way to
+
+645
+00:30:43,039 --> 00:30:46,710
+correct format, the correct way to present them to our agentic pipeline and
+
+646
+00:30:46,720 --> 00:30:50,070
+present them to our agentic pipeline and all hell broke loose.
+
+647
+00:30:50,080 --> 00:30:54,149
+all hell broke loose. And now we're sitting on well over a
+
+648
+00:30:54,159 --> 00:30:56,630
+And now we're sitting on well over a thousand local privilege escalation
+
+649
+00:30:56,640 --> 00:30:59,990
+thousand local privilege escalation vulnerabilities in the Linux kernel.
+
+650
+00:31:00,000 --> 00:31:02,789
+vulnerabilities in the Linux kernel. What what the hell do we do with that?
+
+651
+00:31:02,799 --> 00:31:06,149
+What what the hell do we do with that? We are finding them way way faster than
+
+652
+00:31:06,159 --> 00:31:08,950
+We are finding them way way faster than we can report to them because you don't
+
+653
+00:31:08,960 --> 00:31:12,549
+we can report to them because you don't want to just send tons of slot. You want
+
+654
+00:31:12,559 --> 00:31:14,149
+want to just send tons of slot. You want to send a proposed fix. You want to send
+
+655
+00:31:14,159 --> 00:31:16,549
+to send a proposed fix. You want to send a reasonable analysis.
+
+656
+00:31:16,559 --> 00:31:18,310
+a reasonable analysis. We can trigger them. We can have the
+
+657
+00:31:18,320 --> 00:31:20,549
+We can trigger them. We can have the agents analyze them, but it still takes
+
+658
+00:31:20,559 --> 00:31:22,470
+agents analyze them, but it still takes human effort. And we're finding them at
+
+659
+00:31:22,480 --> 00:31:24,630
+human effort. And we're finding them at about 10 times the rate that we can
+
+660
+00:31:24,640 --> 00:31:26,870
+about 10 times the rate that we can actually report them. So what does this
+
+661
+00:31:26,880 --> 00:31:29,669
+actually report them. So what does this mean for a responsible disclosure in the
+
+662
+00:31:29,679 --> 00:31:32,470
+mean for a responsible disclosure in the agentic age? because it feels like
+
+663
+00:31:32,480 --> 00:31:34,230
+agentic age? because it feels like responsible disclosure is screwed and it
+
+664
+00:31:34,240 --> 00:31:37,430
+responsible disclosure is screwed and it was already screwed before the scale
+
+665
+00:31:37,440 --> 00:31:40,950
+was already screwed before the scale that we can achieve. Now we have a paper
+
+666
+00:31:40,960 --> 00:31:44,751
+that we can achieve. Now we have a paper that that we published in um in
+
+667
+00:31:44,761 --> 00:31:47,190
+that that we published in um in [clears throat] May and this is uh by
+
+668
+00:31:47,200 --> 00:31:50,789
+[clears throat] May and this is uh by one of my awesome students uh Jun Tay.
+
+669
+00:31:50,799 --> 00:31:52,710
+one of my awesome students uh Jun Tay. Uh
+
+670
+00:31:52,720 --> 00:31:56,389
+Uh and the paper basically said even
+
+671
+00:31:56,399 --> 00:31:59,269
+and the paper basically said even without agents just looking at the
+
+672
+00:31:59,279 --> 00:32:02,070
+without agents just looking at the responsible disclosure process
+
+673
+00:32:02,080 --> 00:32:05,669
+responsible disclosure process in the embedded devices space that when
+
+674
+00:32:05,679 --> 00:32:08,389
+in the embedded devices space that when you disclose vulnerabilities,
+
+675
+00:32:08,399 --> 00:32:11,350
+you disclose vulnerabilities, you're making people less safe.
+
+676
+00:32:11,360 --> 00:32:14,310
+you're making people less safe. We analyzed disclosed vulnerabilities on
+
+677
+00:32:14,320 --> 00:32:17,990
+We analyzed disclosed vulnerabilities on embedded devices and we went and
+
+678
+00:32:18,000 --> 00:32:19,590
+embedded devices and we went and extracted the properties of those
+
+679
+00:32:19,600 --> 00:32:22,470
+extracted the properties of those reproduced those vulnerabilities
+
+680
+00:32:22,480 --> 00:32:26,870
+reproduced those vulnerabilities on other devices that we had in the lab.
+
+681
+00:32:26,880 --> 00:32:28,950
+on other devices that we had in the lab. And we found that basically for every
+
+682
+00:32:28,960 --> 00:32:31,350
+And we found that basically for every vulnerability that you disclose,
+
+683
+00:32:31,360 --> 00:32:32,950
+vulnerability that you disclose, depending on how you count, depending on
+
+684
+00:32:32,960 --> 00:32:34,950
+depending on how you count, depending on what you feel is putting people in
+
+685
+00:32:34,960 --> 00:32:37,110
+what you feel is putting people in danger, you're endangering three times
+
+686
+00:32:37,120 --> 00:32:40,710
+danger, you're endangering three times as many devices as you secure.
+
+687
+00:32:40,720 --> 00:32:43,350
+as many devices as you secure. So that's not good.
+
+688
+00:32:43,360 --> 00:32:45,509
+So that's not good. And if you're scaling up the number of
+
+689
+00:32:45,519 --> 00:32:49,430
+And if you're scaling up the number of vulnerabilities that we find by multiple
+
+690
+00:32:49,440 --> 00:32:52,389
+vulnerabilities that we find by multiple multiple orders of magnitude,
+
+691
+00:32:52,399 --> 00:32:56,310
+multiple orders of magnitude, you very quickly become very upset with
+
+692
+00:32:56,320 --> 00:32:57,750
+you very quickly become very upset with the current state of responsible
+
+693
+00:32:57,760 --> 00:32:59,830
+the current state of responsible disclosure.
+
+694
+00:32:59,840 --> 00:33:02,070
+disclosure. And we don't have a better solution. So
+
+695
+00:33:02,080 --> 00:33:04,230
+And we don't have a better solution. So we're dropping all the bugs on Twitter.
+
+696
+00:33:04,240 --> 00:33:06,870
+we're dropping all the bugs on Twitter. No, I'm just kidding. Um,
+
+697
+00:33:06,880 --> 00:33:08,950
+No, I'm just kidding. Um, we're taking small steps to trying to
+
+698
+00:33:08,960 --> 00:33:12,070
+we're taking small steps to trying to find a replacement, a better solution.
+
+699
+00:33:12,080 --> 00:33:13,909
+find a replacement, a better solution. Starting with
+
+700
+00:33:13,919 --> 00:33:15,509
+Starting with something that's pretty hip nowadays.
+
+701
+00:33:15,519 --> 00:33:18,310
+something that's pretty hip nowadays. You put all of your bugs on a website
+
+702
+00:33:18,320 --> 00:33:21,430
+You put all of your bugs on a website and there's over a thousand again local
+
+703
+00:33:21,440 --> 00:33:24,870
+and there's over a thousand again local privilege relevant uh bugs on this too
+
+704
+00:33:24,880 --> 00:33:27,590
+privilege relevant uh bugs on this too many bugs. WTF website that'll forward
+
+705
+00:33:27,600 --> 00:33:30,310
+many bugs. WTF website that'll forward you somewhere where we actually the the
+
+706
+00:33:30,320 --> 00:33:33,190
+you somewhere where we actually the the domain we're actually using.
+
+707
+00:33:33,200 --> 00:33:35,190
+domain we're actually using. And
+
+708
+00:33:35,200 --> 00:33:37,590
+And right now we're just putting up the
+
+709
+00:33:37,600 --> 00:33:40,710
+right now we're just putting up the details of the CVS and the hashes of the
+
+710
+00:33:40,720 --> 00:33:45,269
+details of the CVS and the hashes of the rest. We're working with big vendors and
+
+711
+00:33:45,279 --> 00:33:48,470
+rest. We're working with big vendors and big security groups in the space to try
+
+712
+00:33:48,480 --> 00:33:52,789
+big security groups in the space to try to move forward toward a more proactive
+
+713
+00:33:52,799 --> 00:33:54,950
+to move forward toward a more proactive defense measure with these
+
+714
+00:33:54,960 --> 00:33:57,990
+defense measure with these vulnerabilities. Maybe this looks like
+
+715
+00:33:58,000 --> 00:34:00,789
+vulnerabilities. Maybe this looks like candidate vibecoded patches that you can
+
+716
+00:34:00,799 --> 00:34:04,149
+candidate vibecoded patches that you can apply until the real patches come out.
+
+717
+00:34:04,159 --> 00:34:05,830
+apply until the real patches come out. Maybe it looks like something different.
+
+718
+00:34:05,840 --> 00:34:07,590
+Maybe it looks like something different. Maybe it looks like the old days of full
+
+719
+00:34:07,600 --> 00:34:10,069
+Maybe it looks like the old days of full disclosure where we just drop
+
+720
+00:34:10,079 --> 00:34:11,829
+disclosure where we just drop vulnerabilities on this website and all
+
+721
+00:34:11,839 --> 00:34:14,869
+vulnerabilities on this website and all hell breaks loose. Probably not. But we
+
+722
+00:34:14,879 --> 00:34:17,430
+hell breaks loose. Probably not. But we need a solution and we are interested in
+
+723
+00:34:17,440 --> 00:34:20,310
+need a solution and we are interested in hearing from you all from the community
+
+724
+00:34:20,320 --> 00:34:23,589
+hearing from you all from the community and pulling you in to work with us to
+
+725
+00:34:23,599 --> 00:34:25,589
+and pulling you in to work with us to adapt to the world of vulnerability
+
+726
+00:34:25,599 --> 00:34:28,310
+adapt to the world of vulnerability research in the agentic age. But then
+
+727
+00:34:28,320 --> 00:34:29,349
+research in the agentic age. But then what if you just say, "Okay, you know
+
+728
+00:34:29,359 --> 00:34:32,069
+what if you just say, "Okay, you know what? Screw it. There's too many bugs.
+
+729
+00:34:32,079 --> 00:34:34,069
+what? Screw it. There's too many bugs. We're not fixing all these bugs. Let's
+
+730
+00:34:34,079 --> 00:34:36,310
+We're not fixing all these bugs. Let's throw out all of the code, all this
+
+731
+00:34:36,320 --> 00:34:39,669
+throw out all of the code, all this buggy tech debt, and we rewrite
+
+732
+00:34:39,679 --> 00:34:41,750
+buggy tech debt, and we rewrite everything in Rust.
+
+733
+00:34:41,760 --> 00:34:44,149
+everything in Rust. Who's in?
+
+734
+00:34:44,159 --> 00:34:47,589
+Who's in? Couple of hands. So, the agents are in.
+
+735
+00:34:47,599 --> 00:34:50,869
+Couple of hands. So, the agents are in. Agents are very good at writing Rust.
+
+736
+00:34:50,879 --> 00:34:53,270
+Agents are very good at writing Rust. And uh when I had infinite codecs, I
+
+737
+00:34:53,280 --> 00:34:54,790
+And uh when I had infinite codecs, I thought, well, screw it. I'll just
+
+738
+00:34:54,800 --> 00:34:57,270
+thought, well, screw it. I'll just rewrite everything in Rust. And I
+
+739
+00:34:57,280 --> 00:35:00,710
+rewrite everything in Rust. And I started with these uh loadbearing C
+
+740
+00:35:00,720 --> 00:35:03,109
+started with these uh loadbearing C libraries that that we rely on every
+
+741
+00:35:03,119 --> 00:35:08,630
+libraries that that we rely on every day. Lib SSL, lib PNG, lib XML and so
+
+742
+00:35:08,640 --> 00:35:12,390
+day. Lib SSL, lib PNG, lib XML and so on. Millions of lines of code. And I
+
+743
+00:35:12,400 --> 00:35:14,950
+on. Millions of lines of code. And I created this workflow, this pipeline,
+
+744
+00:35:14,960 --> 00:35:17,910
+created this workflow, this pipeline, this like assurance blah blah blah. And
+
+745
+00:35:17,920 --> 00:35:19,990
+this like assurance blah blah blah. And I reimplement I I blew billions and
+
+746
+00:35:20,000 --> 00:35:22,710
+I reimplement I I blew billions and billions and billions of tokens and I
+
+747
+00:35:22,720 --> 00:35:25,030
+billions and billions of tokens and I implemented millions of lines of Rust.
+
+748
+00:35:25,040 --> 00:35:27,190
+implemented millions of lines of Rust. And this stuff works. I accidentally,
+
+749
+00:35:27,200 --> 00:35:28,310
+And this stuff works. I accidentally, one of my agents went rogue and
+
+750
+00:35:28,320 --> 00:35:31,190
+one of my agents went rogue and installed this on my machine and I
+
+751
+00:35:31,200 --> 00:35:32,870
+installed this on my machine and I ran it for a couple weeks before I had
+
+752
+00:35:32,880 --> 00:35:34,069
+ran it for a couple weeks before I had noticed some weird behavior. I'm like,
+
+753
+00:35:34,079 --> 00:35:36,230
+noticed some weird behavior. I'm like, "Oh, I'm running my own Rust stuff.
+
+754
+00:35:36,240 --> 00:35:40,470
+"Oh, I'm running my own Rust stuff. That's weird." Um,
+
+755
+00:35:46,640 --> 00:35:51,510
+it doesn't work. Why doesn't it work? Why can't we be free of our tech debt?
+
+756
+00:35:51,520 --> 00:35:54,230
+Why can't we be free of our tech debt? Well, because when we rewrite stuff in
+
+757
+00:35:54,240 --> 00:35:57,670
+Well, because when we rewrite stuff in Rust or rewrite re-implement stuff, the
+
+758
+00:35:57,680 --> 00:36:01,109
+Rust or rewrite re-implement stuff, the vulnerability properties come with us.
+
+759
+00:36:01,119 --> 00:36:04,310
+vulnerability properties come with us. Certain types of code is genetically
+
+760
+00:36:04,320 --> 00:36:06,230
+Certain types of code is genetically predisposed
+
+761
+00:36:06,240 --> 00:36:10,550
+predisposed to certain types of vulnerabilities.
+
+762
+00:36:14,400 --> 00:36:16,630
+I told my agents very sternly, make no error.
+
+763
+00:36:16,640 --> 00:36:19,109
+error. and they make error
+
+764
+00:36:19,119 --> 00:36:21,030
+and they make error given
+
+765
+00:36:21,040 --> 00:36:23,670
+given explicit admonitions that these are the
+
+766
+00:36:23,680 --> 00:36:26,470
+explicit admonitions that these are the old vulnerabilities that weren't memory
+
+767
+00:36:26,480 --> 00:36:28,390
+old vulnerabilities that weren't memory corruption vulnerabilities that live
+
+768
+00:36:28,400 --> 00:36:30,710
+corruption vulnerabilities that live crypt was vulnerable to classic crypto
+
+769
+00:36:30,720 --> 00:36:32,870
+crypt was vulnerable to classic crypto attacks. I told them make sure these
+
+770
+00:36:32,880 --> 00:36:34,870
+attacks. I told them make sure these vulnerabilities don't show up. They show
+
+771
+00:36:34,880 --> 00:36:37,910
+vulnerabilities don't show up. They show up. If I don't tell them to make sure
+
+772
+00:36:37,920 --> 00:36:39,510
+up. If I don't tell them to make sure the vulnerabilities don't show up, they
+
+773
+00:36:39,520 --> 00:36:42,230
+the vulnerabilities don't show up, they show up. And then later I go back
+
+774
+00:36:42,240 --> 00:36:43,430
+show up. And then later I go back through and I find all these
+
+775
+00:36:43,440 --> 00:36:45,910
+through and I find all these vulnerabilities and now I have to put a
+
+776
+00:36:45,920 --> 00:36:47,829
+vulnerabilities and now I have to put a big warning on the safe website. Don't
+
+777
+00:36:47,839 --> 00:36:50,230
+big warning on the safe website. Don't use this stuff. There's like a good way
+
+778
+00:36:50,240 --> 00:36:53,750
+use this stuff. There's like a good way to burn down a couple forests, but it's
+
+779
+00:36:53,760 --> 00:36:55,030
+to burn down a couple forests, but it's full of vulnerabilities. They're not
+
+780
+00:36:55,040 --> 00:36:55,990
+full of vulnerabilities. They're not memory corruption vulnerabilities
+
+781
+00:36:56,000 --> 00:36:58,630
+memory corruption vulnerabilities because we're in in Rust land. And
+
+782
+00:36:58,640 --> 00:37:00,310
+because we're in in Rust land. And people can say, "Yes, but what if you
+
+783
+00:37:00,320 --> 00:37:01,829
+people can say, "Yes, but what if you also
+
+784
+00:37:01,839 --> 00:37:03,990
+also have the agents do formal verification
+
+785
+00:37:04,000 --> 00:37:06,550
+have the agents do formal verification to eliminate logic errors?" And that's a
+
+786
+00:37:06,560 --> 00:37:08,069
+to eliminate logic errors?" And that's a cool future direction of research, but
+
+787
+00:37:08,079 --> 00:37:11,750
+cool future direction of research, but it's not a reality yet. not at scale.
+
+788
+00:37:11,760 --> 00:37:13,430
+it's not a reality yet. not at scale. And what's more is this doesn't just
+
+789
+00:37:13,440 --> 00:37:17,030
+And what's more is this doesn't just affect some crazy person's Rust rewrite
+
+790
+00:37:17,040 --> 00:37:20,150
+affect some crazy person's Rust rewrite pet project. This affects the real
+
+791
+00:37:20,160 --> 00:37:22,069
+pet project. This affects the real world.
+
+792
+00:37:22,079 --> 00:37:24,630
+world. Right as I was doing this, there was a
+
+793
+00:37:24,640 --> 00:37:27,109
+Right as I was doing this, there was a set of 79 CVs that dropped for a Rust
+
+794
+00:37:27,119 --> 00:37:30,630
+set of 79 CVs that dropped for a Rust rewrite of core utils. Well, after those
+
+795
+00:37:30,640 --> 00:37:34,310
+rewrite of core utils. Well, after those core utils had been shipped with Ubuntu,
+
+796
+00:37:34,320 --> 00:37:36,710
+core utils had been shipped with Ubuntu, the latest release.
+
+797
+00:37:36,720 --> 00:37:39,030
+the latest release. And it turns out the rush rewrite is
+
+798
+00:37:39,040 --> 00:37:40,870
+And it turns out the rush rewrite is great. We don't have memory corruption
+
+799
+00:37:40,880 --> 00:37:42,550
+great. We don't have memory corruption vulnerabilities,
+
+800
+00:37:42,560 --> 00:37:45,510
+vulnerabilities, but oops, we have all these time check
+
+801
+00:37:45,520 --> 00:37:48,310
+but oops, we have all these time check time of use things and critical Linux
+
+802
+00:37:48,320 --> 00:37:53,349
+time of use things and critical Linux utilities, etc., etc. And this analysis
+
+803
+00:37:53,359 --> 00:37:55,910
+utilities, etc., etc. And this analysis was, I'm sure, agentically assisted
+
+804
+00:37:55,920 --> 00:37:58,870
+was, I'm sure, agentically assisted humanled analysis. We've been looking at
+
+805
+00:37:58,880 --> 00:38:00,710
+humanled analysis. We've been looking at the same codebase
+
+806
+00:38:00,720 --> 00:38:03,589
+the same codebase with our vulnerability property aware
+
+807
+00:38:03,599 --> 00:38:06,230
+with our vulnerability property aware engine and we're finding tons more
+
+808
+00:38:06,240 --> 00:38:08,069
+engine and we're finding tons more issues.
+
+809
+00:38:08,079 --> 00:38:10,390
+issues. So it's
+
+810
+00:38:10,400 --> 00:38:13,349
+So it's a scary prospect.
+
+811
+00:38:13,359 --> 00:38:15,349
+a scary prospect. Okay. So what do we do? Do we restrict
+
+812
+00:38:15,359 --> 00:38:17,589
+Okay. So what do we do? Do we restrict the models?
+
+813
+00:38:17,599 --> 00:38:22,390
+the models? My opinion is that model restriction is
+
+814
+00:38:22,400 --> 00:38:24,870
+My opinion is that model restriction is not the way. I've been doing offensive
+
+815
+00:38:24,880 --> 00:38:27,589
+not the way. I've been doing offensive vulnerability research for over 15 years
+
+816
+00:38:27,599 --> 00:38:29,990
+vulnerability research for over 15 years which is very depressing to say but it's
+
+817
+00:38:30,000 --> 00:38:32,630
+which is very depressing to say but it's a long time in the space and I've been
+
+818
+00:38:32,640 --> 00:38:34,710
+a long time in the space and I've been doing it in the open as Jeff mentioned
+
+819
+00:38:34,720 --> 00:38:38,310
+doing it in the open as Jeff mentioned and every time I get this question of
+
+820
+00:38:38,320 --> 00:38:40,870
+and every time I get this question of but is it responsible that anger is open
+
+821
+00:38:40,880 --> 00:38:43,109
+but is it responsible that anger is open source that you open source your cyber
+
+822
+00:38:43,119 --> 00:38:44,710
+source that you open source your cyber reasoning system for the AI cyber
+
+823
+00:38:44,720 --> 00:38:46,950
+reasoning system for the AI cyber challenge and the cyber grand challenge
+
+824
+00:38:46,960 --> 00:38:48,950
+challenge and the cyber grand challenge and everyone can grab it and everyone
+
+825
+00:38:48,960 --> 00:38:51,270
+and everyone can grab it and everyone can run with it
+
+826
+00:38:51,280 --> 00:38:53,750
+can run with it and the answer is yes because you're all
+
+827
+00:38:53,760 --> 00:38:56,069
+and the answer is yes because you're all the good guys
+
+828
+00:38:56,079 --> 00:38:59,829
+the good guys and we need to make sure that you
+
+829
+00:38:59,839 --> 00:39:02,790
+and we need to make sure that you benefit from this technology. And if we
+
+830
+00:39:02,800 --> 00:39:06,630
+benefit from this technology. And if we start putting up, oh, you have to be
+
+831
+00:39:06,640 --> 00:39:11,270
+start putting up, oh, you have to be this tall to ride,
+
+832
+00:39:13,200 --> 00:39:15,750
+the impact of that, the positive impact is
+
+833
+00:39:15,760 --> 00:39:17,750
+impact of that, the positive impact is in my opinion more heavily diminished
+
+834
+00:39:17,760 --> 00:39:19,750
+in my opinion more heavily diminished than the negative. So all of this talk
+
+835
+00:39:19,760 --> 00:39:21,510
+than the negative. So all of this talk about restricting capable openw weight
+
+836
+00:39:21,520 --> 00:39:23,030
+about restricting capable openw weight models, restricting next generation
+
+837
+00:39:23,040 --> 00:39:26,790
+models, restricting next generation models, in my opinion it is misguided.
+
+838
+00:39:26,800 --> 00:39:28,470
+models, in my opinion it is misguided. Then
+
+839
+00:39:28,480 --> 00:39:31,750
+Then what about human learning in the agentic
+
+840
+00:39:31,760 --> 00:39:33,910
+what about human learning in the agentic age?
+
+841
+00:39:33,920 --> 00:39:36,630
+age? Do we still need to know cyber security?
+
+842
+00:39:36,640 --> 00:39:39,270
+Do we still need to know cyber security? What do you think?
+
+843
+00:39:39,280 --> 00:39:42,310
+What do you think? Maybe. Yes. I run pawn college, an open
+
+844
+00:39:42,320 --> 00:39:45,750
+Maybe. Yes. I run pawn college, an open cyber security education platform.
+
+845
+00:39:45,760 --> 00:39:49,270
+cyber security education platform. about 10,000 people learn actively on it
+
+846
+00:39:49,280 --> 00:39:51,349
+about 10,000 people learn actively on it every month and the number one question
+
+847
+00:39:51,359 --> 00:39:54,630
+every month and the number one question I get is should I still bother
+
+848
+00:39:54,640 --> 00:39:56,950
+I get is should I still bother in the agent cage or is AI eating cyber
+
+849
+00:39:56,960 --> 00:39:59,670
+in the agent cage or is AI eating cyber security
+
+850
+00:39:59,680 --> 00:40:04,230
+security this impact going from a couple hundred
+
+851
+00:40:04,240 --> 00:40:06,630
+this impact going from a couple hundred bugs asking GPD to find bugs to having
+
+852
+00:40:06,640 --> 00:40:08,950
+bugs asking GPD to find bugs to having an agent pipeline that's vulnerability
+
+853
+00:40:08,960 --> 00:40:13,430
+an agent pipeline that's vulnerability aware that finds more much more
+
+854
+00:40:13,440 --> 00:40:15,270
+aware that finds more much more That
+
+855
+00:40:15,280 --> 00:40:17,589
+That requires human innovation, human
+
+856
+00:40:17,599 --> 00:40:18,950
+requires human innovation, human understanding of the threat models, of
+
+857
+00:40:18,960 --> 00:40:21,270
+understanding of the threat models, of the vulnerability space, of all of this.
+
+858
+00:40:21,280 --> 00:40:23,190
+the vulnerability space, of all of this. And for the foreseeable future, it will
+
+859
+00:40:23,200 --> 00:40:27,109
+And for the foreseeable future, it will remain so. Until agents do 100% of your
+
+860
+00:40:27,119 --> 00:40:29,750
+remain so. Until agents do 100% of your work in vulnerability research, all
+
+861
+00:40:29,760 --> 00:40:32,390
+work in vulnerability research, all they're doing by eating 90% of your work
+
+862
+00:40:32,400 --> 00:40:35,990
+they're doing by eating 90% of your work is letting you do more work,
+
+863
+00:40:36,000 --> 00:40:38,069
+is letting you do more work, letting you have more impact. I think
+
+864
+00:40:38,079 --> 00:40:41,910
+letting you have more impact. I think this is the best time to get into cyber
+
+865
+00:40:41,920 --> 00:40:44,870
+this is the best time to get into cyber security as a human and it is a great
+
+866
+00:40:44,880 --> 00:40:48,870
+security as a human and it is a great time to dig into research to go back to
+
+867
+00:40:48,880 --> 00:40:51,750
+time to dig into research to go back to graduate school because now whereas
+
+868
+00:40:51,760 --> 00:40:53,349
+graduate school because now whereas before you had to worry about the
+
+869
+00:40:53,359 --> 00:40:55,430
+before you had to worry about the research paper and the technique and
+
+870
+00:40:55,440 --> 00:40:58,550
+research paper and the technique and unlike in the industry academic research
+
+871
+00:40:58,560 --> 00:41:00,950
+unlike in the industry academic research prototypes often ended up not really
+
+872
+00:41:00,960 --> 00:41:03,750
+prototypes often ended up not really working outside the research paper which
+
+873
+00:41:03,760 --> 00:41:05,990
+working outside the research paper which was observed by research and academics
+
+874
+00:41:06,000 --> 00:41:08,870
+was observed by research and academics alike.
+
+875
+00:41:12,240 --> 00:41:15,109
+Now the implicit assumptions that researchers had to make to get stuff to
+
+876
+00:41:15,119 --> 00:41:18,630
+researchers had to make to get stuff to run on the data sets that they had the
+
+877
+00:41:18,640 --> 00:41:22,309
+run on the data sets that they had the human effort capability to run on
+
+878
+00:41:22,319 --> 00:41:25,829
+human effort capability to run on leading to this bad behavior. Now the
+
+879
+00:41:25,839 --> 00:41:30,950
+leading to this bad behavior. Now the agents can scale. Why?
+
+880
+00:41:30,960 --> 00:41:33,670
+agents can scale. Why? My first paper 15 years ago, well, this
+
+881
+00:41:33,680 --> 00:41:36,150
+My first paper 15 years ago, well, this one actually was 11 years ago analyzed
+
+882
+00:41:36,160 --> 00:41:38,710
+one actually was 11 years ago analyzed firmware for memory uh sorry for
+
+883
+00:41:38,720 --> 00:41:40,790
+firmware for memory uh sorry for authentication bypass vulnerabilities.
+
+884
+00:41:40,800 --> 00:41:43,190
+authentication bypass vulnerabilities. It had three samples
+
+885
+00:41:43,200 --> 00:41:45,349
+It had three samples that I evaluated on and with three
+
+886
+00:41:45,359 --> 00:41:49,510
+that I evaluated on and with three samples there was quite a lot of
+
+887
+00:41:49,520 --> 00:41:53,109
+samples there was quite a lot of implicit assumptions that could slip in.
+
+888
+00:41:53,119 --> 00:41:55,270
+implicit assumptions that could slip in. If you scale this out, there's a more
+
+889
+00:41:55,280 --> 00:41:57,670
+If you scale this out, there's a more modern work by my uh awesome student
+
+890
+00:41:57,680 --> 00:42:00,309
+modern work by my uh awesome student Will Gibbs who might be in the audience.
+
+891
+00:42:00,319 --> 00:42:02,950
+Will Gibbs who might be in the audience. uh he has a booth here uh artificial
+
+892
+00:42:02,960 --> 00:42:06,309
+uh he has a booth here uh artificial booth come check it out it's about their
+
+893
+00:42:06,319 --> 00:42:09,190
+booth come check it out it's about their uh commercialization of their AICC work
+
+894
+00:42:09,200 --> 00:42:11,190
+uh commercialization of their AICC work we scaled out to a thousand firmware
+
+895
+00:42:11,200 --> 00:42:14,950
+we scaled out to a thousand firmware much fewer assumptions still many with
+
+896
+00:42:14,960 --> 00:42:16,710
+much fewer assumptions still many with GPT
+
+897
+00:42:16,720 --> 00:42:19,750
+GPT and with agents that can work a computer
+
+898
+00:42:19,760 --> 00:42:23,030
+and with agents that can work a computer to avoid hallucinations to experiment to
+
+899
+00:42:23,040 --> 00:42:26,630
+to avoid hallucinations to experiment to evaluate to ground
+
+900
+00:42:26,640 --> 00:42:29,190
+evaluate to ground the failures of new samples into fixes
+
+901
+00:42:29,200 --> 00:42:30,790
+the failures of new samples into fixes of research proto prototypes. We're
+
+902
+00:42:30,800 --> 00:42:34,390
+of research proto prototypes. We're entering a new era of both applicability
+
+903
+00:42:34,400 --> 00:42:36,150
+entering a new era of both applicability and result analysis of research
+
+904
+00:42:36,160 --> 00:42:38,790
+and result analysis of research prototypes.
+
+905
+00:42:38,800 --> 00:42:41,190
+prototypes. And we can do this autonomously. This is
+
+906
+00:42:41,200 --> 00:42:43,990
+And we can do this autonomously. This is the future of vulnerability research. an
+
+907
+00:42:44,000 --> 00:42:48,230
+the future of vulnerability research. an autonomous sharpening pipeline
+
+908
+00:42:48,240 --> 00:42:50,230
+autonomous sharpening pipeline where academics
+
+909
+00:42:50,240 --> 00:42:53,670
+where academics that and academic like industry
+
+910
+00:42:53,680 --> 00:42:56,230
+that and academic like industry researchers with a good understanding of
+
+911
+00:42:56,240 --> 00:42:58,710
+researchers with a good understanding of the research process of how to evaluate
+
+912
+00:42:58,720 --> 00:43:01,910
+the research process of how to evaluate things properly with a good grasp of the
+
+913
+00:43:01,920 --> 00:43:03,990
+things properly with a good grasp of the data sets
+
+914
+00:43:04,000 --> 00:43:07,430
+data sets can build self-improving systems
+
+915
+00:43:07,440 --> 00:43:09,829
+can build self-improving systems that scale out both their data sets and
+
+916
+00:43:09,839 --> 00:43:12,710
+that scale out both their data sets and their results. And this over the next
+
+917
+00:43:12,720 --> 00:43:14,790
+their results. And this over the next couple of years is going to be
+
+918
+00:43:14,800 --> 00:43:18,390
+couple of years is going to be absolutely revolutionary and it requires
+
+919
+00:43:18,400 --> 00:43:22,550
+absolutely revolutionary and it requires all of your brilliant human effort.
+
+920
+00:43:22,560 --> 00:43:29,540
+all of your brilliant human effort. Thank you.
+
+921
+00:43:30,560 --> 00:43:33,270
+[applause] Right on.
+
+922
+00:43:33,280 --> 00:43:35,030
+Right on. All right. I just got a couple
+
+923
+00:43:35,040 --> 00:43:37,030
+All right. I just got a couple housekeeping notes and then I will
+
+924
+00:43:37,040 --> 00:43:40,630
+housekeeping notes and then I will unleash you. Um, next session starts
+
+925
+00:43:40,640 --> 00:43:43,589
+unleash you. Um, next session starts here at 10:30 on this stage and all the
+
+926
+00:43:43,599 --> 00:43:45,750
+here at 10:30 on this stage and all the main briefings talks like yesterday
+
+927
+00:43:45,760 --> 00:43:48,710
+main briefings talks like yesterday start upstairs at 10:15.
+
+928
+00:43:48,720 --> 00:43:51,589
+start upstairs at 10:15. Um, we've got some new areas at Black
+
+929
+00:43:51,599 --> 00:43:53,349
+Um, we've got some new areas at Black Hat this year. We're calling them like
+
+930
+00:43:53,359 --> 00:43:55,430
+Hat this year. We're calling them like interactive spaces and we've got an AI
+
+931
+00:43:55,440 --> 00:43:57,670
+interactive spaces and we've got an AI zone, a cyber district. We've got some
+
+932
+00:43:57,680 --> 00:43:59,990
+zone, a cyber district. We've got some places to grab a drink and hang out.
+
+933
+00:44:00,000 --> 00:44:01,750
+places to grab a drink and hang out. We've got a photo booth and some other
+
+934
+00:44:01,760 --> 00:44:04,550
+We've got a photo booth and some other whimsical things. Cool. And then
+
+935
+00:44:04,560 --> 00:44:07,510
+whimsical things. Cool. And then tonight, the last session of the day
+
+936
+00:44:07,520 --> 00:44:10,150
+tonight, the last session of the day instead of a lock note, our keynote is
+
+937
+00:44:10,160 --> 00:44:13,829
+instead of a lock note, our keynote is our lock note at 4:15 or 4:30 at level
+
+938
+00:44:13,839 --> 00:44:16,630
+our lock note at 4:15 or 4:30 at level two at Oceanside A. And the lock note
+
+939
+00:44:16,640 --> 00:44:18,950
+two at Oceanside A. And the lock note gives us a chance to have a conversation
+
+940
+00:44:18,960 --> 00:44:20,710
+gives us a chance to have a conversation and talk about some of the most
+
+941
+00:44:20,720 --> 00:44:23,109
+and talk about some of the most impressive talks we saw, trends, and we
+
+942
+00:44:23,119 --> 00:44:24,870
+impressive talks we saw, trends, and we get to hear from the review board
+
+943
+00:44:24,880 --> 00:44:27,589
+get to hear from the review board members who helped select the content
+
+944
+00:44:27,599 --> 00:44:29,829
+members who helped select the content and learn from their expert perspective
+
+945
+00:44:29,839 --> 00:44:31,750
+and learn from their expert perspective what they found interesting. So
+
+946
+00:44:31,760 --> 00:44:33,349
+what they found interesting. So hopefully I'll see you the end of the
+
+947
+00:44:33,359 --> 00:44:35,349
+hopefully I'll see you the end of the day at the lock note. Thank you very
+
+948
+00:44:35,359 --> 00:44:43,555
+day at the lock note. Thank you very much. [music] See you.

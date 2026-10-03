@@ -1,0 +1,32 @@
+atom	status	evidence
+新闻开场蒙太奇设定氛围	ok	00:00:31--00:01:14 字幕；正文不展开为知识，仅作为 sink 场景说明
+CTF 起源与 attack informs defense	ok	04:33--06:13 字幕（Jeff Moss）；正文「为什么攻击能力是防御的地面真相」
+Yan 的个人经历（俄罗斯→美国，8 岁）	ok	06:18--06:54 字幕；正文用于解释其逆向工程背景
+angr 的来历与 Shellphish 统治 CTF	ok	07:19--07:38 字幕；正文与延伸资料 angr.io
+angr 被超过 1000 个研究/产品工具使用	ok	07:46--07:59 字幕（讲者声称）；正文标注为讲者说法
+Order of the Overflow 运营 DEF CON CTF	ok	08:07--08:24 字幕；延伸资料 oooverflow.io
+学术研究模式：想法→研究生实现→原型	ok	09:47--10:28 字幕；agentic 时代为对照
+agentic 时代研究模式：学生 prompt agent	ok	11:28--11:56 字幕（图 5 前后正文）
+研究致谢：SEFCOM/CSTF 与 ASU CTF 中心	ok	10:40--11:06 字幕；正文「拓展阅读」节
+agentic ≠ LLM 时代：Apple VRP 被 AI slop 淹没	ok	12:31--13:22 字幕；延伸资料 MacRumors/FT 2026-08
+三种方式之一 analyze better	ok	14:29--15:10 字幕；对照 Mythos 等更强模型
+三种方式之二 analyze more：ARBITER 仓库级扫描	ok	15:11--16:13 字幕；图（ARBITER 表）；延伸资料 USENIX'22 论文 76,516 binaries
+三种方式之三 analyze differently：饼干模子类比	ok	16:14--18:10 字幕；TikZ 示意图
+静态分析与模糊测试的可复现性差异	ok	19:06--20:08 字幕；正文「重跑是否还有新洞」
+工具效能难以评测：rewind time 与 LLM 训练污染	ok	20:48--22:12 字幕；正文作为方法论难点
+核心论点：漏洞属性（vulnerability properties）	ok	22:23--23:05 字幕；论点框 + 图（thesis 幻灯片）
+OpenHarmony 案例：从 Android 属性迁移得到 0day	ok	23:46--26:44 字幕；两幅图（SoK 论文 + DLV 表）；延伸资料 USENIX Security'26 SoK（116 篇/56 个/24 个）
+是否需要属性：面对下一代模型	ok	26:56--27:14 字幕；图（DOES THIS MATTER）
+Mythos 基准：WaPo 6 月 479 个 Linux 内核漏洞	ok	28:22--28:55 字幕；图（WHO WOULD WIN + 竞赛图）；延伸资料 WeLiveSecurity 独立报道
+GPT 堆叠 300 + 工作流 600 + 属性 1024	ok	28:55--30:50 字幕；图（workflow + 竞赛条形图 1024）
+威胁模型：全部为非特权用户可触发的本地提权	ok	29:00--29:16 字幕；正文说明评测口径
+发现速度是报告速度 10 倍：负责任披露崩溃	ok	31:00--31:37 字幕；正文「 disclosures 3 倍危机」衔接
+负责任披露实证：每披露 1 个危及 3 倍设备	ok	31:40--32:44 字幕；两幅图（论文标题 + 数据集表）；延伸资料 ASU News/IEEE S&P'26 Distinguished Paper
+toomanybugs.wtf：分级渐进披露平台	ok	32:59--34:17 字幕；图（网站）；延伸资料 toomanybugs.wtf
+SafeLibs：Rust 重写关键 C 库实验	ok	34:28--35:28 字幕；图（SafeLibs 幻灯片）
+Rust 重写后漏洞属性随之而来（生成时注入）	ok	35:43--37:13 字幕；图（CVE 清单幻灯片）
+uutils coreutils 真实案例与 TOCTOU	ok	37:13--38:10 字幕；图（oss-sec 邮件）；延伸资料 Zellic 审计 113 issues/44 CVE vs 讲者 79
+模型限制立场：开源与开放权重模型	ok	38:13--39:28 字幕；正文与 angr 开源先例对照
+人类学习：pwn.college 与 90%/100% 论断	ok	39:33--40:45 字幕；图（HUMAN LEARNING）
+研究原型的隐含假设：Firmalice 3 样本到 1000 固件	ok	40:58--42:28 字幕；两幅图（1975/2015 引言 + Firmalice）
+自主 sharpening 流水线与未来	ok	42:28--43:18 字幕；图（SHARPENING）

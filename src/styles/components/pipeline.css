@@ -1,0 +1,469 @@
+/* pipeline.css — 管道车间（Pipeline Scene，第 64 次组件群 II）。
+ * 单一职责：#view-convert 内 #pipelineScene 的呈现（六相位主体；
+ * 第 68 次 .pipe-rail 相位轨道移除——与顶部 stageStepper 逐项重复，移除即消重；
+ * 第 69 次 .ph-label 相位标题与 .pipe-recovery 绕行条移除——相位名同样由
+ * stageStepper 承载、recovery 时刻由「正在做」栈卡片承载，移除即消重）。
+ *
+ * 网格下限一律 min(100%, Npx)：320 css-px 极窄视口（仓内 319 媒体档）也不溢出——
+ * 实测缺陷登记：minmax(Npx) 的固定下限在 320 px 下溢出 29 px。
+ * 色板逐字取自既有 token（base.css :root），零新增 token、零改既有视图色板
+ * （第 62 次失败的直接规避）。零真 @media（check-cascade 的媒体序 8 项不登记
+ * 新条目）——窄屏由网格自身的 auto-fit / auto-fill 与 flex-wrap 承担。
+ * 刻意不在注释内书写形如 .cut-* 的连写：星杠序列会提前终止本注释、把碎片粘进
+ * 下一条选择器（第 63 次实测吞掉过 .source-stage 的网格规则——同类陷阱登记在案）。
+ * 相位三态（pending 灰 / active 紫 / done 绿）逐字复用 .stage-step 的既有读点
+ * 组合（convert.css：active = accent-soft + accent、done = green-soft + green），
+ * 与阶段步进器同语言是本组件的刻意裁决（新皮肤 = 新色板 = 第 62 次失败形态）。
+ * 动效档位：母盒揭幕 = --d3 = 300ms opacity-only + @starting-style（第 47/59 次
+ * 家族模板）；单元态翻转 = --d15（第 50 次词汇）；第 80 次新增 4 族 keyframe
+ * （verdictStamp / valuePop / triPing / triConfirm，详见文件内 s2 评分段），blockIn
+ * 仍复用 stack.css；全部 transition / animation 由 responsive.css 末块的
+ * prefers-reduced-motion 收口统一治理（第 43 次 + 51 补丁）。 */
+
+/* ---------- 母盒揭幕：与 .run-panel 同一模式的镜像（第 59 次模板） ---------- */
+.pipeline-scene {
+  background: var(--paper);
+  border: var(--hairline);
+  border-radius: var(--r14);
+  box-shadow: var(--shadow-panel);
+  padding: var(--s20);
+  margin-bottom: var(--s12);
+  transition: opacity var(--d3) var(--ease-out);
+}
+.pipeline-scene:not(.hidden) > .pipe-head,
+.pipeline-scene:not(.hidden) > .pipe-body {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+.pipeline-scene:not(.hidden) > .pipe-head { animation-delay: var(--d3); }
+.pipeline-scene:not(.hidden) > .pipe-body { animation-delay: 360ms; }
+@starting-style { .pipeline-scene:not(.hidden) { opacity: 0; } }
+/* iteration 66: 场景作为 .run-body 右栏网格项（由 runPanel 上方兄弟节点移入，
+   DOM 重构许可面）：卡片本体语义逐字不变（纸卡 / 边 / 阴影 / 揭幕模板），
+   仅底部 margin 归零——栏内不需要卡片间匇，零高度变化由网格单元吸收。 */
+.run-body > .pipeline-scene { margin-bottom: 0; }
+/* 无出口规则：全仓对 #pipelineScene 的 hidden 类写只有 startConvert 一处 remove
+   （演示结束后场景与面板一并保持可见，重跑只在已可见的容器内复位状态 ——
+   resetPipeline 的就地清零 = 46/49 的既有词汇），无关闭即无出口过渡。 */
+
+/* ---------- 相位头：标题（第 68 次：.pipe-rail 相位轨道移除——与顶部 stageStepper 逐项重复 ⇒ 移除即消重；pipe-head 退为单标题形态，flex 容器自适应零改） ---------- */
+.pipe-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s12);
+}
+.pipe-title b { font-size: var(--f14); color: var(--ink); font-weight: 600; }
+.pipe-title span { display: block; font-size: var(--f11); color: var(--ink-3); margin-top: 2px; }
+
+/* ---------- 相位主体：一次只显一相（相位 = 当前轨迹状态） ---------- */
+.pipe-body { margin-top: var(--s16); }
+.pipe-phase:not([hidden]) {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+}
+.pipe-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: var(--s12); }
+.pipe-s2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: var(--s12); align-items: start; }
+/* iteration 74: 抽帧阶段竖排（运营方指令「三个横向排布动画组件修改为
+   pipe-probe 和 pipe-scores 组件竖向排布」）：probe + scores 两卡包进
+   .pipe-s2-side（列向 grid），.pipe-s2 遂为二项网格 = cuts 一列 + 侧列
+   （probe 上 / scores 下——scores 仍居末位，位置不变）。auto-fit 280px 下限
+   与窄屏塌缩零改：scene 内容 < 572px 时整体单列（先 cuts 后侧列），零新增
+   @media（本文件零真 @media 纪律逐字不变）。 */
+.pipe-s2-side { display: grid; gap: var(--s12); align-content: start; }
+
+/* ---------- 卡片（相位内的一个机器动作区） ---------- */
+.pipe-card {
+  background: var(--bg);
+  border: var(--hairline);
+  border-radius: var(--r12);
+  padding: var(--s14);
+}
+.pc-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--s8);
+  margin-bottom: var(--s10);
+}
+.pc-head > span:first-child { font-size: var(--f12); font-weight: 600; color: var(--ink); }
+.pc-badge { font-size: var(--f10); color: var(--ink-3); text-align: right; white-space: nowrap; }
+.factline { font-size: var(--f11); color: var(--ink-3); margin-top: var(--s10); }
+
+/* ---------- 单元点亮词汇：chip / 步骤行（toggle(force) 驱动，幂等） ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font-size: var(--f11); color: var(--ink-3);
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--paper);
+  /* iteration 76: 点亮手势——未亮 chip 微缩"待命"，点亮相位 scale→1 + 既有色通道
+     （transform = paint-only，零布局贡献，49/50 的通道纪律） */
+  transform: scale(0.94);
+  transition: background var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out), color var(--d15) var(--ease-out), transform var(--d15) var(--ease-out);
+}
+.chip.on { background: var(--green-soft); border-color: #bbe3d2; color: var(--green); transform: scale(1); }
+
+.dl-steps, .latex-flow {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 6px;
+}
+.dl-steps li, .latex-flow li {
+  display: flex; align-items: center; gap: 8px;
+  font-size: var(--f12); color: var(--ink-3);
+  opacity: 0.5;
+  transition: opacity var(--d15) var(--ease-out), color var(--d15) var(--ease-out);
+}
+.dl-steps li i, .latex-flow li i {
+  width: 9px; height: 9px; border-radius: 3px; flex: none;
+  background: var(--line-strong);
+  transition: background var(--d15) var(--ease-out);
+}
+.dl-steps li.on, .latex-flow li.on { opacity: 1; color: var(--ink); }
+.dl-steps li.on i, .latex-flow li.on i { background: var(--green); }
+
+/* 运营方指令 ①②④⑤（84 期）：四张列表流式到场——构建期不再预渲染暗色待命行，
+   条目随相位进度逐个插入（诞生即 .on，blockIn 入场一次；幂等：同计数零写入）。
+   基态的未亮暗色行不再出现于任何渲染路径（将来要恢复「待命行」语义时，
+   基态规则仍在，重新插入不带 .on 的条目即可）。 */
+.dl-steps li.on, .latex-flow li.on, .sub-tracks li.on, .rt-chip.on {
+  animation-name: blockIn; animation-duration: var(--d15); animation-timing-function: var(--ease-out);
+}
+
+/* s1 下载：分步进度条（determinate，CI 管道词汇）+ 端点事实与封面到达 */
+.dl-bar { height: 6px; border-radius: 3px; background: var(--line-2); margin-top: var(--s12); overflow: hidden; }
+.dl-bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 3px; transition: width var(--d45) var(--ease-out); }
+.dl-end {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s12); flex-wrap: wrap;
+  font-size: var(--f11); color: var(--ink-3); margin-top: var(--s10);
+  opacity: 0.35; transition: opacity var(--d3) var(--ease-out);
+}
+.dl-end.arrived { opacity: 1; }
+.dl-end img { width: 64px; height: 36px; object-fit: cover; border-radius: var(--r4); border: var(--hairline); }
+
+/* s1 字幕轨：4 轨逐条落位 + 健康度 */
+.sub-tracks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.sub-tracks li {
+  display: flex; align-items: center; gap: 8px;
+  font-size: var(--f12); color: var(--ink-2);
+  opacity: 0.5; transition: opacity var(--d15) var(--ease-out);
+}
+.sub-tracks li code {
+  font-family: var(--font-mono); font-size: var(--f11);
+  background: var(--accent-soft); color: var(--accent);
+  padding: 2px 8px; border-radius: var(--r4);
+  transition: background var(--d15) var(--ease-out), color var(--d15) var(--ease-out);
+}
+.sub-tracks li.on { opacity: 1; }
+.sub-tracks li.on code { background: var(--green-soft); color: var(--green); }
+.sub-final { font-size: var(--f11); color: var(--ink-3); margin-top: var(--s10); opacity: 0.5; transition: opacity var(--d15) var(--ease-out); }
+.sub-final.arrived { opacity: 1; }
+.sub-health {
+  font-size: var(--f11); color: var(--ink-3); margin-top: var(--s8);
+  padding: 6px 10px; border-radius: var(--r8); border: 1px dashed var(--line-2);
+  opacity: 0.45; transition: opacity var(--d15) var(--ease-out);
+}
+.sub-health.ok { opacity: 1; background: var(--green-soft); border-color: #bbe3d2; color: var(--green); }
+
+/* ---------- s2 抽帧网格：35 帧 = 35 次调用的唯一候选名（第 65 次逐帧生长 / 第 72 次重锚三批 L78/L97/L116）---------- */
+/* 到场语义（运营方指令「帧不是同时准备好的，而是随着每一帧加入所在容器逐渐增高」）：
+ * 未落帧的格 display:none ⇒ 零预留槽位、零骨架梳（notes/05-pacing 的「零预留空间」
+ * 原则同族）；点亮（.on）那一帧由 padding-bottom 通道从零面积生长到 16/9 槽位。
+ * 为什么是 padding-bottom 而不是 aspect-ratio：aspect-ratio 是尺寸派生量、过渡
+ * 离散（不可插值）；padding 是可插值属性（长度/百分比逐帧解析），56.25% = 9/16×
+ * 100% 相对包含块宽度 ⇒ 高度 = 0.5625×宽。2px 边框补偿（border-box 口径，
+ * base.css `*` 实读）：padding-bottom: calc(56.25% - 2px) + 上下各 1px 边框 =
+ * 0.5625×宽 ⇒ border-box 高与旧 aspect-ratio: 16/9 逐字节相等 = 落定态几何零变。
+ * 进入过渡含 display 的 allow-discrete（进入方向即时翻转到 block，第 48 次
+ * modal/lightbox 同家族），@starting-style 提供首帧（零面积/透明）；出口语义 =
+ * 基态不声明 transition ⇒ 摘 .on 瞬时消失（reset 就地清零，46/49 词汇、与 47 「回退
+ * 是跳回」同口径）；降级由 responsive.css 末块（第 43 次 + 51 补丁）把全部通道
+ * 收敛到 10ms 落完成帧，零新增 @media/token/keyframe。 */
+.cut-batch + .cut-batch { margin-top: var(--s12); }
+.cb-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.cb-head b { font-size: var(--f11); color: var(--ink); font-weight: 600; }
+.cb-head span { font-size: var(--f10); color: var(--ink-3); }
+.cb-cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 84px), 1fr)); gap: 6px; }
+.cut-cell {
+  position: relative;
+  border: 1px solid var(--line); border-radius: var(--r8);
+  background: var(--line-2); overflow: hidden;
+  display: none;  /* 未落帧的格不占空间：无预留槽位 / 零骨架（含 2px 边框梳与行隙也不留） */
+}
+.cut-cell.on {
+  display: block;
+  padding-bottom: calc(56.25% - 2px);  /* + 2px 边框 = 0.5625×宽 = aspect-ratio 16/9 同几何 */
+  opacity: 1; border-color: var(--accent);
+  transition: padding-bottom var(--d3) var(--ease-out), opacity var(--d3) var(--ease-out), border-color var(--d3) var(--ease-out), display var(--d3) allow-discrete;
+}
+@starting-style { .cut-cell.on { padding-bottom: 0; opacity: 0; } }  /* 点亮那一帧从零面积起跳 */
+.cut-cell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cc-t {
+  position: absolute; left: 3px; bottom: 3px;
+  font-size: 10px; line-height: 1.4; color: var(--ink);
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0 4px; border-radius: 3px;
+}
+.cut-note-cap { font-size: var(--f10); color: var(--ink-3); margin-bottom: 6px; }
+.cut-note {
+  font-size: var(--f11); color: var(--amber);
+  background: var(--amber-soft); border-radius: var(--r8);
+  padding: 6px 10px; margin-bottom: var(--s10);
+}
+
+/* ---------- s2 抽帧探头：原片画面 ↔ 刚取下的帧（因果对照） ---------- */
+/* iteration 80: 左格 = 双通道。video（16/9 播放器腔）为底，帧图覆盖层叠顶——
+ * 覆盖层在 video seek 首个落位前常驻镇场：无 byte-range 的静态服务会令
+ * Chromium 静默丢弃 currentTime 赋值、帧恒停 t≈0（旧「左格黑屏」根因；
+ * 帧图即原片该秒取下的真帧，无论哪条通道呈同一画面的因果对照）；落位后
+ * 覆盖层淡出（--d3）揭出视频本体。覆盖层与 video 同盒同 object-fit ⇒
+ * 揭幕零位移。 */
+.probe-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8); align-items: stretch; }
+/* 83 期：80 期双通道退休——左格从 <video>+绝对覆盖层改为直接显示的帧图 */
+.probe-source { margin: 0; }
+.probe-source img { /* 原片在这一秒的帧（与抽帧点同源真值） */
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain;
+  background: #000; border-radius: var(--r8);
+}
+.probe-source figcaption { font-size: var(--f10); color: var(--ink-3); margin-top: 4px; }
+.probe-cand { margin: 0; }
+.probe-cand img {
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  border: 1px solid var(--accent); border-radius: var(--r8); background: var(--line-2);
+}
+.probe-cand figcaption { font-size: var(--f10); color: var(--ink-3); margin-top: 4px; }
+.probe-why { font-size: var(--f10); color: var(--ink-3); margin-top: var(--s8); }
+
+/* ---------- s2 帧评分（真 info 值的升降条）与三向核验 ---------- */
+/* iteration 81：逐帧判别扫描条——L44 密集抽帧 86 样本的单行等宽刻度（grid
+ * 86 等分 + 1px 间距，任意卡宽自适应、窄屏不溢出），扫描窗（1/86 宽、
+ * 上下各溢出 2px 的光标条）随相位进度逐帧推进；扫过的刻度转亮 = 「该帧
+ * 已评分」。渲染语义零计时、幂等（judged = 相位进度的纯函数）。 */
+/* 82 期：列数改 grid-auto-flow column（适配 SCORE_FRAMES 数据驱动——旧硬编码 86 列随数据源替换退役） */
+.judge-strip { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 1px; margin-bottom: var(--s10); }
+.jt {
+  height: 10px; border-radius: 2px; background: var(--line-2);
+  transition: background var(--d15) var(--ease-out);
+}
+.jt.on { background: #cdd2fb; } /* 已判 = 浅紫（暗色 accent 的同族读数，区别于未判的灰） */
+.judge-scan { /* 扫描窗 = 「正在判这一帧」的光标（宽 = 1/N，由模板内联随 SCORE_FRAMES 落定） */
+  position: absolute; top: -2px; bottom: -2px;
+  left: 0%; background: var(--accent); border-radius: 2px;
+  box-shadow: 0 0 4px 1px rgba(60, 53, 175, 0.45);
+  transition: left var(--d3) var(--ease-out); pointer-events: none;
+}
+/* 84：帧过滤标签流（运营方指令 ③）——扫描条正下方逐个落 f_NNN 标签；滚动窗口
+   = 最近 JUDGE_WINDOW(10) 个 + 头部「…」表示还有很多（总数计数随徽章单调不减）。
+   min-height 预留一行高 = 首个标签到场时下方 score-rows 不位移（布局稳定性优先
+   于「零预留」教条——本行是纯星宫槽位，非骨架梳）。 */
+.judge-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; min-height: 22px; margin-bottom: var(--s10); }
+.jt-tag {
+  font-family: var(--font-mono); font-size: 10px; line-height: 1.6;
+  padding: 0 7px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+  animation-name: blockIn; animation-duration: var(--d15); animation-timing-function: var(--ease-out);
+}
+.jt-tag.is-pick { /* 入选教学图的帧转绿 = 「判过 ≠ 入选」的一眼可辨 */
+  background: var(--green-soft); color: var(--green);
+}
+.jt-tag.is-pick::before { /* 入选标记小方块（dl-steps li i / .cl-mark 同族词汇） */
+  content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 1.5px;
+  background: var(--green); margin-right: 4px; vertical-align: 1px;
+}
+.jt-more { font-size: 10px; color: var(--ink-3); padding: 0 2px; }
+/* iteration 80 评判动效族（组件性质 = 机器逐帧过堂 + 三方对齐核验，全部由
+ * class 翻转驱动 ⇒ 渲染幂等不变量逐字不变；零计时器 ⇒ 自动继承演示调速 /
+ * 暂停冻结-续播 / 视图隐藏冻结；reduced-motion 由 responsive.css 末块收口）：
+ *   行入场（blockIn）= 逐帧过堂 · 判定盖戳（verdictStamp）= 结论拍下 ·
+ *   评分值弹跳（valuePop）= 分数落定 · 三向脉冲（triPing）= 核验点亮 ·
+ *   对齐确认（triConfirm 三道 0/150/300 ms 阶梯 = 时间轴/字幕/画面文字逐一对齐）。
+ *   82 期：剔除划线（is-reject 的左→右 wipe）+ .sr-verdict.reject 随新数据退役——
+ *   纯幻灯片演讲的 179 帧无一被除（SCORES 判定行全为通过），is-reject 类原子
+ *   不再出现于任何页 ⇒ dr* 死规则门强制删除（0.1 原则 8）；SCORES 的 reject
+ *   布尔仍保留于 JS 数据模式，将来会话出现被除帧时需重建样式（删除原因与
+ *   复活路径见 docs/Explore_82.md）。
+ *   85 期（运营方指令「要有插帧的感觉；3 帧满了就自动将最后一个删除」）：
+ *   判定行从「预渲染暗底待命行 + litN 翻转」改为插入式滚动窗——未到判定
+ *   行不存在（#pipeScores 初始为空），扫描到达帧号才 prepend 插入（诞生即
+ *   .on ⇒ blockIn / valuePop / verdictStamp 三段入场一次播齐），插入后
+ *   >= SCORE_WINDOW(3) 删底部 .score-row（最旧）——与 84 期标签流同一 FIFO
+ *   语义；退场即时（零计时器）。基态 opacity .45 仅作未来「待命行」复活
+ *   的降级底（同 84 期四张列表基态规则的处置）。 */
+.score-rows { display: grid; gap: var(--s10); }
+.score-row {
+  opacity: 0.45; transition: opacity var(--d15) var(--ease-out);
+}
+.score-row.on { opacity: 1; animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out); }
+.score-row.on .sr-head span:last-child { /* 评分值落定弹跳（静通道：transform 零布局贡献） */
+  animation-name: valuePop; animation-duration: var(--d3); animation-timing-function: var(--ease-out);
+}
+.score-row.on .sr-verdict { /* 判定盖戳：结论拍下（延迟 150 ms = 评分值落定之后） */
+  animation-name: verdictStamp; animation-duration: var(--d3); animation-timing-function: var(--ease-out); animation-fill-mode: backwards; animation-delay: var(--d15);
+}
+.sr-head { display: flex; justify-content: space-between; font-size: var(--f11); color: var(--ink-2); }
+.sr-head span:last-child { font-family: var(--font-mono); color: var(--accent); }
+.sr-bar { height: 6px; border-radius: 3px; background: var(--line-2); margin-top: 4px; overflow: hidden; }
+.sr-bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 3px; transition: width var(--d5) var(--ease-out); }
+.score-row.on .sr-bar i { width: var(--w); }
+.sr-verdict { font-size: var(--f10); margin-top: 3px; }
+.sr-verdict.keep { color: var(--green); }
+.tri-verify { display: flex; gap: 6px; flex-wrap: wrap; margin-top: var(--s12); }
+.tri-track {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: var(--f10); color: var(--ink-3);
+  padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line);
+  opacity: 0.5;
+  transition: opacity var(--d15) var(--ease-out), background var(--d15) var(--ease-out), color var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out);
+}
+.tri-track i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); transition: background var(--d15) var(--ease-out); }
+.tri-track.on { opacity: 1; background: var(--accent-soft); border-color: #cdd2fb; color: var(--accent); }
+.tri-track.on i { background: var(--accent); animation-name: triPing; animation-duration: var(--d45); animation-timing-function: var(--ease-out); }
+.tri-verify.aligned .tri-track {
+  opacity: 1; background: var(--green-soft); border-color: #bbe3d2; color: var(--green);
+  /* 80: 对齐确认——三道阶梯 0 / 150 / 300 ms（同 52 首屏钋锼 60 ms/步的收敛拍），
+     from 帧回望未对齐的 accent 态 = 「三方逐一对齐」的叙事 */
+  animation-name: triConfirm; animation-duration: var(--d45); animation-timing-function: var(--ease-out); animation-fill-mode: backwards;
+}
+.tri-verify.aligned .tri-track:nth-child(1) { animation-delay: 0s; }
+.tri-verify.aligned .tri-track:nth-child(2) { animation-delay: var(--d15); }
+.tri-verify.aligned .tri-track:nth-child(3) { animation-delay: var(--d3); }
+.tri-verify.aligned .tri-track i { background: var(--green); }
+.tri-note {
+  font-size: var(--f10); color: var(--green);
+  background: var(--green-soft); border-radius: var(--r8);
+  padding: 4px 10px; margin-top: var(--s8);
+}
+.tri-note:not([hidden]) { /* 80: 核验通过收束条到场（blockIn 家族下端） */
+  animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out);
+}
+/* 80: 评判动效族的 keyframe（blockIn 复用 stack.css）——盖戳带 -2deg 微幅倾斜 =
+   「拍下结论」的触感（M3 emphasized 同族快窗 300 ms）；triPing 为点亮的
+   单次雷达脉冲，triConfirm from 帧回望未对齐态 */
+@keyframes verdictStamp { from { opacity: 0; transform: scale(1.16) rotate(-2deg); } to { opacity: 1; transform: none; } }
+@keyframes valuePop { from { transform: scale(1.28); } to { transform: none; } }
+@keyframes triPing {
+  from { box-shadow: 0 0 0 0 rgba(60, 53, 175, 0.5); }
+  to { box-shadow: 0 0 0 7px rgba(60, 53, 175, 0); }
+}
+@keyframes triConfirm { from { transform: scale(0.92); background: var(--accent-soft); color: var(--accent); } to { transform: none; } }
+
+/* ---------- s3 原片对照（76：联系表核对窗——素材驱动的核验动画） ---------- */
+/* 联系表 = 86 帧密集样本（assets/contact.jpg）；核对窗随已核验条数扫过表宽
+   （renderS3 写 left%，0→88%；窗宽 12% ⇒ 末条到边）。窗的巨型 box-shadow 被
+   .verify-scan 的 overflow 裁剪 = 窗外压暗的 spotlight —— "逐条回看原片画面" */
+.verify-scan { position: relative; overflow: hidden; border: var(--hairline); border-radius: var(--r8); }
+.verify-sheet { display: block; width: 100%; opacity: 0.75; transition: opacity var(--d3) var(--ease-out); }
+.verify-window {
+  position: absolute; top: 0; bottom: 0; width: 12%; left: 0%;
+  border: 2px solid var(--accent); border-radius: 3px;
+  box-shadow: 0 0 0 9999px rgba(16, 18, 30, 0.35);
+  transition: left var(--d3) var(--ease-out);
+}
+.verify-window::after { /* 扫描线（窗顶 3px 强调线） */
+  content: ""; position: absolute; left: -2px; right: -2px; top: -2px; height: 3px;
+  background: var(--accent);
+}
+
+/* ---------- s5 交付成功动画（84 期，运营方指令 ⑥）---------- */
+/* 六相位落幕后拍下成功印章（verdictStamp 同族盖戳）+ 下载按钮。
+   85 期（运营方指令）：引导文案「讲义就在下方，点击下载」有误导感（暗示可点、
+   本体无控件）⇒ 换成声明式下载锚点（75 期裁决同款 href+download，零 JS 接线，
+   复用 .btn-primary 家族：accent 底白字 对比 9.06 + 力反馈三态）。ps-cue / 弹跳
+   chevron / cueBounce 随之删除（0.1 原则 8：删除优于兼容——机制历史见
+   docs/Explore_84.md）。 */
+.pipe-success {
+  display: flex; align-items: center; gap: var(--s12); flex-wrap: wrap;
+  padding: 10px 14px; margin-bottom: var(--s12);
+  background: var(--green-soft); border: 1px solid #bbe3d2; border-radius: var(--r8);
+}
+.pipe-success:not([hidden]) { animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out); }
+.ps-check {
+  width: 34px; height: 34px; flex: none; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--green); color: #fff; font-size: 18px; font-weight: 700; line-height: 1;
+  animation-name: verdictStamp; animation-duration: var(--d45); animation-timing-function: var(--ease-out);
+}
+.ps-text { display: grid; gap: 2px; }
+.ps-text b { font-size: var(--f13); color: var(--green); }
+.ps-text span { font-size: var(--f11); color: var(--ink-2); }
+.ps-download { margin-left: auto; align-self: center; } /* 右槽定位；视觉全继承 .btn-primary */
+
+/* ---------- s5 归档收束（76：交付物 arrival + 归档 chips） ---------- */
+.archive-row { display: flex; gap: var(--s16); align-items: center; flex-wrap: wrap; }
+.archive-artifact {
+  margin: 0; width: 168px; flex: none;
+  /* 交付物本体乘相面揭幕窗末之后一拍落位（59 家族：内容子自母盒窗末起拍） */
+  animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards; animation-delay: 150ms;
+}
+.archive-artifact img {
+  display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+  border: var(--hairline); border-radius: var(--r8); box-shadow: var(--shadow-panel);
+}
+.archive-artifact figcaption { font-size: var(--f10); color: var(--ink-3); margin-top: 4px; }
+.archive-side { flex: 1 1 240px; min-width: 0; }
+
+/* ---------- s3 数字声称（10 条带视频机器时间）+ 外部检索往返 ---------- */
+/* 82 期：27 条声称使列表过高 → 有界滚动（旧 11 条全显无需边界；max-height 取旧全显高度 ~11 行） */
+.claim-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; max-height: 360px; overflow-y: auto; }
+.claim-list li {
+  display: grid; grid-template-columns: auto 1fr auto auto; gap: 8px; align-items: center; /* 76: +cl-mark 列 */
+  font-size: var(--f11); color: var(--ink-2);
+  padding: 5px 8px; border-radius: var(--r8);
+  opacity: 0.45;
+  transition: opacity var(--d15) var(--ease-out), background var(--d15) var(--ease-out);
+}
+.cl-mark { /* 76: 核验标记——dl-steps li i / .dot 同族的 9px 方块（47/49 词汇），到点位 scale+亮绿 */
+  width: 9px; height: 9px; border-radius: 3px; flex: none;
+  background: var(--line-strong); opacity: 0.4; transform: scale(0.7);
+  transition: background var(--d15) var(--ease-out), opacity var(--d15) var(--ease-out), transform var(--d15) var(--ease-out);
+}
+.claim-list li.on .cl-mark { background: var(--green); opacity: 1; transform: scale(1); }
+.claim-list li.on { opacity: 1; background: var(--accent-soft); }
+.cl-val { font-weight: 600; color: var(--accent); white-space: nowrap; }
+.cl-time { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); white-space: nowrap; }
+.rt-zone { display: flex; flex-wrap: wrap; gap: 6px; }
+.rt-chip {
+  font-size: var(--f11); color: var(--ink-3);
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--paper);
+  transition: background var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out), color var(--d15) var(--ease-out);
+}
+.rt-chip.on { background: var(--cyan-soft); border-color: #b6d8e2; color: var(--cyan); }
+
+/* ---------- s4 编译交付：LaTeX 流 + 33 页逐页到达 + CJK 滚动 ---------- */
+/* 87 期（运营方指令「页面多时过于拥挤，可以多行，一行 10 个左右」）：
+   auto-fill + minmax 自适应换行。实测驱动值：卡内容宽 363 px ⇒
+   (363+5)/(34+5)≈9.3 ⇒ 每行 9 格 × ~36×48 px（aspect 3/4），33 页 =
+   9/9/9/6 共 4 行；取宽 34 而非 32（多塞 1 格但牺牲页码可读性，不取）。
+   73 期的「内联 style repeat(PDF.pages, 1fr)」同日退役（内联删除后真源回
+   CSS；页数再增 / 卡宽变更均无需改代码——auto-fill 天然按宽换行）。
+   min(100%, 34px) 下限 = 仓内既定 320 px 溢出护栏（与 .cb-cells 的
+   min(100%, 84px) 同族——见文件头的 320 px 溢出教训登记）。 */
+.pdf-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 34px), 1fr)); gap: 5px; margin-top: var(--s12); }
+.pdf-p {
+  position: relative; overflow: hidden; /* 76: 页面图铺满 + 页码作小徽标（去掉原居中数字） */
+  aspect-ratio: 3 / 4; border-radius: 2px;
+  background: var(--line-2);
+  transition: background var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out);
+}
+.pdf-p.arrived { background: var(--paper); border: 1px solid var(--accent); }
+.pdf-p::after { /* 页码徽标——.cc-t 同族读数（半透明白底压在页面图上，数字语义不丢） */
+  position: absolute; left: 2px; bottom: 2px; z-index: 1;
+  font-size: 9px; line-height: 1.4; color: var(--ink);
+  background: rgba(255, 255, 255, 0.88); padding: 0 3px; border-radius: 2px;
+  content: attr(data-p);
+}
+.pdf-p img { /* 76: "编译出一页"——页面本体淡入（src 落到位才写，65 期 src-at-arrival） */
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity var(--d3) var(--ease-out);
+}
+.pdf-p.arrived img { opacity: 1; }
+.cjk-line { font-size: var(--f12); color: var(--ink-2); margin-top: var(--s12); }
+.cjk-line b { font-family: var(--font-mono); font-size: var(--f14); color: var(--accent); }
+.pdf-end {
+  font-size: var(--f11); color: var(--ink-3); margin-top: var(--s8);
+  opacity: 0.45; transition: opacity var(--d3) var(--ease-out);
+}
+.pdf-end.arrived { opacity: 1; color: var(--green); }
+

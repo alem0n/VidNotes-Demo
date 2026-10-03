@@ -1,0 +1,675 @@
+[00:00:31] I warning tonight about the scope of a massive cyber attack.
+[00:00:33] >> Already believed to be the largest >> America under virtual invasion.
+[00:01:14] Please welcome to the Black Hat main stage the president of Black Hat, Susie Pallet.
+[00:01:33] >> Good morning and welcome to the final day of Black Hat. We've made it and I
+[00:01:36] wanted to say start by saying thank you.
+[00:01:39] Thank you for showing up, for bringing
+[00:01:41] your expertise, your curiosity, and your
+[00:01:44] willingness to engage. for asking the hard questions, for sharing your
+[00:01:49] research, and for making the connections that turn ideas into action.
+[00:01:55] Before I say anything else, I want you
+[00:01:57] to look around. Look at the people
+[00:01:59] sitting next to you, behind you, across the aisle.
+[00:02:03] These are the people who've been solving
+[00:02:05] problems with you all week, challenging your assump ass assumptions, sharing
+[00:02:10] what you've learned, and staying up too
+[00:02:12] late because the conversation was too
+[00:02:14] good to walk away from. This is what Black Hat is really about.
+[00:02:20] Over the past few days, thousands of
+[00:02:22] people from around the world have come
+[00:02:24] together to do what this community does best. exchange ideas, challenge assumptions, explore new technologies,
+[00:02:31] and build relationships that last long after we leave Las Vegas. From the groundbreaking research
+[00:02:38] presented in briefings to the expert
+[00:02:40] insights shared at our summits, from the
+[00:02:43] hands-on experiences across the event to the hallway conversations that went
+[00:02:47] deeper than any session ever could, you
+[00:02:50] made this week what it was.
+[00:02:54] Black Hat has always been at its best when discovery leads to collaboration
+[00:02:59] and that collaboration leads to growth.
+[00:03:02] And this week we've seen that happen over and over again.
+[00:03:07] Whether you've spent your time learning
+[00:03:08] from researchers or testing tools in Arsenal, exploring emerging technologies, or reconnecting with
+[00:03:15] colleagues or meeting someone new who's
+[00:03:17] going to change the trajectory of your
+[00:03:19] work and how you think. I hope you're
+[00:03:22] leaving with new skills, new insights, and new opportunities.
+[00:03:27] But there's one thing that keeps
+[00:03:28] surfing. One question we can't ignore.
+[00:03:32] AI is fundamentally changing how we find vulnerabilities,
+[00:03:37] how fast threats move, and how we analyze them. Today's keynote will tackle that head on.
+[00:03:44] As AI becomes more capable, more autonomous, what happens to vulnerability research? Where does human
+[00:03:50] ingenuity fit in a world where machines
+[00:03:53] can hunt for flaws faster than we ever
+[00:03:55] could? And what does it mean for this community, for the researchers, the
+[00:03:59] defenders, the builders all in this room
+[00:04:02] when the tools when that we rely on
+[00:04:04] start to think for themselves? They're not hypothetical questions. They're the
+[00:04:09] reality we're facing live right now.
+[00:04:12] But before before we bring up today's keynote speaker to explore those
+[00:04:15] questions, please join me in welcoming
+[00:04:18] an amazing person, the founder of Black
+[00:04:20] Hat and president of Defcon, Jeff Moss.
+[00:04:33] Hey, good morning. Glad uh we all made it here today. I've
+[00:04:35] got uh just a little bit of a backstory
+[00:04:38] I want to share with you uh for today's
+[00:04:41] uh keynote speaker and maybe put it a little bit into context. Um so
+[00:04:51] about 30 years ago almost 30 years to
+[00:04:54] this month ago the concept of a capture
+[00:04:58] the flag CTF was accidentally invented
+[00:05:02] at Defcon. The origin of CTF was essentially a network fight that
+[00:05:07] happened at Defcon about 31 years ago.
+[00:05:10] And since then, CTFs have evolved to
+[00:05:14] like run the world. CTFs everywhere all
+[00:05:17] the time. But it wasn't purpose-built to
+[00:05:20] do that. It's grown because CTFs are
+[00:05:24] incredibly useful. And due to the nature
+[00:05:27] of how Capture the Flag started at
+[00:05:29] Defcon, it was purely an offensive
+[00:05:33] defensive full combat. Only rule was
+[00:05:36] after the first year, you couldn't take
+[00:05:38] over the scoring system or the router
+[00:05:41] because that's what the attackers did the first year. [laughter]
+[00:05:44] So we're [snorts] like, oh, maybe we need rules.
+[00:05:47] Um, and it so many lessons were learned,
+[00:05:51] right? Because how can you defend if you
+[00:05:53] don't know how people attack? attack informs defense.
+[00:05:58] And so if you don't have a sort of
+[00:06:00] ground truth of how attacks and exploits
+[00:06:04] are being developed, it's probably going
+[00:06:06] to be pretty hard to create an effective
+[00:06:08] defense. So um that's a way of sort of
+[00:06:13] tying into our keynote uh Yan who
+[00:06:18] as an origin story for his superpowers
+[00:06:21] in reversing. He uh his mom had a PhD
+[00:06:27] essentially in uh computer science in
+[00:06:30] Russia before that was really a thing.
+[00:06:34] Then the fall of the wall happened and
+[00:06:37] all of a sudden academics in Russia were
+[00:06:39] starting to be pressured to endorse
+[00:06:41] political candidates. And when the KGB
+[00:06:44] came around and started pressuring the
+[00:06:46] family to endorse the KGB candidate,
+[00:06:49] they fled Russia. He fled to America. He's 8 years old.
+[00:06:54] Um, and never thought he'd be an
+[00:06:56] academic like his parents until he gets
+[00:06:58] to university and he starts playing
+[00:07:02] capture the flag and he loves hacking and he can't stop hacking
+[00:07:07] and then he realizes as a graduate
+[00:07:09] student he's getting paid to essentially
+[00:07:12] hack all the time and he's doing a lot
+[00:07:16] of these tasks manually. He's like,
+[00:07:19] well, what if I automate this as much as
+[00:07:21] I can? So, he goes and he creates this multimodal framing fuzzwork called
+[00:07:26] anger. And with anger, he and his CTF
+[00:07:31] team, Shellfish, basically run the board
+[00:07:35] worldwide contests for about two years
+[00:07:38] because Anger allowed them to reverse
+[00:07:41] and exploit in other ways that the existing tooling could not do.
+[00:07:46] Since then, Anger's probably been used
+[00:07:48] in over a thousand different research and academic and product tooling.
+[00:07:59] This uh highly contributo uh mindset of an academic, right, giving away the tooling, advancing the state-of-the-art
+[00:08:07] led team shellfish then to organize and
+[00:08:10] run Order of the Overflow, which was an
+[00:08:12] organizer of the Defcon capture the
+[00:08:14] flag. So his whole career started with
+[00:08:18] capture the flag and they ended up
+[00:08:20] running capture the flag and through
+[00:08:24] this whole process and now uh being at
+[00:08:27] uh Arizona State University with his students and graduate students
+[00:08:31] developing new exploits and new agent
+[00:08:33] tools, he's seeing how the exploit development
+[00:08:38] trajectory has kind of changed from art
+[00:08:41] into science. And so I'm really looking
+[00:08:44] forward to hearing his story and uh and
+[00:08:48] and having him share it with you. It's
+[00:08:49] my pleasure to introduce Yan Shisho Tash.
+[00:09:13] So, as Jeff said, I have quite an origin in the um capture the flag community. In
+[00:09:17] my day job, I am an associate professor
+[00:09:21] at Arizona State University where the
+[00:09:24] biggest thing I do, my priority is research into vulnerability analysis
+[00:09:31] and exploitation and uh repair and so on
+[00:09:36] and then education of the next
+[00:09:38] generation. I'm very excited to talk
+[00:09:41] about this all today from the lens of the agentic age.
+[00:09:47] What does it mean to be an academic
+[00:09:49] researcher? Well, it means that I sit
+[00:09:51] around and I have shower thoughts,
+[00:09:55] bright ideas that I take and typically
+[00:09:58] pass on to my bright graduate student researchers
+[00:10:02] who then run with them and produce the research projects, the research papers,
+[00:10:11] and the research prototypes that lead to the breakthroughs.
+[00:10:16] So what a lot of what Jeff was talking
+[00:10:19] about happened when I was this graduate
+[00:10:21] student and I was handed the bright idea
+[00:10:24] and has kept going forward beyond that.
+[00:10:28] That means what I'm talking about today
+[00:10:31] isn't just my work. It is the work of an
+[00:10:34] amazing team of colleagues without whom
+[00:10:38] I would not be here today. I'll try to
+[00:10:40] acknowledge them as we cover those parts
+[00:10:44] of research where they contributed. They
+[00:10:46] they led the the research. They were the brilliant graduate student. But I'll acknowledge them all cumulatively right
+[00:10:53] now. The lab uh SECOM lab and the center for cyber security and trusted foundations. Coincidentally, the CTF center at Arizona State University.
+[00:11:01] Awesome group of people. If you're
+[00:11:03] looking for graduate school, talk to us.
+[00:11:06] Um all right. So these kids implement these brilliant ideas. They're
+[00:11:12] not all brilliant. Sometimes these ideas
+[00:11:14] are terrible for the record. Uh but of
+[00:11:16] course those don't make it into the
+[00:11:17] talks. Um they take the ideas, they
+[00:11:20] implement them. They spend a lot of time
+[00:11:23] working on this and you can probably all
+[00:11:26] start thinking wait a second you know
+[00:11:28] we're in the agentic age. Instead of the
+[00:11:32] graduate students we can prompt the
+[00:11:35] agents. The agents will generate really
+[00:11:38] infuriating text but you know they get results. Realistically this is what happens now.
+[00:11:46] The students prompt the agents the students
+[00:11:49] do the agentic prototype. The students
+[00:11:51] get results and and and what's really interesting about this is it
+[00:11:56] puts me very far back from the the final
+[00:12:01] outcome of our research. In the abstract
+[00:12:04] for this talk, I mentioned my research
+[00:12:07] has led to the discovery of thousands of vulnerabilities
+[00:12:11] and many of them quite recently as the agentic age hypercharged everything and many of them
+[00:12:19] allow us now to start stepping back and thinking about this field in aggregate as modern AI transforms vulnerability
+[00:12:31] research. Some people might say, "Okay,
+[00:12:34] let's just paste everything into chat GPT
+[00:12:37] and solve the problem. Find all of the
+[00:12:40] bugs." Of course, the reason I'm talking
+[00:12:43] about the agentic age and not just the age of LLMs,
+[00:12:47] it's because there's a very very serious
+[00:12:51] difference between the two. We start
+[00:12:53] pasting things into GBT, asking it to
+[00:12:55] find bugs, submitting those bugs to
+[00:12:58] maintainers, and we get things like the
+[00:13:00] headline I read yesterday that Apple is
+[00:13:03] pushing back on their uh vulnerability research award program because they're being overwhelmed by slop.
+[00:13:10] And this slop is a result of AI hallucination of people that don't
+[00:13:14] really know what they're doing enough to
+[00:13:17] filter that AI hallucination. That's not
+[00:13:19] what I'm going to talk about today.
+[00:13:22] going to make the assumption that we're
+[00:13:23] going to work that out because back in
+[00:13:25] the days of fuzzing, back in every advancement throughout the history of the vulnerability research field, especially the academic the automation
+[00:13:33] of vulnerability research, we ran into
+[00:13:36] similar issues. What I'm going to be talking today is people that
+[00:13:41] eventually will know what they're doing
+[00:13:44] in this space enough to use these technologies to create highquality bug
+[00:13:49] submissions to find actual bugs. We're
+[00:13:51] not going to talk about hallucinations.
+[00:13:54] We're going to talk about vulnerability
+[00:13:57] research in the agentic age. We're going to step back
+[00:14:02] and I'm going to show you three ways that we can find vulnerabilities autonomously.
+[00:14:10] Three things that lead to headlines
+[00:14:12] where or research papers where approach
+[00:14:18] XYZ finds three, four, five digit bugs
+[00:14:23] in software. There's three ways to do
+[00:14:25] this. One, you can analyze better. You
+[00:14:29] take an analysis that existed before
+[00:14:33] Jeff mentioned anger. It is a base a
+[00:14:36] research base of our um kind of research
+[00:14:40] trajectory in static analysis of binary
+[00:14:43] software and we make it better and so it
+[00:14:46] it it has fewer false posers. It is more
+[00:14:50] performance faster so that before the
+[00:14:52] timeouts it can actually find the bugs.
+[00:14:54] Think a good example in the agentic age
+[00:14:56] of this of course is mythos. It is more
+[00:15:00] capable models that find bugs that other
+[00:15:03] models would have missed. And we'll talk about this again later. You can analyze more things.
+[00:15:11] So you say forget about being better.
+[00:15:14] We're just going to make something that
+[00:15:15] is, you know, better in a way that's
+[00:15:18] more resilient, that might scale farther
+[00:15:21] and we're just going to analyze everything. Before we could analyze
+[00:15:25] eight programs, now we're going to
+[00:15:27] analyze 800. And of course, we're going
+[00:15:29] to find lots and lots of bugs based on
+[00:15:32] that. And I have research in this space.
+[00:15:37] One of my awesome uh former students now Dr. J. Varias
+[00:15:42] created a platform a program an analysis
+[00:15:46] program called arbiter built on top of
+[00:15:49] anger that could analyze binaries at a
+[00:15:51] scale where we were analyzing for example every program shipped into repositories for vulnerabilities. Now,
+[00:15:58] often times you don't actually need to
+[00:16:01] make this analyzer better. You just need
+[00:16:04] to make it more applicable. And so then
+[00:16:07] by casting a wider net, you find more
+[00:16:10] bugs. Or, and this is the crazy thing, you just analyze things differently
+[00:16:18] than they used to be analyzed. And it
+[00:16:20] turns out if you just tweak how you're analyzing, you find new bugs. Why?
+[00:16:29] Because bugs are everywhere. Let's say
+[00:16:31] we want to make our CVE cookies and we
+[00:16:35] have our rolled out dough of vulnerabilities. This dough is all vulnerabilities in a given program.
+[00:16:46] And we take our research prototype
+[00:16:48] anger. It's our anger logo. We build
+[00:16:51] some static analysis on top of it and we use it to analyze
+[00:16:58] the code for vulnerabilities and it literally takes this substrate of
+[00:17:04] vulnerabilities and stamps out. We find those vulnerabilities that Anger finds
+[00:17:10] and we fix them. They're gone.
+[00:17:13] For a static analyzer, what this means
+[00:17:17] is if we run this tool again, no new vulnerabilities. Is the code perfect? No.
+[00:17:26] We just happen to have found the
+[00:17:27] vulnerabilities that we're going to find with this technique
+[00:17:32] and we can tweak the technique a bit. So
+[00:17:35] we build research prototype A on top of
+[00:17:38] our Angular research vehicle. We build
+[00:17:40] research prototype B and it's slightly different and that slight difference
+[00:17:47] will find a tiny tiny additional set of
+[00:17:50] bugs. What does that mean? Does that
+[00:17:52] mean research prototype B is bad or
+[00:17:54] research prototype A is better? No, it
+[00:17:57] means we got unlucky. Research prototype B came in after A. And this is something that
+[00:18:05] because of the trajectory over time of software development
+[00:18:11] and the development of analyzers to find bugs in that software
+[00:18:17] makes it very difficult to really understand the efficacy of different tools. For example,
+[00:18:24] let's say I go and manually look at
+[00:18:26] every binary in the Ubuntu repositories.
+[00:18:29] I would of course also look at that their source code. Um,
+[00:18:34] and I go afterwards and I try to find
+[00:18:36] bugs and I find a bunch of bugs because
+[00:18:39] as a cookie cutter, a vulnerability
+[00:18:42] cutter, I will find different types of vulnerabilities. I'll cut out a different shape in the vulnerability landscape than anger did.
+[00:18:51] Does that mean the static analysis was
+[00:18:53] bad? No. It means it was different than
+[00:18:55] me. If he inverted the ordering, it would be
+[00:19:01] the static analyzer that comes after me
+[00:19:03] and finds a ton of vulnerabilities.
+[00:19:06] Now, let's go to something a little more
+[00:19:09] fuzzy. This is dynamic analysis that's
+[00:19:12] very stochastic. Fuzzers. This is the
+[00:19:14] logo of American Fuzzy Lop, which is the
+[00:19:17] work of another amazing uh group of
+[00:19:20] people. nothing to do with with us, but
+[00:19:22] we also do research in the space.
+[00:19:25] And if you run a fuzzer on even well
+[00:19:28] analyzed code that hasn't been fuzzed before,
+[00:19:32] in part just because the fuzzer does
+[00:19:34] different things, it will find new vulnerabilities.
+[00:19:39] And unlike a static analyzer, because
+[00:19:41] fuzzing is a very stochastic pro uh uh
+[00:19:44] process, you build random inputs and you
+[00:19:47] shove it into software and the software crashes because you're triggering
+[00:19:52] something that that people didn't think about fuzzing. Unlike most static analyzers,
+[00:19:58] if you just run it again,
+[00:20:00] you're going to find something around
+[00:20:03] those corner cases you missed the first time. Okay? And now
+[00:20:10] this brings us to this question. For the
+[00:20:14] last decade before the agentic age
+[00:20:17] starting from around 2013, 2014, 2015, which was the
+[00:20:24] process of the DARPA cyber grand challenge, pushing the world really toward autonomy and vulnerability
+[00:20:30] research. Ever since then, we've been experiencing this fuzzing renaissance.
+[00:20:35] new fuzzers coming out that say, "Hey,
+[00:20:37] we fuzzed well fuzzed code. We fuzzed it
+[00:20:39] a little differently. We found new bugs
+[00:20:42] and so now we're claiming that we're better." It's actually very very difficult to measure.
+[00:20:48] Now after a decade of hearing this new
+[00:20:51] fuzzer is better, this new fuzzer is
+[00:20:53] better, this new fuzzer is better, we
+[00:20:55] bring in large language models and we apply that to code
+[00:21:01] and that finds tons and tons and tons
+[00:21:03] and tons of vulnerabilities. Now we're saying, "Oh,
+[00:21:07] large language models, that's the new thing. They're better than fuzzers because they're finding vulnerabilities
+[00:21:13] fuzzers aren't." and we ran the fuzzer
+[00:21:16] on the same code and it didn't find more vulnerabilities. And so now we're switching all over
+[00:21:23] to pasting our code into GPT and asking for bugs. This ignores that evolutionary timeline and it ignores this this
+[00:21:34] idea that what you really need is to
+[00:21:37] rewind time which is very difficult
+[00:21:41] and probably the subject of a different
+[00:21:43] keynote at a different conference and
+[00:21:45] then you have to analyze from scratch.
+[00:21:48] Here's what the fuzzer does. Here's what
+[00:21:50] Ellen would do. Here's the static
+[00:21:51] analysis results. We're trying to do
+[00:21:53] this in the lab right now. It's very
+[00:21:54] very difficult to deal with you know contamination of LLM training because
+[00:22:00] the LLM knows about all the previous
+[00:22:02] bugs the fuzzer found and so on. We're
+[00:22:05] trying to do this and we are getting very interesting results
+[00:22:09] in that point in this direction
+[00:22:12] that what we're really cutting out isn't
+[00:22:15] just random shapes. Each analysis has a
+[00:22:17] shape of vulnerabilities it cuts out. Those shapes
+[00:22:23] are created from the types of properties of vulnerabilities that implicitly
+[00:22:32] the vulnerabilities have. For example, a
+[00:22:35] vulnerability might be a result of data
+[00:22:37] flow, a result of injection of attack or control content, might exhibit multi-threaded behavior or require multi-to behavior. These are all properties of a vulnerability and
+[00:22:49] analyses either explicitly in this case
+[00:22:52] of most static analyses or implicitly in
+[00:22:55] the case of pasting things into GPT and many fuzzing approaches. These analyzers target specific vulnerability properties.
+[00:23:06] And kind of my thesis to you today is as
+[00:23:10] we move into the agentic age of
+[00:23:12] vulnerability research, we need to move
+[00:23:15] into here with with an eye toward
+[00:23:20] what are the properties of the
+[00:23:21] vulnerabilities we're going to find. We
+[00:23:23] eventually want to find, fix, exploit
+[00:23:25] depending on your line of work, all of
+[00:23:27] them. And how do we best create
+[00:23:32] analyzers? How do we even extract these vulnerability properties?
+[00:23:37] to maximize the impact we can have in
+[00:23:39] the agentic age. So, let me show you how we think about vulnerability properties. Not just finding the vulnerabilities, but the properties of the
+[00:23:46] vulnerabilities. And I'll uh give you an
+[00:23:48] example of a a paper we recently
+[00:23:51] published. Actually, it is coming out
+[00:23:52] next week. So, this is a bit of a
+[00:23:54] preview um of uh an analysis we did on
+[00:24:00] Huawei's Open Harmony. This is the work
+[00:24:02] of my awesome student Hong Kai Chen. Um,
+[00:24:05] of course, under my brilliant guidance,
+[00:24:08] but you know, let's not kid ourselves.
+[00:24:10] Who who is the brilliant researcher? It's not me. Um, Hankai
+[00:24:18] had this idea that we can
+[00:24:28] extract properties from wellstudied software
+[00:24:30] and vulnerabilities that had arisen in
+[00:24:32] that software and then apply these
+[00:24:33] properties to new software. So, who here
+[00:24:37] runs a phone on Huawei's open Harmony OS? Especially maybe the government contractors.
+[00:24:46] Neither do I. But a lot of people use
+[00:24:49] Harmony OS. Harmony OS is a relatively new phenomenon. It's a complete reimplementation of an Android inspired operating system completely
+[00:24:57] reimplemented from scratch and it is
+[00:24:59] used by a billion devices in the world.
+[00:25:03] a billion devices and up until next week
+[00:25:07] there will have been no major academic
+[00:25:10] studies on the security of Harmony OS
+[00:25:13] which is crazy and so what we thought is
+[00:25:16] hey we can bootstrap this field we
+[00:25:18] looked at the last decade plus of
+[00:25:21] Android research we mind it and this was
+[00:25:26] uh agentically assisted for this mining
+[00:25:29] component we mind it to extract this recipe book of vulnerability properties. We analyzed those properties manually
+[00:25:40] and we manually guided by those
+[00:25:42] properties. We're now manually looked at
+[00:25:45] the code of open harmony. We're talking
+[00:25:47] about millions and millions of lines of
+[00:25:49] code, tons of different parameters. It
+[00:25:51] is a daunting task to analyze with just
+[00:25:55] a handful of people all this code. And
+[00:25:58] what happened? Well, we found that every vulnerability property applied very specifically, roughly
+[00:26:07] speaking, led to a new zero day vulnerability in Open Harmony.
+[00:26:14] We found dozens of flaws ranging from uh
+[00:26:19] Bluetooth uh um device takeovers to
+[00:26:24] privacy leaks, location, all of this very fun stuff.
+[00:26:29] in open harmony because we started from the vulnerability properties that we extracted from Android bugs
+[00:26:37] and now we're doing this agentically and
+[00:26:41] the results are incredible. I'll save
+[00:26:44] that for a later research talk. But this property extraction and property application, the understanding of vulnerability properties, this is the
+[00:26:56] way. But then you might say, okay, Yan,
+[00:26:58] but I can just tell Claude or Codeex
+[00:27:02] like go find me the bugs. Do I really
+[00:27:05] need these properties? Especially as the
+[00:27:07] models keep getting better. Maybe it'll
+[00:27:09] be built into the properties. Maybe when we all have mythos access,
+[00:27:15] this this will all be irrelevant. And luckily, Arizona State University in
+[00:27:20] their infinite wisdom allowed us a
+[00:27:23] glimpse into whether this really matters
+[00:27:26] because by accident, and we didn't
+[00:27:29] realize it was by accident, Arizona State University gave every employee
+[00:27:33] infinite codeex usage before it was cool to do so.
+[00:27:38] And it turned out that this was a
+[00:27:40] misconfiguration on their part that we
+[00:27:42] didn't realize until we spent a couple
+[00:27:44] million dollars of of the university's
+[00:27:46] money and hope hopefully they had a good
+[00:27:48] deal with OpenAI. But anyways, around
+[00:27:50] the same time, Methos came out and all
+[00:27:53] of these headlines, Mythos is finding hundreds of vulnerabilities in Firefox,
+[00:27:59] in the Linux kernel, etc. And we were doing research in vulnerability analysis in the Linux kernel.
+[00:28:06] And so we had this question of like okay
+[00:28:10] mythos is a next generation model. If we
+[00:28:12] use kind of a last generation model how
+[00:28:14] many of those models can we pile into a box
+[00:28:18] to match methos performance? Now the
+[00:28:22] exact numbers of what methos finds, what
+[00:28:24] it doesn't is is is very hard to come
+[00:28:26] by. But in June there was a Washington
+[00:28:29] Post article um that said that mythos
+[00:28:32] has found 479 vulnerabilities in the
+[00:28:35] Linux kernel. So let's take that as our
+[00:28:39] as our benchmark. our box of dozens and
+[00:28:42] dozens of GPTs and this was back in the 54 55 days
+[00:28:48] altogether thrown at the Linux kernel produced 300 vulnerabilities.
+[00:28:55] Now this is a bit of an apples to oranges comparison because for our vulnerabilities we don't
+[00:29:02] we're very threat model aware. These are all vulnerabilities that are triggerable
+[00:29:07] from as an unprivileged user on a Linux machine. So potential local privilege escalations.
+[00:29:16] I don't know if that's the case for the Mythos ones. Typically people also
+[00:29:21] report the root only bugs, but we didn't
+[00:29:25] beat it. Bummer. But then we looked into
+[00:29:28] this and and mythos part of it according
+[00:29:31] to various reports online part of the
+[00:29:33] trick is a really clever workflow and
+[00:29:36] workflows are kind of the the hip latest
+[00:29:38] thing adversarial reviews and all of
+[00:29:40] this and planning and so on
+[00:29:43] and that was one of the secrets of
+[00:29:46] mythos success. So then we integrated
+[00:29:48] workflows and we stuffed infinite GPTs
+[00:29:51] into the workflows and ASU caught on to
+[00:29:54] us and shut off our access. Then we just
+[00:29:56] got a couple of uh max plans and it turns out that basically
+[00:30:03] three GPTs in a trench code with a good workflow can outperform those stated numbers.
+[00:30:13] That got us to about 600 local potential local privilege escalation vulnerabilities in the Linux
+[00:30:22] kernel. Triaged them all like these are real vulnerabilities.
+[00:30:27] And then we applied the vulnerability properties. We looked at the vulnerabilities we were finding. We looked at the vulnerabilities that historically were found. We extracted
+[00:30:37] these properties and we figured out the
+[00:30:41] correct format, the correct way to
+[00:30:43] present them to our agentic pipeline and all hell broke loose.
+[00:30:50] And now we're sitting on well over a thousand local privilege escalation vulnerabilities in the Linux kernel.
+[00:31:00] What what the hell do we do with that?
+[00:31:02] We are finding them way way faster than
+[00:31:06] we can report to them because you don't
+[00:31:08] want to just send tons of slot. You want
+[00:31:12] to send a proposed fix. You want to send a reasonable analysis.
+[00:31:16] We can trigger them. We can have the
+[00:31:18] agents analyze them, but it still takes
+[00:31:20] human effort. And we're finding them at
+[00:31:22] about 10 times the rate that we can
+[00:31:24] actually report them. So what does this
+[00:31:26] mean for a responsible disclosure in the
+[00:31:29] agentic age? because it feels like
+[00:31:32] responsible disclosure is screwed and it
+[00:31:34] was already screwed before the scale
+[00:31:37] that we can achieve. Now we have a paper
+[00:31:40] that that we published in um in
+[00:31:44] [clears throat] May and this is uh by
+[00:31:47] one of my awesome students uh Jun Tay. Uh
+[00:31:52] and the paper basically said even
+[00:31:56] without agents just looking at the responsible disclosure process
+[00:32:02] in the embedded devices space that when you disclose vulnerabilities, you're making people less safe. We analyzed disclosed vulnerabilities on
+[00:32:14] embedded devices and we went and extracted the properties of those reproduced those vulnerabilities
+[00:32:22] on other devices that we had in the lab.
+[00:32:26] And we found that basically for every vulnerability that you disclose,
+[00:32:31] depending on how you count, depending on
+[00:32:32] what you feel is putting people in danger, you're endangering three times
+[00:32:37] as many devices as you secure. So that's not good.
+[00:32:43] And if you're scaling up the number of
+[00:32:45] vulnerabilities that we find by multiple multiple orders of magnitude,
+[00:32:52] you very quickly become very upset with the current state of responsible disclosure.
+[00:32:59] And we don't have a better solution. So
+[00:33:02] we're dropping all the bugs on Twitter. No, I'm just kidding. Um,
+[00:33:06] we're taking small steps to trying to
+[00:33:08] find a replacement, a better solution. Starting with something that's pretty hip nowadays.
+[00:33:15] You put all of your bugs on a website
+[00:33:18] and there's over a thousand again local
+[00:33:21] privilege relevant uh bugs on this too
+[00:33:24] many bugs. WTF website that'll forward
+[00:33:27] you somewhere where we actually the the domain we're actually using. And
+[00:33:35] right now we're just putting up the
+[00:33:37] details of the CVS and the hashes of the
+[00:33:40] rest. We're working with big vendors and
+[00:33:45] big security groups in the space to try
+[00:33:48] to move forward toward a more proactive defense measure with these vulnerabilities. Maybe this looks like
+[00:33:58] candidate vibecoded patches that you can
+[00:34:00] apply until the real patches come out.
+[00:34:04] Maybe it looks like something different.
+[00:34:05] Maybe it looks like the old days of full disclosure where we just drop
+[00:34:10] vulnerabilities on this website and all
+[00:34:11] hell breaks loose. Probably not. But we
+[00:34:14] need a solution and we are interested in
+[00:34:17] hearing from you all from the community
+[00:34:20] and pulling you in to work with us to
+[00:34:23] adapt to the world of vulnerability
+[00:34:25] research in the agentic age. But then
+[00:34:28] what if you just say, "Okay, you know
+[00:34:29] what? Screw it. There's too many bugs.
+[00:34:32] We're not fixing all these bugs. Let's
+[00:34:34] throw out all of the code, all this
+[00:34:36] buggy tech debt, and we rewrite everything in Rust. Who's in?
+[00:34:44] Couple of hands. So, the agents are in.
+[00:34:47] Agents are very good at writing Rust.
+[00:34:50] And uh when I had infinite codecs, I
+[00:34:53] thought, well, screw it. I'll just
+[00:34:54] rewrite everything in Rust. And I
+[00:34:57] started with these uh loadbearing C
+[00:35:00] libraries that that we rely on every
+[00:35:03] day. Lib SSL, lib PNG, lib XML and so
+[00:35:08] on. Millions of lines of code. And I created this workflow, this pipeline,
+[00:35:14] this like assurance blah blah blah. And
+[00:35:17] I reimplement I I blew billions and
+[00:35:20] billions and billions of tokens and I
+[00:35:22] implemented millions of lines of Rust.
+[00:35:25] And this stuff works. I accidentally,
+[00:35:27] one of my agents went rogue and
+[00:35:28] installed this on my machine and I
+[00:35:31] ran it for a couple weeks before I had
+[00:35:32] noticed some weird behavior. I'm like,
+[00:35:34] "Oh, I'm running my own Rust stuff. That's weird." Um,
+[00:35:46] it doesn't work. Why doesn't it work? Why can't we be free of our tech debt?
+[00:35:51] Well, because when we rewrite stuff in
+[00:35:54] Rust or rewrite re-implement stuff, the vulnerability properties come with us.
+[00:36:01] Certain types of code is genetically predisposed to certain types of vulnerabilities.
+[00:36:14] I told my agents very sternly, make no error. and they make error given
+[00:36:21] explicit admonitions that these are the old vulnerabilities that weren't memory corruption vulnerabilities that live
+[00:36:28] crypt was vulnerable to classic crypto
+[00:36:30] attacks. I told them make sure these
+[00:36:32] vulnerabilities don't show up. They show
+[00:36:34] up. If I don't tell them to make sure
+[00:36:37] the vulnerabilities don't show up, they
+[00:36:39] show up. And then later I go back
+[00:36:42] through and I find all these
+[00:36:43] vulnerabilities and now I have to put a
+[00:36:45] big warning on the safe website. Don't
+[00:36:47] use this stuff. There's like a good way
+[00:36:50] to burn down a couple forests, but it's full of vulnerabilities. They're not memory corruption vulnerabilities
+[00:36:56] because we're in in Rust land. And
+[00:36:58] people can say, "Yes, but what if you also
+[00:37:01] have the agents do formal verification
+[00:37:04] to eliminate logic errors?" And that's a
+[00:37:06] cool future direction of research, but
+[00:37:08] it's not a reality yet. not at scale.
+[00:37:11] And what's more is this doesn't just
+[00:37:13] affect some crazy person's Rust rewrite
+[00:37:17] pet project. This affects the real world.
+[00:37:22] Right as I was doing this, there was a
+[00:37:24] set of 79 CVs that dropped for a Rust
+[00:37:27] rewrite of core utils. Well, after those
+[00:37:30] core utils had been shipped with Ubuntu, the latest release.
+[00:37:36] And it turns out the rush rewrite is
+[00:37:39] great. We don't have memory corruption vulnerabilities,
+[00:37:42] but oops, we have all these time check
+[00:37:45] time of use things and critical Linux
+[00:37:48] utilities, etc., etc. And this analysis was, I'm sure, agentically assisted
+[00:37:55] humanled analysis. We've been looking at the same codebase with our vulnerability property aware
+[00:38:03] engine and we're finding tons more issues. So it's a scary prospect.
+[00:38:13] Okay. So what do we do? Do we restrict the models?
+[00:38:17] My opinion is that model restriction is
+[00:38:22] not the way. I've been doing offensive
+[00:38:24] vulnerability research for over 15 years
+[00:38:27] which is very depressing to say but it's
+[00:38:30] a long time in the space and I've been
+[00:38:32] doing it in the open as Jeff mentioned
+[00:38:34] and every time I get this question of
+[00:38:38] but is it responsible that anger is open
+[00:38:40] source that you open source your cyber
+[00:38:43] reasoning system for the AI cyber
+[00:38:44] challenge and the cyber grand challenge
+[00:38:46] and everyone can grab it and everyone can run with it
+[00:38:51] and the answer is yes because you're all the good guys
+[00:38:56] and we need to make sure that you
+[00:38:59] benefit from this technology. And if we
+[00:39:02] start putting up, oh, you have to be this tall to ride,
+[00:39:13] the impact of that, the positive impact is
+[00:39:15] in my opinion more heavily diminished
+[00:39:17] than the negative. So all of this talk about restricting capable openw weight models, restricting next generation
+[00:39:23] models, in my opinion it is misguided. Then
+[00:39:28] what about human learning in the agentic age?
+[00:39:33] Do we still need to know cyber security? What do you think?
+[00:39:39] Maybe. Yes. I run pawn college, an open cyber security education platform.
+[00:39:45] about 10,000 people learn actively on it
+[00:39:49] every month and the number one question
+[00:39:51] I get is should I still bother
+[00:39:54] in the agent cage or is AI eating cyber security
+[00:39:59] this impact going from a couple hundred
+[00:40:04] bugs asking GPD to find bugs to having an agent pipeline that's vulnerability
+[00:40:08] aware that finds more much more That requires human innovation, human
+[00:40:17] understanding of the threat models, of
+[00:40:18] the vulnerability space, of all of this.
+[00:40:21] And for the foreseeable future, it will
+[00:40:23] remain so. Until agents do 100% of your work in vulnerability research, all
+[00:40:29] they're doing by eating 90% of your work
+[00:40:32] is letting you do more work,
+[00:40:36] letting you have more impact. I think
+[00:40:38] this is the best time to get into cyber
+[00:40:41] security as a human and it is a great
+[00:40:44] time to dig into research to go back to graduate school because now whereas
+[00:40:51] before you had to worry about the
+[00:40:53] research paper and the technique and
+[00:40:55] unlike in the industry academic research
+[00:40:58] prototypes often ended up not really
+[00:41:00] working outside the research paper which
+[00:41:03] was observed by research and academics alike.
+[00:41:12] Now the implicit assumptions that researchers had to make to get stuff to
+[00:41:15] run on the data sets that they had the
+[00:41:18] human effort capability to run on
+[00:41:22] leading to this bad behavior. Now the agents can scale. Why?
+[00:41:30] My first paper 15 years ago, well, this
+[00:41:33] one actually was 11 years ago analyzed
+[00:41:36] firmware for memory uh sorry for authentication bypass vulnerabilities. It had three samples
+[00:41:43] that I evaluated on and with three
+[00:41:45] samples there was quite a lot of
+[00:41:49] implicit assumptions that could slip in.
+[00:41:53] If you scale this out, there's a more
+[00:41:55] modern work by my uh awesome student
+[00:41:57] Will Gibbs who might be in the audience.
+[00:42:00] uh he has a booth here uh artificial
+[00:42:02] booth come check it out it's about their
+[00:42:06] uh commercialization of their AICC work
+[00:42:09] we scaled out to a thousand firmware
+[00:42:11] much fewer assumptions still many with GPT
+[00:42:16] and with agents that can work a computer
+[00:42:19] to avoid hallucinations to experiment to evaluate to ground
+[00:42:26] the failures of new samples into fixes of research proto prototypes. We're
+[00:42:30] entering a new era of both applicability and result analysis of research prototypes.
+[00:42:38] And we can do this autonomously. This is
+[00:42:41] the future of vulnerability research. an autonomous sharpening pipeline where academics that and academic like industry
+[00:42:53] researchers with a good understanding of
+[00:42:56] the research process of how to evaluate
+[00:42:58] things properly with a good grasp of the data sets can build self-improving systems
+[00:43:07] that scale out both their data sets and
+[00:43:09] their results. And this over the next
+[00:43:12] couple of years is going to be absolutely revolutionary and it requires
+[00:43:18] all of your brilliant human effort. Thank you.
+[00:43:30] [applause] Right on.
+[00:43:33] All right. I just got a couple
+[00:43:35] housekeeping notes and then I will
+[00:43:37] unleash you. Um, next session starts
+[00:43:40] here at 10:30 on this stage and all the main briefings talks like yesterday start upstairs at 10:15.
+[00:43:48] Um, we've got some new areas at Black
+[00:43:51] Hat this year. We're calling them like
+[00:43:53] interactive spaces and we've got an AI
+[00:43:55] zone, a cyber district. We've got some
+[00:43:57] places to grab a drink and hang out.
+[00:44:00] We've got a photo booth and some other whimsical things. Cool. And then
+[00:44:04] tonight, the last session of the day
+[00:44:07] instead of a lock note, our keynote is
+[00:44:10] our lock note at 4:15 or 4:30 at level
+[00:44:13] two at Oceanside A. And the lock note
+[00:44:16] gives us a chance to have a conversation
+[00:44:18] and talk about some of the most
+[00:44:20] impressive talks we saw, trends, and we
+[00:44:23] get to hear from the review board
+[00:44:24] members who helped select the content
+[00:44:27] and learn from their expert perspective what they found interesting. So
+[00:44:31] hopefully I'll see you the end of the
+[00:44:33] day at the lock note. Thank you very much. [music] See you.

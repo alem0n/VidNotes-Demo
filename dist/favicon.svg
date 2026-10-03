@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="视记 VidNotes">
+  <style>
+    /* 暗色模式（MDN: prefers-color-scheme in SVG <style>）：底色取 token 的深 ink，
+       前景取品牌色的浅色调（与顶栏 logo 的渐变末端 #c7d2fe 同源）。 */
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #141a2b; }
+      .fg { fill: #c7d2fe; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32" rx="8" fill="#3c35af"/>
+  <!-- 播放三角 = 视频；右侧两条圆角线 = 笔记条目：视频 → 笔记 -->
+  <path class="fg" fill="#ffffff" d="M10 9.5 L20 16 L10 22.5 Z"/>
+  <rect class="fg" fill="#ffffff" x="21.5" y="11.5" width="5.5" height="2.6" rx="1.3"/>
+  <rect class="fg" fill="#ffffff" x="22.5" y="18.4" width="4.5" height="2.6" rx="1.3"/>
+</svg>

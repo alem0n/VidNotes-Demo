@@ -1,0 +1,368 @@
+/* ---------- convert hero ---------- */
+/* iteration 52: 氛围层宿主（「体验美学」氛围层）。position relative + z-index 0 = 零盒模型
+   变化（第 50 次 nav-item/run-item 同款裁决），只为给 ::before 光晕建立层叠上下文：
+   负 z-index 伪元素画在宿主透明背景之上、内容之下，页面底色从渐变的透明区透出来。
+   宿主自身 backgroundColor 保持 transparent（氛围只画在伪元素上）⇒ 扫描读点
+   （inject-main.2 的 bgOf 沿 parentElement 链合成祖先 backgroundColor）结构性
+   不变——机器侧零退化；渲染侧的诚实实算（渐变叠 --bg 的最坏合成对比比）见
+   Explore_52.md §1：全 alpha 最坏 ink 12.9 / ink-2 6.19 / green 5.30，均 >= AA。 */
+.convert-hero { text-align: center; padding: 56px var(--s20) 36px; position: relative; z-index: 0; transition: opacity var(--d15) var(--ease-out), transform var(--d15) var(--ease-out), display var(--d15) allow-discrete; }
+/* iteration 66: 整体退场（场景切换的出口半边）——表单提交后整个 hero（标题 / 副标 /
+   #convertForm / #cvMsg 反馈区 / trust-row）离开舞台，为 runPanel 三区宽屏让位。
+   词汇逐字取自第 48 次 modal / lightbox 的出口非对称（modal.css 已确立的 2:1
+   口径：进入 --d3=300ms / 出口 --d15=150ms；出口快于进入 = M3 easing-and-duration
+   的「exit transitions … require less attention」），三通道同窗同曲线：
+   ① opacity 1→0（paint-only，与 52 首屏错峰、::before 氛围层同窗衰减）；
+   ② transform translateY(-12px)（内容上浮离场，向上 = 下方新舞台顶替的运镜方向）；
+   ③ display block→none 落在窗**末**（allow-discrete 的出口方向 none 翻转在过渡结束
+      时落定）⇒ 出口窗内元素仍在 a11y 树，故另在 JS 同步任务内先写 aria-hidden=true
+      使树摘除即时（不积到 150ms 翻转），退场元素即时移出 a11y 树。
+   出口窗内 pointer-events 通透（本规则内声明）：双击不会在退场中途重复提交。
+   回返（摘 .is-exited）= 跳回口径（47/49 的回退同语义）：display 在窗首翻回
+   block（allow-discrete 进入方向即时翻转），父级 opacity/transform 无过渡起点
+   （刻意无 @starting-style = 不为首次绘制增新动画）⇒ 父级瞬回，**子级 52 错峰随
+   子树重建重播**（display:none→block 的子树获得新鲜渲染 ⇒ blockIn 家族自然重放
+   = 回返的呈现仪式，零新增 keyframe）。降级：responsive.css 末块（43+51）
+   把三通道收敛 0.01s 落完成帧，退场即时落 none。 */
+.convert-hero.is-exited { opacity: 0; transform: translateY(-12px); pointer-events: none; display: none; }
+/* iteration 52: 氛围层本体——静态渐变 mesh 光晕（纯 CSS、零动画、零在线资源，产物
+   静态可用）。两层径向渐变：accent 光晕居中偏上（h1 区最强 .07）、violet 光晕
+   左上（.05），皆向透明衰减（66%/70% 衰减点），trust-row 所在底部带落在衰减尾外
+   ⇒ 其渲染底色仍是 --bg（green 5.960 不变）。刻意纯静态：常驻循环动效在
+   第 43 次收口块（iteration-count 1）下会停在首帧，静态 mesh 既满足「开场氛围」
+   又结构性免降级治理（零新增 @media/零新增 keyframe/零新增 token——rgba 字面量
+   为既有 --accent/--violet 的 RGB 分量）。inset 0 ⇒ 伪元素不越宿主盒，对
+   documentElement.scrollWidth 与 body 子树几何扫描零贡献（伪元素亦不在 body* 内）。 */
+.convert-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(64% 54% at 50% -14%, rgba(60,53,175,.07), transparent 66%),
+    radial-gradient(40% 38% at 7% 24%, rgba(109,40,217,.05), transparent 70%);
+}
+.convert-hero h1 { font-size: 32px; letter-spacing: .5px; line-height: 1.35; }
+.hero-sub { color: var(--ink-2); margin: var(--s12) auto var(--s28); max-width: 620px; font-size: var(--f14); line-height: 1.8; }
+.convert-form { display: flex; gap: var(--s8); max-width: 760px; margin: 0 auto; }
+.url-input {
+  flex: 1; padding: 13px 18px; font-size: var(--f14); border: 1.5px solid var(--line-strong);
+  border-radius: var(--r12); background: var(--paper); outline: none; transition: border-color var(--d15);
+  font-family: var(--font-mono);
+}
+/* iteration 11: WCAG 1.4.3 covers placeholder text ("This success criterion
+   applies to text in the page, including placeholder text"). The UA default is
+   rgb(117,117,117) = 4.26 on --bg and 4.61 on paper; ink-3 is 5.53/5.98.
+   opacity:1 defends against older UAs compositing the placeholder at ~0.5. */
+.url-input::placeholder { color: var(--ink-3); opacity: 1; }
+.url-input:focus { border-color: var(--accent); box-shadow: var(--ring-focus); }
+.mode-select { padding: 13px var(--s14); font-size: var(--f13); border: 1.5px solid var(--line-strong); border-radius: var(--r12); background: var(--paper); color: var(--ink-2); outline: none; }
+.btn-primary {
+  background: var(--accent); color: #fff; border: none; border-radius: var(--r12);
+  padding: 13px 26px; font-size: var(--f14); font-weight: 600; box-shadow: var(--shadow-btn);
+  transition: transform var(--d1), box-shadow var(--d15);
+}
+/* iteration 52: CTA 主角化（反馈面）——力反馈三态全走安全通道（transform / box-shadow /
+   outline），宿主 background-color 过渡一律不做（.btn-primary 在 inject-main.2 的
+   white 扫描组：#fff on accent = 9.06，宿主 bg 须恒为 accent——第 50 次首次失败的
+   风险通道禁令）。悬停 = 升起 1px + 既有 --shadow-btn-hover 加深（M3 States 的 hover
+   语义 + elevation 家族的阴影高度惯例）；按下 = 收缩到 --shadow-btn（按压 = 高度
+   收缩的物理语义，保留既有 translateY(1px)）；焦点 = 仓内既有焦点钩子逐字复用
+   （.doc-card/.scrubber/.run-pause/.stack-card 同一声明：:focus-visible only，
+   keyboard only、never on click）。过渡骑既有 transition（transform --d1=100ms /
+   box-shadow --d15=150ms，Atlassian interactions 50–150ms 窗），零新增声明。
+   本类覆盖三处实例（convert 首屏 CTA / #btnViewDoc / #mReplay），家族一致。 */
+.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-btn-hover); }
+.btn-primary:active { transform: translateY(1px); box-shadow: var(--shadow-btn); }
+.btn-primary:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+.btn-ghost { background: var(--paper); border: var(--hairline); border-radius: var(--r12); padding: 13px var(--s20); font-size: var(--f13); color: var(--ink-2); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+/* iteration 16: inline feedback for #convertForm (#cvMsg doubles as its own
+   polite live region — see convert.js). --amber on the hero backdrop (--bg,
+   .convert-hero has no own background) is 5.479: >= 4.5 for the 13px normal
+   text (SC 1.4.3); as the invalid control's border it is the same 5.479,
+   >= 3:1 (SC 1.4.11, mirroring --line-strong's role as the control's visual
+   indicator). :empty keeps an unannounced message out of layout entirely
+   (a trailing-space nudge never matches :empty). */
+.cv-msg { max-width: 760px; margin: var(--s10) auto 0; text-align: left; font-size: var(--f13); color: var(--amber); }
+.cv-msg:empty { display: none; }
+.url-input[aria-invalid="true"] { border-color: var(--amber); }
+.trust-row { display: flex; gap: 22px; justify-content: center; margin-top: 24px; color: var(--green); font-size: var(--f12); }
+
+/* iteration 52: 首屏呈现仪式——开场错峰（「动效表达」第八切面 + 叙事 spine 首屏冲击；
+   45 的容器转场是「舞台升起」，本段是「台上角色的登场编排」）。形态逐字复用证据词
+   汇 blockIn（opacity 0→1 + translateY 8px，家族下端，同 46/47/48/51 四度先例），
+   同窗 --d3 + --ease-out；fill 取 backwards（51 同款实证）：延迟窗内保首帧（错峰机制
+   必需），活动窗结束后不保留任何帧 ⇒ 元素回落自身声明 ⇒ .btn-primary 的
+   hover/active transform 与其 --d1/--d15 过渡逐字存活（机制最小化页实测）。
+   **只用长手属性、不用 animation 简写**（51 的级联教训：简写会把 animation-delay
+   一并重置为 0，简写规则的特异性还会压过下面的阶梯规则，错峰被吃掉）。
+   节拍：h1 ←--d12=120ms（母拍 300ms 的 40% 点：--ease-out 前置极陡、45 实测母拍
+   150ms 已 0.928 ⇒ 内容起拍落在母拍到访尾部，两拍连续而非同帧同向叠加——
+   母拍与内容拍的信息量不同：前者是「视图抵达」，后者是「7 步呈现序」，
+   通道结构性正交：子 transform 不动父盒、opacity 为乘法复合的嵌套淡入）；
+   其后 60ms/步（motion.dev stagger(0.05)–stagger(0.1) 带、高于 m1 的 20ms 扫描上限
+   ——首屏是呈现仪式而非可扫描列表，间隔须演示距离可辨）：hero-sub 180、
+   .url-input 240、两个 .mode-select 300/360、CTA（控件簇末拍/主角）420、
+   .trust-row（收尾拍）480 ⇒ 末拍起播 + 单元窗 = 总窗 780ms（= 51 已登记的
+   root ~800ms 预算）。阶梯规则只声明 animation-delay（无动画指派时不产生效果，
+   动画只由本段那条合并基础规则指派——nth-child 序 = 视觉序 = 「自上而下」
+   m1 的 populate 方向）。
+   作用域钉 #view-convert.active（48/51 的防御性先例）：.view:not(.active) 的
+   display:none 使整个子树不渲染 ⇒ 动画实例移除；返回时 display 翻转 + 作用域
+   重匹配 ⇒ 动画在新建渲染上重播（51 机制页重入 rAF 实证），三条进入路径
+   （boot 默认视图 / nav 点击 + hashchange-reconcile / 深链回退 app）全部收敛于
+   同一个 switchView 类翻转、同构一致；零 JS / 零 HTML 改动。
+   安全通道：opacity + transform 全 paint-only；扫描读点地图（GROUPS 首屏五组 /
+   run-narrow nbForm 六元素 right 读点 / bh* 类级）先映射后挂载，风险通道零落地，
+   详见 Explore_52.md §1/§3。降级：第 43 次收口块（含 51 补入的 delay 归零）
+   10ms 内落完成帧（7 拍同时落定 = 降级的应有语义）。 */
+#view-convert.active .convert-hero h1,
+#view-convert.active .hero-sub,
+#view-convert.active .convert-form > *,
+#view-convert.active .trust-row {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+#view-convert.active .convert-hero h1 { animation-delay: var(--d12); }
+#view-convert.active .hero-sub { animation-delay: 180ms; }
+#view-convert.active .convert-form > .url-input { animation-delay: 240ms; }
+#view-convert.active .convert-form > .mode-select:nth-child(2) { animation-delay: 300ms; }
+#view-convert.active .convert-form > .mode-select:nth-child(3) { animation-delay: 360ms; }
+#view-convert.active .convert-form > .btn-primary { animation-delay: 420ms; }
+#view-convert.active .trust-row { animation-delay: 480ms; }
+
+/* ---------- run panel ---------- */
+/* iteration 59: 演示主舞台的揭幕（「动效表达」第十四切面——叙事链「首屏仪式（52 hero 错峰）
+   → 按下「开始转换」→ [舞台升起] → 阶段推进（46）→ 交付收束（49）」缺失的一环）。此前
+   convert.js startConvert 里 classList.remove("hidden") 是 display:none→block 硬切换，
+   entire 主舞台（run-head/运输组/阶段步进/时刻栈/交付面板）整块闪现；47 已为 player 建立
+   「.hidden 摘除 = 揭幕」的家族模板（母盒 opacity-only --d3 + @starting-style + 内容子
+   8px），48 把模板落到覆盖层（有关闭路径者加 allow-discrete 出口非对称）——本段是同构
+   而未入族的 convert 主舞台实例，也是观看者主动按下按钮后的「回礼」时刻。
+   母盒只挂 opacity（读点地图：inject-main.2:469 读 .run-panel 的 computed
+   backgroundColor（ctFocus 的 3:1 门）、run-narrow 的 nbRunHead 读 .run-transport 与
+   #runPanel 的 right——opacity 不入计算色与任何 rect，47/48/49 三度实证的母盒安全通道，
+   run-foot 同款）。出口刻意不带 allow-discrete、无出口规则：全仓对 #runPanel 的类写只有
+   startConvert 一处 remove（实读）——演示结束后面板保持可见（交付按钮 runFoot 就在面板内
+   继续可用），重跑提交（stopRun + 重建内容）只在已可见的面板内复位内容（stepper/arts
+   就地类翻转 = 46/49 的既有词汇），无任何把 hidden 加回的路径 ⇒ 无关闭即无出口过渡
+   （47 的 #player 同口径；48 的出口非对称只适用于有关闭路径的覆盖层）。触发器 = 表单
+   submit（点击/Enter——iteration-16 的 #cvMsg 验证反馈先行落定，揭幕只落画面）的同一
+   同步任务，与 main.js 的 scrollIntoView(smooth) 同任务发起 ⇒ 页面下滑与舞台升起合成
+   一条连续运镜（47「滚动叙事」的同构）；0ms 可用（display 进入方向即时翻转、立即可
+   聚焦），300ms 只是落画面（M3 standard / NN/g 大幅面档，与 45/47/48 同窗同曲线）。
+   内容子第二拍 = 三拍封顶（演示面板信息密度高，子拍宜少不宜多、贪多读作「一组一起抖」）：
+   直接内容子 .run-head → .stage-stepper → .run-body（阅读序 = F 型 top+left 优先的
+   头部 → 步进 → 躯干），形态逐字复用 blockIn（opacity + translateY 8px 家族下端，
+   零新增 keyframe），基延迟 var(--d3) = 300ms = 母盒揭幕窗末（58 同款裁决：母拍是母盒
+   本身，若取 51/52/54 的 --d12 = 120ms 会与母盒 opacity 窗同窗起步 = 47 否决的双重拍
+   形态；母拍 1.0 起拍 = 54「0.95+ 起拍」实证口径的严格版），60ms/步（家族呈现序步距）、
+   总窗 720ms。.run-foot 刻意排除在内容拍外（家族边界裁决）：49 的交付拍在 finishConvert
+   摘 hidden 时独立揭幕（自身 transition + @starting-style，见文件末段），若并入本作用域
+   （开演时作用域即匹配、但其时 display:none、结束摘 hidden 时才起播）会与 49 的 opacity
+   transition 同窗叠加且 animation 级压住它 ⇒ 吞掉 49 的交付拍语义，故 49 逐字保留、
+   runFoot 不入本作用域。
+   既有节拍全部原构（本轮验收线）：46 的 stepActivate 与状态色/填充条声明挂在 .stage-step
+   的内容子（与本轮的容器拍是嵌套乘法复合——父 opacity × 子 opacity、子 transform 不动
+   父盒——非同触发器同向叠加；容器是步进的父，其 transform 会平移步盒，但步进是单行
+   flex（display:flex 无 wrap）⇒ 6 盒同排、tops 本来全相等，且探针冻结首帧的平移量是整数
+   8px（Math.round(x+8) == Math.round(x)+8，任意取舍边界同向保持）⇒ nbStepsN 的 top 去重
+   计数两端不变；46 当年改挂内容子正是因为把 transform 挂到 .stage-step 自身、飞行分数值
+   改变 top 分布——本面的整数首帧 + 同排等值两端成立，故容器挂载安全）；49/56/50/52 的
+   声明逐字不动。基础规则只用长手属性、不用 animation 简写（51 的级联教训：简写会把
+   animation-delay 重置为 0、简写特异性还压过阶梯规则吃掉错峰）；三条阶梯规则只声明
+   animation-delay（无动画指派时不产生效果，动画只由本段基础规则指派）。fill 取
+   backwards：延迟窗内保首帧（错峰机制必需），活动窗结束后不保留任何帧 ⇒ 元素回落自身
+   声明 ⇒ 46/49/56 的既有 hover/激活/状态拍（.btn-primary 力反馈、.run-pause 双态、
+   .speeds 指示条、.art-row 挣得拍）逐字存活（若用 both/forwards 终值会压住基础态）。
+   作用域钉 .run-panel:not(.hidden)（47/48/51/58 防御性先例）：narrow 夹具 #runPanel 无
+   hidden ⇒ 作用域匹配但 paint-only ⇒ 7×23 逐字节；重跑路径不重 hidden ⇒ 动画实例不
+   重建（一次开演语义，与 47 的 player 母盒在重复 openPlayer 下的同行为家族一致）。
+   降级：第 43 次收口块（含 51 补入的 animation-delay / transition-delay 归零）把本段
+   全部通道收敛到 10ms 内落完成帧（三拍同时落定 = 降级的应有语义）。零新增
+   keyframe/token/@media/JS/HTML/探针。 */
+/* iteration 67: 全出血舞台（运营方指令「将 runPanel 扩大到整个界面而不是限制在卡片
+   中」）：解除第 64 次的卡片视铬（border/r14/shadow）与 .view 的 1180 限宽 + 水平
+   内边距双重限制，成为边缘到边缘的全宽纸面舞台。突围 = width:100vw +
+   margin-left:calc(-50vw + 50%)：百分比边距相对包含块（view 内容盒）内联尺寸，
+   与视口居中几何相消 ⇒ 左缘恒落视口 0（任意视口、含 vw≤1180 段成立；同技法：
+   chriskirknielsen Breakout Container / CSS-Tricks Full-Width Containers in
+   Limited Width Parents）。DOM / .view / hero 零动（hero 本体为本轮硬线）。
+   vw 含经典滚动条宽度 ⇒ 溢出由 base.css 根元素 overflow-x:clip 对治（详见该注释）。
+   去卡片后的分区感以既有 token 承载（M3 Dividers：full-bleed divider 强调区段
+   分离）：stage-stepper border-bottom 顶带封线 / run-side border-top 中→底封线 /
+   run-foot 既有 dashed 交付拍（第 49 次）逐字不动。水平内边距 var(--s28) 对齐
+   topbar（padding: 0 var(--s28)）与 footer（30 var(--s28)）的仓内槽线。
+   背景刻意保留 var(--paper)：① inject-main.2:469 ctFocus 直读本元素 computed
+   backgroundColor 作 accent 3:1 门第二背景，透明会使 crOf(accent, transparent)
+   无定义（对比比 = 语义不变量，harness 契约不动）；② 面板内全部内件（.metric
+   纷片 / .artifacts-check / .pipeline-scene 纸卡 / .stack-card 纸卡）相对面板的
+   背景关系逐字节不变（面板本来即 paper），去卡片只动外视铬；③ 全宽纸带 vs --bg
+   页面（#fff vs #f7f6f3）= topbar（rgba 白 + hairline）同族带状语言。几何类
+   读点（nb* / 镜头实测）随新布局 re-baseline；语义不变量（零横溢、对比比、
+   揭幕拍、focus/时序键）零变。 */
+/* iteration 68: 回卡片 + 20px 外边距（运营方指令「runPanel 还是卡片效果比较好，只不过
+   左右两边留 20px 作为外边距就可以了」）：恢复卡片视铬（border/r14/shadow-panel
+   三个既有 token，与 #pipelineScene 场景卡同语言；67 解除卡片视铬的裁决被本指令
+   取代，突围几何保持）；让位恒 20px —— margin-left = -50vw + 50% + 20 ⇒ 元素
+   左缘 = x0 − 0.5vw + 0.5W + 20：vw>1180 段 x0=(vw−1180)/2+28、W=1124 ⇒ 20；
+   vw≤1180 段 x0=28、W=vw−56 ⇒ 20（百分比相对 view 内容盒，与视口居中几何
+   相消，同 67 的推导法）；width = 100vw − 40 ⇒ 右缘 = vw − 20 ≤ clientWidth
+   ⇒ 零横溢出（overflow-x:clip 兑底 vw 含滚动条），无需 max() 封顶。去卡片时期的
+   border-top 全宽封线由卡片全边取代（stage-stepper border-bottom 顶带封线与
+   .run-foot dashed 交付拍逐字保留）；--paper 底保留（ctFocus 对比比门 + 内件
+   背景关系双零变，67 的①②③裁决逐字存活）。几何类读点随新布局 re-baseline
+   （narrow 基线 + nb* 计数）；语义不变量（零横溢、对比比、揭幕拍、focus/时序
+   键）零变。 */
+/* iteration 74: run 页舞台贴顶（运营方指令「runPanel 与 topbar 的间距调整为
+   20px」）：.view 的 40px 顶槽只服务 convert 页 hero；run 页 view 顶槽归零后
+   runPanel 自己的 margin-top（20px）即与 60px sticky topbar 的视觉间距，恒
+   20px、任意视口成立（body[data-page] 页级作用域：经典束五页共享零串扰；
+   hero 的 40px 顶槽与 45 的入场过渡逐字不动）。 */
+body[data-page="run"] .view { padding-top: 0; }
+.run-panel { background: var(--paper); border: var(--hairline); border-radius: var(--r14); box-shadow: var(--shadow-panel); padding: var(--s20) var(--s28) var(--s28); margin-top: 20px; margin-left: calc(-50vw + 50% + 20px); width: calc(100vw - 40px); transition: opacity var(--d3) var(--ease-out); }
+.run-panel:not(.hidden) > .run-head,
+.run-panel:not(.hidden) > .stage-stepper,
+.run-panel:not(.hidden) > .run-body {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+.run-panel:not(.hidden) > .run-head { animation-delay: var(--d3); }
+.run-panel:not(.hidden) > .stage-stepper { animation-delay: 360ms; }
+.run-panel:not(.hidden) > .run-body { animation-delay: 420ms; }
+/* iteration 68: 揭幕阶梯四拍回三拍（.run-side 底带整体下线，第 66 次的第四拍随之
+   退役）：head 300 / stepper 360 / body 420，总窗 720ms（59 的三拍封门口径）；
+   .run-foot 仍刻意排除（49 交付拍独立揭幕的边界裁决逐字不变）。 */
+@starting-style { .run-panel:not(.hidden) { opacity: 0; } }
+/* iteration 22: flex-wrap makes the head wrap-safe at css-px widths where
+   title + dwell control no longer fit one line (measured: without it the
+   transport overflows the 320 css-px viewport by 21px). Inert whenever the two
+   items fit — so every width the narrow baseline measures keeps its layout */
+.run-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; }
+.run-title { font-size: 19px; font-weight: 700; }
+.run-sub { color: var(--ink-3); font-size: var(--f12); margin-top: 2px; }
+.run-clock { font-family: var(--font-mono); font-size: 22px; color: var(--accent); font-weight: 600; }
+/* iteration 22: the run panel's dwell control — same shape as the player's
+   .transport (button left of the time readout, gap 12px). The button reuses
+   .btn-ghost (--paper/--ink-2/--line, registered >= AA) and is only sized
+   down like .transport .btn-ghost; no new :root token, so the live-read
+   contrast matrix is unchanged. Focus follows the house convention
+   (.doc-card / .scrubber / [data-lightbox]): keyboard only, never on click. */
+/* iteration 29: the transport gets the iteration-22 .run-head treatment —
+   flex-wrap. Measured in the narrow fixture (which now carries #btnPauseRun +
+   #demoSpeeds in their visible state): at 320 css px the three controls'
+   min-content (pause ~70 + speeds ~112 + clock ~66 + 2×12 gap) exceeds the
+   panel content box (216), pushing #runClock 10px past the panel's right edge
+   (fixture nbRunHeadN=277t287). The wrap is inert wherever the row fits
+   (panel slack is 25px+ at 360 and above: 317t292 / 332t307 / 371t310 …), so
+   the >= 360 layout is byte-identical; only the <= 320 band wraps, the same
+   trade the player's .transport makes at <= 640. iteration 75: the group is
+   gone (28's #demoSpeeds retired); the wrap survives as the transport's
+   narrow guard over 暂停钮 + 时钟 (two controls fit every width, so the
+   wrap is now inert at all 7 gate widths — kept as the belt-and-braces
+   guard: inert ≠ dead, it still caps any future transport child). */
+.run-transport { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s6) var(--s12); }
+.run-transport .btn-ghost { padding: var(--s8) var(--s16); }
+.run-pause:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+/* iteration 28's #demoSpeeds group (and its .demo-speeds button:focus-visible
+   rule) retired in iteration 75 — operator instruction: the demo runs purely
+   at the submission-time pace; the player's #plSpeeds is the app's only
+   runtime speed group. The shared .speeds family (style.css) keeps serving
+   that one instance; this rule was the demo-specific focus outline, deleted
+   with its element (the 12th-iteration dead-rule caliber: zero matches). */
+/* iteration 67: 顶带封线（去卡片后的区段分离，M3 full-bleed divider 语义）：
+   padding-bottom + border-bottom 叠在既有 margin var(--s20) 0 之外 ⇒ 分隔线两侧
+   各 20px 留白（封线不贴内容）；step 盒几何不动（border 与 padding 均不改
+   .stage-step 的 top ⇒ nbStepsN rows / nbDesk stepsTop 两端口径不变）。 */
+.stage-stepper { display: flex; gap: var(--s6); margin: var(--s20) 0; padding-bottom: var(--s20); border-bottom: var(--hairline); }
+/* iteration 46: the stepper's progression beat (motion second facet). Three
+   paint-only channels ride ONE class flip that renderStepper (convert.js)
+   now performs in place — the per-tick innerHTML rewrite had destroyed node
+   identity, leaving the transition below permanently dead (a transition
+   needs a previous value on the SAME node). ① state crossfade of bg/border/
+   text colour at --d15 (150ms = interaction window ceiling: Atlassian
+   interactions 50–150ms, NN/g simple feedback ~100ms). ② entrance of the
+   newly activated step: stepActivate at --d3 300ms + --ease-out (same
+   window/curve as the iteration-45 view entrance), mounted on the step's
+   CONTENT children (.s-name/.s-hint) — not on .stage-step itself: nbStepsN
+   (narrow third path) counts distinct getBoundingClientRect().top of the six
+   step boxes; a chip-level transform shifts that rect and the probe's
+   virtual clock freezes the animation at its starting frame (verified: row
+   count +1 on 6 of 7 widths). A child's transform cannot move the parent's
+   box, so the narrow gate stays byte-identical, zero probe change, beat
+   unchanged (container crossfades in place, content arrives). ③ progression
+   axis: bottom 3px fill bar via ::after (position: relative anchors it,
+   overflow: hidden clips it to the corner radius) reusing the player
+   .ribbon-seg vocabulary — scaleX 0 → .active .5 (accent) → .done 1 (green),
+   origin left, --d3 + --ease-out. Reduced motion: the iteration-43 closing
+   block's 0.01s !important covers elements and pseudo-elements — no new
+   @media. */
+.stage-step {
+  flex: 1; border: var(--hairline); border-radius: var(--r10); padding: 9px var(--s10); background: var(--line-2);
+  position: relative; overflow: hidden;
+  transition: background-color var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out);
+}
+.stage-step::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform var(--d3) var(--ease-out), background-color var(--d15) var(--ease-out); }
+.stage-step .s-name { font-size: var(--f12); font-weight: 600; color: var(--ink-3); white-space: nowrap;
+  transition: color var(--d15) var(--ease-out); }
+.stage-step .s-hint { font-size: var(--f10); color: var(--ink-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stage-step.done { background: var(--green-soft); border-color: #bbe3d2; }
+.stage-step.done .s-name { color: var(--green); }
+.stage-step.done::after { transform: scaleX(1); background: var(--green); }
+.stage-step.active { background: var(--accent-soft); border-color: #cdd2fb; }
+.stage-step.active .s-name { color: var(--accent); }
+.stage-step.active .s-name, .stage-step.active .s-hint { animation: stepActivate var(--d3) var(--ease-out); }
+.stage-step.active::after { transform: scaleX(.5); }
+@keyframes stepActivate { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+/* iteration 66: 中区两栏（上中下三区结构的中间区）——左 .stack-zone 轨迹演示列
+   1/4、右 #pipelineScene 3/4（运营方指定比例）。minmax(0, …) 抑制网格项
+   min-content 反噬（场景内 auto-fit 分支在窄轨自动塌单列，零横向溢出）。
+   塌缩：≤980px 由 responsive.css 既有 980 媒体块塌单列，堆叠序 = DOM 序
+   （先「正在做」后机器场景 = 两栏阅读序左→右的延续）。 */
+/* iteration 67: 中区宽度重分配（1:3 比例 → stack 固定轨道 264px + pipeline 取全部
+   剩余；minmax(0,1fr) 语义与 980 媒体块坦单列口径逐字不变）。 */
+/* iteration 68: stack 固定轨道 264 → **294**（运营方指令「stack-zone 区域要扩大
+   30px」，+30 整）。1280 视口新口径：面板边盒 1240（100vw−40）− 内边距 56 ⇒
+   内容 1184；294 + gap 18 ⇒ pipeline = 872（相对 67 的 942 = −30（stack 让位）
+   −40（卡片外边距），双层来源如实登记；pipe-cols auto-fit 自然重排，内容由既有
+   自适应规则承载，零新增组件/数据）。 */
+/* iteration 74: stack 固定轨道 294 → **324**（运营方指令「stack-zone 加宽 30px、
+   管道车间 pipe-title 同步收窄 30px」）：右轨 minmax(0,1fr) 自动吸收 −30 ⇒
+   1280 视口 pipeline = 842（68 次 872 − 30）；pipe-title 无固定宽（随场景盒
+   同步收窄 30px 的机制即此），s2 二项重排见 pipeline.css。 */
+.run-body { display: grid; grid-template-columns: 324px minmax(0, 1fr); gap: 18px; }
+/* 同栏窄带补丁：左列（第 67 次起固定轨道、第 68 次 264→294px）在窄视口段
+   stack-head 的长提示需折行（wrap 在宽段惰性、零影响）。 */
+.run-body .stack-head { flex-wrap: wrap; }
+/* iteration 12: the .now-card family (5 rules) was deleted — no element with
+   those classes exists (the "current step" card became .stack-head +
+   .stack-card in the iteration-8 redesign), and dead rules mislead maintainers. */
+/* iteration 68: 底部数据带 .run-side 整体下线（运营方指令「run-side 组件可以移除，
+   我认为没有存在必要了」）：#runMetrics 纯重复数字删除（每项在仓内另有呈现路径，
+   见 Explore_68.md §1 消重论证），#runArtifacts 的 art-rows 迁入 #runFoot（上方
+   DOM，置于按钮之上）；.run-side / .metric-grid / .metric 规则随之删除（第 12 次
+   死规则口径——残留类名零匹配（inject-main.2 的两个 .metric* 读点同步删除）。
+   iteration 74：#runArtifacts / art-rows 随 artifacts-check 组件退役再次整体
+   下线（容器 + 规则族 + convert.js 的 ARTS/renderArts，见下方 74 注释）。 */
+/* iteration 74: 交付物自检组件下线（运营方指令「移除底部 artifacts-check 组件」）。
+   删除面：.artifacts-check 容器两条规则 + .art-row/.art-row.ok/.art-row .dot/
+   .art-row.ok .dot 四条规则（第 12 次死规则口径——残留类名零匹配）；convert.js
+   的 ARTS 常量 / renderArts（构建一次后就地翻转，46/49 的节点身份机制）与三处
+   调用同步删除。第 49 次双拍拆解：① 挣得节拍（qEarn glyph + dot 行色交叉淡入）
+   宿主即 art-rows ⇒ 随组件退役；@keyframes qEarn 仍服务回放器验收清单（同源
+   不同宿主，style.css 保留）② 交付卡揭幕（.run-foot 母盒 opacity-only --d3 +
+   @starting-style + 摘 .hidden 同任务，重跑复位是「跳回」语义故不含 display 的
+   allow-discrete）逐字存活——交付卡现为 .run-foot-actions 单子，flex-direction
+   列向 + dashed 封线 + gap 零改。 */
+.run-foot { display: flex; flex-direction: column; gap: var(--s10); margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); transition: opacity var(--d3) var(--ease-out); }
+/* iteration 68: 交付卡改列向（历史：art-rows 容器在上、按钮成组在下；74 起
+   art-rows 容器退役，交付卡 = .run-foot-actions 单子）——.run-foot-actions
+   行向 flex + wrap 承载窄屏换行（22/29 的既有口径）；49 的 opacity 揭幕与
+   @starting-style 逐字不动（flex-direction 只改主轴，opacity 过渡与读点零涉）。 */
+.run-foot-actions { display: flex; gap: var(--s10); flex-wrap: wrap; }
+@starting-style { .run-foot:not(.hidden) { opacity: 0; } }
+

@@ -1,0 +1,29 @@
+/* src/styles/main.css — 样式表入口（iteration 78，目录结构重构 I 期）。
+ *
+ * 单一职责：本文件只是级联序的**声明清单**——@import 的顺序就是级联序
+ * （CSS Cascade L6 §6.1 Order of Appearance：独立 link 的声明 treated as if
+ * concatenated in linking order；同级 @import 的级联序 = 出现序）。
+ * 构建器（build-inlined.js）递归内联下列 import，按本序拼接为 dist/app.css
+ * ——逐字节口径与 70–77 期的「页内连续 7 link 块按文档序拼接」完全相同
+ * （迁移前后 sha 一致即为本轮保序证明）。@import 语法硬约束：只能位于其他
+ * 规则之前，故本文件不放任何规则。
+ *
+ * 分层目录 = 7-1 架构精简版（sass-guidelin.es 的 base/components/utilities）：
+ *   base/       设计 token、reset、排版与原子元素样式
+ *   components/ 视图与组件样式（convert / pipeline / views / modal / stack）
+ *   utilities/  响应式处方档链（reduced-motion 收口块保持拼接序最末）
+ *
+ * 未采用原生 @layer 的裁决（iteration 78，0.1 原则 1：无第二真实用例不引入）：
+ * 分层会改变优先级语义——层内 important 声明的优先级**反序**（越早声明的层
+ * important 越强），将打破 responsive.css 末位收口块「!important + 拼接序最末
+ * 压过 stack.css 的 .fast」的权威（第 43 次自述原则）。import 序已承载等价
+ * 的可预测级联；待确有「需层隔离的第三方/主题样式」再引入 @layer。
+ */
+
+@import "./base/base.css";
+@import "./components/convert.css";
+@import "./components/pipeline.css";
+@import "./components/views.css";
+@import "./components/modal.css";
+@import "./components/stack.css";
+@import "./utilities/responsive.css";

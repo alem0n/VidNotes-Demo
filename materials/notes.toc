@@ -1,0 +1,38 @@
+\contentsline {section}{\numberline {1}开场：一场关于「人的位置」的主题演讲}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}演讲者与 CTF 社区的方法论起点}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}本章小结}{1}{subsection.1.2}%
+\contentsline {section}{\numberline {2}在 agent 之前：漏洞发现的三条规模化路径}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Agentic 时代 $\neq $ LLM 时代}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}三种把漏洞发现自动化的方式}{2}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}饼干模子：为什么「换个方式」能找到新漏洞}{3}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}工具之间其实很难比较}{4}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}本章小结}{4}{subsection.2.5}%
+\contentsline {section}{\numberline {3}漏洞属性：把第一个 0day 变成方法论}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}案例：用 Android 的已知属性审计 OpenHarmony}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}本章小结}{6}{subsection.3.2}%
+\contentsline {section}{\numberline {4}与 Mythos 对照：工作流与属性 vs 更强的模型}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}一场配置错误的「无限额度」实验}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}四个数字与一条工作流}{7}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}本章小结}{9}{subsection.4.3}%
+\contentsline {section}{\numberline {5}发现速度 ×10：负责任披露率先崩溃}{9}{section.5}%
+\contentsline {subsection}{\numberline {5.1}报告成了新的瓶颈}{9}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}为什么披露本身制造风险}{10}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}把问题变成基础设施：toomanybugs.wtf}{11}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}本章小结}{11}{subsection.5.4}%
+\contentsline {section}{\numberline {6}全部用 Rust 重写？漏洞属性会跟着代码走}{12}{section.6}%
+\contentsline {subsection}{\numberline {6.1}SafeLibs：一次认真的实验}{12}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}结论：语言换不掉属性}{13}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}现实世界里的同一课}{14}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}本章小结}{15}{subsection.6.4}%
+\contentsline {section}{\numberline {7}人的位置：开放模型、教育与自主「锐化」流水线}{15}{section.7}%
+\contentsline {subsection}{\numberline {7.1}限制模型不是方向}{15}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}人类学习：agent 吃掉 90\% 的工作，剩下的是杠杆}{15}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}学术研究的下一站：自主「锐化」流水线}{16}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}本章小结}{18}{subsection.7.4}%
+\contentsline {section}{\numberline {8}总结与延伸}{18}{section.8}%
+\contentsline {subsection}{\numberline {8.1}讲者收束的原话}{18}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}本讲义的三点提炼}{18}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}开放问题}{19}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}拓展阅读}{19}{subsection.8.4}%
+\contentsline {section}{\numberline {9}参考资料}{19}{section.9}%
+\contentsline {section}{\numberline {A}字幕去重优化版}{21}{appendix.A}%

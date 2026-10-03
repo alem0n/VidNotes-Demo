@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# 视记 VidNotes —— 自包含的本地静态演示产物（dist/ 双击即开，file:// 零服务端零网络）。
+# 无固定部署域名，故无 sitemap.xml；面向 LLM/agent 的自述见同目录 llms.txt。

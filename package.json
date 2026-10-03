@@ -1,0 +1,18 @@
+{
+  "name": "vidnotes",
+  "version": "0.78.0",
+  "private": true,
+  "type": "module",
+  "description": "视记 VidNotes —— 视频链接 → 中文讲义 + 可回放轨迹（展示型 MVP；自包含静态产物，file:// 零服务端零网络）",
+  "scripts": {
+    "build": "node pipeline/build.js && node pipeline/build-inlined.js",
+    "serve": "node pipeline/serve.mjs",
+    "probe": "node tests/probe/run-all.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": ["static-site", "demo", "lecture-notes", "video", "chinese"],
+  "license": "UNLICENSED",
+  "note": "零第三方依赖：构建链（pipeline/）只用 Node 内置模块（fs/path/url/vm/crypto），无需 npm install。npm scripts 只是记事入口；任意派生 worktree 内直接 node build.js 亦可重跑全链。"
+}

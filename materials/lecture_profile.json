@@ -1,0 +1,11 @@
+{
+  "mode": "mixed",
+  "audience": "capable first-time reader",
+  "central_question": "当 AI agent 接管漏洞发现之后，漏洞研究的方法论（怎么找）、工程化（怎么报、怎么修）与人的角色（研究者该懂什么）要如何重构？",
+  "reader_outcome": "读者应能解释「漏洞属性」这一方法论、说明为什么发现能力规模化之后负责任披露会率先崩溃、判断「全部用 Rust 重写」无法消除哪一类缺陷，并形成对开放模型与人类判断力各自边界的观点。",
+  "visual_teaching_atoms": 24,
+  "formula_teaching_atoms": 0,
+  "vision": "no",
+  "transcript_appendix": true,
+  "transcript_appendix_note": "用户要求：文末附字幕去重优化版（去口水词、去重复、修 ASR 听写错误），见 transcript_appendix.tex / audio.srt"
+}

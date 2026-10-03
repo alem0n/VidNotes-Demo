@@ -1,0 +1,284 @@
+:root {
+  --bg: #f7f6f3;
+  --paper: #ffffff;
+  --ink: #1c2333;
+  /* iteration 11: ink-3/green darkened for WCAG AA — see docs/Explore_11.md.
+     ink-3 #8a94a6 -> #5b6472: 2.61-3.06 -> 5.11-5.98 on every real backdrop
+     green #0e8a5f -> #047857: 3.72-4.36 -> 4.69-5.48 (and white-on-green 4.36 -> 5.48) */
+  --ink-2: #4a5568;
+  --ink-3: #5b6472;
+  --line: #e5e1d8;
+  /* iteration 11: SC 1.4.11 — a form control whose border is the only visual
+     indicator of its presence needs >=3:1 against the adjacent colour; #e5e1d8
+     is 1.21-1.30. Used only by .url-input/.mode-select borders. */
+  --line-strong: #8e8877;
+  --line-2: #efede8;
+  /* iteration 29: CVD lightness ladder. WCAG 1.4.1's Note: colour differences
+     that "also have a significant difference in lightness ... counts as an
+     additional visual distinction", and under any colour vision deficiency
+     lightness is the only dimension every deficiency type keeps — but hue is
+     not reliable (the green/cyan pair sat 0.003 apart in relative luminance,
+     so a deutan/tritan user could not tell 执行/关卡 pills apart by lightness
+     at all; the text labels carried the meaning per G14). The six pill tokens
+     are rescaled into an ascending ladder L = .034/.050/.066/.082/.098/.113
+     (cyan/red/accent/amber/violet/green; violet and green keep their
+     iteration-20 values), so every pair of pills differs by >= 0.015 and every
+     hue-confusable pair (green-cyan, green-red, amber-red, accent-violet,
+     accent-cyan) by >= 0.031. Uniform >= 0.05 gaps are provably impossible
+     with the >= 5.0 pill-pair floor: six values need a 0.25 span, while the
+     light end is pinned at L ~ .137 by the pastel soft fills and the dark end
+     by 10px hue readability (~.03). Darkening is also monotone-safe for
+     contrast: the pill-pair minimum RISES 5.365 -> 5.734 (green is now the
+     minimum) and white-on-accent 6.29 -> 9.06. --accent deepening is
+     product-wide (buttons/logo/nav) — registered side effect, see
+     docs/Explore_29.md for the full before/after matrices. */
+  --accent: #3c35af;
+  --accent-soft: #eef0fe;
+  /* iteration 20: --green deepened by the same uniform 10% channel scaling as
+     the iteration-12 amber/red prescription (docs/Explore_12.md leftover ②),
+     off the registered 4.882 edge to the >=5.0 "safe-margin" tier: on its
+     own soft fill 4.882 -> 5.734 (margin 1.23 over 4.5); >=5.51 on every real
+     backdrop. Numbers and full matrix in docs/Explore_20.md. */
+  --green: #046c4e;
+  --green-soft: #e7f5ee;
+  /* iteration 12: both tokens were referenced only by dead rules (the
+     .m-decision/.m-recovery pill selectors never matched the real
+     .stack-card.st-<kind> markup). They are revived by the rewritten
+     .st-decision .m-tag pill, and are deepened 10% off the 4.569 edge that
+     iteration 11 registered as a borderline pass (margin < 0.1 over 4.5:1):
+     on their own soft fill amber 4.569 -> 5.388, red (below) 4.569 -> 5.365.
+     SC 1.4.3 thresholds are not rounded, so the 10px/600 pill text (normal
+     text, not large) needs the raw value >= 4.5.
+     iteration 29: both are darkened one rung further for the CVD lightness
+     ladder (above) — amber 5.388 -> 7.250, red 5.365 -> 9.223. */
+  --amber: #833d06;
+  --amber-soft: #fdf3e3;
+  /* iteration 12: same deepening for .st-recovery .m-tag (4.569 -> 5.365).
+     iteration 29: darkened for the lightness ladder (5.365 -> 9.223). */
+  --red: #722707;
+  --red-soft: #fdeee4;
+  /* iteration 20: same deepening for --cyan, the iteration-12 matrix minimum
+     (4.727, margin 0.23): on cyan-soft 4.727 -> 5.581 (margin 1.08). After
+     both deepenings the six pill pairs are all >=5.365 — docs/Explore_20.md.
+     iteration 29: darkened to the bottom ladder rung for CVD separation from
+     green (5.581 -> 10.994). */
+  --cyan: #073947;
+  --cyan-soft: #e6f3f7;
+  --violet: #6d28d9;
+  --violet-soft: #f1ebfd;
+  /* iteration 42: 尺度 token（色板逐字不动；数值=登记值；语义与豁免见 docs/Explore_42.md） */
+  /* 间距/尺度尺 */
+  --s1: 1px; --s2: 2px; --s3: 3px; --s4: 4px; --s5: 5px; --s6: 6px;
+  --s8: 8px; --s10: 10px; --s12: 12px; --s14: 14px; --s16: 16px; --s20: 20px;
+  --s28: 28px;
+  /* 圆角档位：14 容器/药丸 · 12 控件 · 10 小块 · 8 芯片 · 4 轨条（M3 shape 4/8/12/16） */
+  --r14: 14px; --r12: 12px; --r10: 10px; --r8: 8px; --r4: 4px;
+  /* 阴影层级（M3 elevation：resting 0..+3，+4/+5 交互态） */
+  --shadow-panel: 0 1px 2px rgba(28,35,51,.05), 0 8px 24px rgba(28,35,51,.06);
+  --shadow-raised: 0 12px 30px rgba(28,35,51,.10);
+  --shadow-raised-accent: 0 12px 30px rgba(60,53,175,.10);
+  --shadow-btn: 0 4px 14px rgba(60,53,175,.26);
+  --shadow-btn-hover: 0 6px 18px rgba(60,53,175,.34);
+  --shadow-thumb: 0 6px 14px rgba(28,35,51,.18);
+  --shadow-knob: 0 2px 6px rgba(60,53,175,.28);
+  --shadow-overlay: 0 24px 60px rgba(0,0,0,.30);
+  --shadow-lightbox: 0 24px 60px rgba(0,0,0,.50);
+  --ring-focus: 0 0 0 3px var(--accent-soft);
+  /* 边框/分隔语义（--control-border 是 WCAG 1.4.11 控件唯一指示器，语义不动） */
+  --hairline: 1px solid var(--line); --divider: 1px dashed var(--line-2);
+  --control-border: 1.5px solid var(--line-strong); --outline-focus: 3px solid var(--accent);
+  --font-mono: ui-monospace, "SF Mono", Consolas, monospace;
+  /* 字阶（有限档位；h 后缀 = 0.5px CJK 密度半档） */
+  --f10: 10px; --f11: 11px; --f12: 12px; --f13: 13px; --f14: 14px;
+  /* 动效：时长档（交互 <=300ms；揭示动画保持原值）+ 缓动 */
+  --d1: .1s; --d12: .12s; --d14: .14s; --d15: .15s; --d3: .3s; --d4: .4s; --d45: .45s; --d5: .5s; --d6: .6s; --d8: .8s;
+  --ease-out: cubic-bezier(.2,.9,.3,1);
+  --z-topbar: 60; --z-modal: 200; --z-lightbox: 300;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+/* iteration 67: 根元素横向裁剪（全出血舞台 vw 突围的对治）。第 67 次 .run-panel 以
+   width:100vw + 负边距边缘到边缘（convert.css）：vw 单位含经典滚动条宽度（headless
+   Chromium 实测 15px：narrow 基线 nbVw=320 / nbScrollW=305 即在场证明），无本规则则竖
+   滚动条在场时舞台右缘溢出 clientWidth 而生横向滚动条。用 clip 而非 hidden：clip 不建
+   立滚动容器（MDN overflow-x：clip 另外禁止滚动、不成滚动盒），hidden 会使 body 成为
+   滚动容器从而破坏 position: sticky（benfrain 实证 clip 与 sticky 共存）——topbar 的
+   sticky 不受影响；scroll-behavior 为独立属性、与 overflow 传播无涉（smooth 滚动门
+   逐字不动，run-skspace / 主探针 37 次以降滚动门验收照常）。被裁去的仅是舞台的纯背景/
+   内边距区（内容带 var(--s28) 槽线），视觉零损失；横向溢出回归仍可由
+   documentElement.scrollWidth 读出（裁剪不改其内容测量口径 ⇒ nbOvf 门照常工作）。 */
+html { scroll-behavior: smooth; overflow-x: clip; }
+body {
+  font: 14px/1.6 -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color: var(--ink); background: var(--bg);
+}
+button { font-family: inherit; cursor: pointer; }
+.hidden { display: none !important; }
+
+/* ---------- top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: var(--z-topbar);
+  display: flex; align-items: center; gap: 32px;
+  padding: 0 var(--s28); height: 60px; background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px); border-bottom: var(--hairline);
+}
+.brand { display: flex; align-items: center; gap: var(--s10); }
+.logo {
+  width: 34px; height: 34px; border-radius: var(--r10); display: flex; align-items: center; justify-content: center;
+  background: var(--accent); color: #fff; font-weight: 800; font-size: 15px; letter-spacing: -1px;
+}
+.logo span { background: linear-gradient(180deg,#fff,#c7d2fe); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.brand-text b { font-size: 15px; letter-spacing: .3px; display: block; }
+.brand-text em { font-style: normal; font-size: var(--f10); color: var(--ink-3); }
+.nav { display: flex; gap: var(--s4); }
+.nav-item {
+  border: 0; background: none; font: inherit; /* <button> reset: keep the link-like look */
+  /* iteration 70: tab 成为独立页面的锚点（<a>）；同一重置原则扩到锚点专属默认值：
+     下划线与默认链接色两个会破坏「像按钮一样的 tab」读数的默认样式一并归零
+     （color 已声明为 ink-2，此处只补 text-decoration；零新增 token、零动效声明） */
+  text-decoration: none;
+  padding: 7px var(--s14); border-radius: var(--r10); color: var(--ink-2); font-size: var(--f13); cursor: pointer;
+  display: flex; align-items: center; gap: var(--s6); font-weight: 500;
+  position: relative; z-index: 0; /* iteration 50: 伪元素洗与指示条的包含块；z-index 0 把负 z-index 伪元素罩进宿主自身层叠上下文（画在宿主背景之上、内容之下）；relative 不改变盒模型 */
+}
+.nav-item:hover { background: var(--line-2); }
+.nav-item.active, .nav-item[aria-current="page"] { color: var(--accent); }
+/* iteration 50: 控制层 active 态的迁移语言（「动效表达」第六切面）。字节安全裁决（首次派发失败后
+   root 分类，详见 Explore_50.md §5）：对比比扫描（inject-main.2 的 GROUPS 与 bgOf）读
+   computed color 与祖先链 backgroundColor，探针虚拟钟冻结 JS 调度而 CSS 过渡走实时钟 ⇒
+   file/http 双路读点可落在不同插值进度（首次失败的 .count@5.76 ↔ .fact@6.43 实证）。
+   故 color/background-color 过渡一律不挂宿主（.nav-item 与其子 .count 同在 ink2 组、
+   .nav-item.active 在 accent 组——宿主与后代皆被扫描或经继承入扫描），active 洗与指示条
+   全部改走伪元素安全通道：① ::before 洗 = opacity 交叉淡入（伪元素被 bgOf 的
+   parentElement 链结构性排除、亦不入 body 子树几何扫描）——伪元素取代宿主背景承载
+   accent-soft 洗，宿主背景恒为透明；② ::after 迁移指示条 = transform scaleX（同上
+   结构性排除，且 transform 零布局贡献）。宿主 fg 翻转保持瞬时（= 第 49 次前既有行为；
+   AT 语义 aria-current 由 switchView 类翻转同任务先行，动效只落画面 = 第 45 次可中断
+   口径）。同窗 --d15 = 150ms 交互态窗 + --ease-out，与 46 stepper / 47 质量行 /
+   49 交付勾选同一支跨视图状态语言；双向同窗（覆盖式选择翻转无进出场主体，非 48
+   弹层进出非对称语义）；hover 交互态保持宿主瞬时（扫描安全优先，不挂第二过渡）。 */
+.nav-item::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: var(--accent-soft); opacity: 0; transition: opacity var(--d15) var(--ease-out); }
+.nav-item.active::before, .nav-item[aria-current="page"]::before { opacity: 1; }
+/* iteration 50: 迁移指示条（重音通道；首次 WIP 已验证为字节安全可复用部分，凭据 = 伪元素
+   结构性排除 + transform 零布局贡献）。2px = --s2、--accent 既有登记值；bottom -6px
+   落在 60px sticky topbar 的药丸下方与下边框之间（宿主 rect 不变——nbTopbar 读
+   .nav/.topbar 的 right、nbOvfEls 的 body 子树扫描不含伪元素）。transform-origin 用
+   center 而非 46 推进轴的 left：nav 是无方向选择集，「这里被选中」而非「自左推进」；
+   旧项 retract 与新项 extend 同窗同时 = 标记读作迁到另一项（47 frontier 游标的同族
+   位置语言）。选择器镜像既有 active 复合规则——switchView 的同一 forEach lockstep 翻转
+   两者。状态由 fg + 洗 + 条与 aria-current 承载，指示条是第三通道而非唯一指示器
+   （WCAG 1.4.1）；accent on topbar 白 = 9.04 ≥ 3（SC 1.4.11 不适用于装饰性指示条）。
+   降级：第 43 次末块的三连（`*`、`*::before`、`*::after`）收敛 0.01s 落完成帧。 */
+.nav-item::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: var(--s2);
+  background: var(--accent); transform: scaleX(0); transform-origin: center;
+  transition: transform var(--d15) var(--ease-out); }
+.nav-item.active::after, .nav-item[aria-current="page"]::after { transform: scaleX(1); }
+.count { background: var(--line); border-radius: var(--r8); font-size: var(--f10); padding: 0 var(--s6); font-family: var(--font-mono); }
+.topbar-right { margin-left: auto; }
+/* iteration 42: .pill 去默认控件边框（标签非控件）；ink-3/line-2 = 5.113 >= AA */
+.pill { font-size: var(--f11); color: var(--ink-3); background: var(--line-2); padding: var(--s5) var(--s12); border-radius: var(--r14); }
+
+/* ---------- transport two-state layer（第 56 次，「动效表达」第十二切面 +「智能状态与反馈」） ---------- */
+/* 落点裁决：本段在 base.css 而非 style.css —— style.css 已 492/500 行触线（原则 2「接近上限时
+   优先重构模块边界」，但为 10 条规则拆新样式表是为抽象而抽象），而 base.css 已承载「跨视图
+   控件状态层」段（45 视图容器转场 / 50 nav active 迁移），运输双态与之同族同语言，同段落延续。
+   级联零冲突实读：style.css 的 .transport .btn-ghost / .run-transport .btn-ghost 只声明 padding、
+   .btn-ghost:hover 只声明 border-color+color —— 本段与之属性正交（hover 的 border-accent 与
+   playing 的 border-accent 同值，谁胜视觉逐位相同）。 */
+/* 覆盖对象 = 两处「双态切换型」运输钮：convert 演示的 #btnPauseRun（⏸ 暂停 ↔ ▶ 继续）与
+   player 回放的 #plPlay（▶ 播放 ↔ ⏸ 暂停，终态 ↺ 重播）。label 承载动作（NN/g 媒体播放器
+   idiom：The Play icon is replaced with Pause when the video is playing，icon indicates the
+   state that the system will move to）、aria-pressed 承载状态（APG toggle button）——两者皆由
+   setPauseBtn / setPlayBtn 同步任务写下，本段零改写入口径，动效只骑视觉层。 */
+/* 触发机制（机制页实证）：状态呈现直接由 aria-pressed 取值派生——两条「取值分列」的规则在每次
+   取值翻转时其一失配另一条新匹配。但同一动画名在 Chromium 里被视作「已解析动画未变」⇒ 不重播
+   （机制页对照：通配 [aria-pressed] 单条规则与两规则同名皆不重播，只有两方向「异名」
+   keyframes 才在每次翻转重播）⇒ 到场拍必须 swapPlay（进入播放）/ swapPause（进入暂停）两名。
+   display 翻转（钮从 .hidden 出现 / player 揭幕）经同一重匹配机制同任务起播（45/51/54 口径）。 */
+/* 字节安全（root 第 50 次裁决硬约束）：.btn-ghost 在 inject-main.2 GROUPS.ink2 组内 ⇒ 宿主
+   color/background-color 过渡为风险通道（首次失败实证 .count@5.76 ↔ .fact@6.43）⇒ 本段全部
+   通道 = transform / box-shadow / border-color / 伪元素 opacity / keyframes（opacity+transform），
+   宿主色翻转保持瞬时（:hover 既有色翻转逐字不动）。playing 持续标记为「静态」三路（border /
+   3px 左轨 / halo 阴影，NN/g「a shadow to indicate that the button has been pressed and now
+   it's active」的物理征象）——非常驻呼吸（常驻循环被第 43 次末块 iteration-count:1 停在首帧）；
+   paused = 三路同窗收敛 + 演示运输区 wash + label 到场拍。降级：第 43 次末块三连把本段全部
+   通道收敛 0.01s 落完成帧（含伪元素）。 */
+.transport .btn-ghost, .run-transport .btn-ghost {
+  position: relative; overflow: hidden; /* 轨的包含块 + 圆角裁剪（46 .stage-step::after 词汇），relative/overflow 零盒模型变化 */
+  transition: transform var(--d1) var(--ease-out), border-color var(--d15) var(--ease-out),
+    box-shadow var(--d15) var(--ease-out);
+}
+/* press 力反馈：52 的 .btn-primary 三态范式同型同值（Atlassian 高频交互 < 150ms、即时起播）——
+   作用域仅两处运输区（.transport / .run-transport）：刻意不扩到 .btn-ghost 全族，避免 55 的
+   flyCapture 从 #btnReplayRun 取 rect/视觉快照时把 hover 的位移/阴影带进飞行层起点 quad。 */
+.transport .btn-ghost:hover, .run-transport .btn-ghost:hover { transform: translateY(-1px); box-shadow: var(--shadow-btn-hover); }
+.transport .btn-ghost:active, .run-transport .btn-ghost:active { transform: translateY(1px); box-shadow: none; }
+/* 补 #plPlay 缺失的键盘焦点钩子（仓内 .run-pause/.doc-card/.scrubber 既有声明逐字同值；
+   .run-pause 自己的 :focus-visible 保留在 style.css 逐字不动） */
+.transport .btn-ghost:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+/* playing 持续标记（aria-pressed=true）三路静态：accent 边 + accent halo + 3px 左轨。
+   状态本身已由 label（⏸/▶）+ aria-pressed + 转瞬即止的时钟承载，三路标记是加强而非唯一
+   指示器（WCAG 1.4.1）；border-width 随 hairline 1px 不变 ⇒ 几何零变化。 */
+.btn-ghost[aria-pressed="true"] { border-color: var(--accent); box-shadow: var(--shadow-btn); }
+.btn-ghost[aria-pressed="true"] { animation: swapPlay var(--d3) var(--ease-out); }
+.btn-ghost[aria-pressed="false"] { animation: swapPause var(--d3) var(--ease-out); }
+.btn-ghost[aria-pressed]::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: var(--s3);
+  background: var(--accent); opacity: 0; transition: opacity var(--d15) var(--ease-out); }
+.btn-ghost[aria-pressed="true"]::before { opacity: 1; }
+/* 演示运输区的「已暂停」wash（可选伴面，纯 CSS）：演示存活且钮取 false（手动暂停或第 25 次离场
+   自动冻结）⇒ 钮可见且态唯一 ⇒ wash 读作「演示已暂停」；演示结束时 convert.js:350 整钮隐藏
+   （hidePauseBtn），不存在「已结束却被标成已暂停」的窗口。读点论证：伪元素被 bgOf 的
+   parentElement 链结构性排除、宿主与祖先背景声明逐字不变 ⇒ 机器读点零变化；渲染侧全 alpha
+   实算 ink-3 on accent-soft = 5.29 / accent on accent-soft = 7.99 ≥ AA（52 氛围层同口径）。
+   宿主 position:relative + z-index:0 = 52 氛围层同款的零盒模型层叠上下文。 */
+.run-transport { position: relative; z-index: 0; }
+.run-transport::after { content: ""; position: absolute; inset: -7px; z-index: -1;
+  border-radius: var(--r12); background: var(--accent-soft); opacity: 0;
+  transition: opacity var(--d15) var(--ease-out); }
+.run-transport:has(.run-pause[aria-pressed="false"])::after { opacity: 1; }
+/* label 到场拍：glyph 直换（textContent）无包裹节点 ⇒ 动画主体 = 按钮元素本身（47 的
+   swap+元素动画模式；::first-letter 在 Chromium 对 button 实证无伪元素 ⇒ 无法隔离 glyph）。
+   主体是整颗控件 ⇒ 刻意不用 scale 家族（整体缩放读作故障）；形态取 blockIn 家族的
+   opacity + translateY(4px)（内容自下方升位），窗 = --d3 300ms 到场档（与 45/47/52 同家族），
+   与标记的 150ms 状态窗构成同面双通道异窗（.doc-card 的 120/150 先例）。fill 默认 none ⇒
+   落定后 :hover/:active 的 transform 与过渡逐字存活（52 机制页同款验证）。
+   两名同体（swapPlay/swapPause 形态逐字相同）是 Chromium 重播机制的必需，非方向差异。 */
+@keyframes swapPlay { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes swapPause { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ---------- views ---------- */
+.view {
+  max-width: 1180px; margin: 0 auto; padding: 40px var(--s28) 72px;
+  /* iteration 45: 进入转场（「动效表达」第一切面）。transition 不含 display，故出口
+     保持「类翻转即离 layout」——第 9 次滚动语义的前提逐字不变（出口同任务离 layout、
+     文档高度当帧塌陷为单视图、翻转后 scrollTo(0,"instant") 复位的目标页仍是单视图页）。
+     可中断：AT 语义（aria-hidden/inert/aria-current）/ 焦点逃逸 guard / 滚动复位 /
+     viewswitch 派发全部在类翻转的同一任务内先行落定，300ms 只是落画面。 */
+  transition: opacity var(--d3) var(--ease-out), transform var(--d3) var(--ease-out);
+}
+/* iteration 45: @starting-style = display:none → block 的首帧起点（进入方向唯一的纯 CSS
+   原语；出口方向不加 allow-discrete 是刻意的——出口过波会让出口视图在过渡期内留在
+   layout：双视图叠高 + incoming 落其下被遮，且同帧 instant 复位会瞄到带出口视图高度的
+   页面，即第 9 次注释「collapsing document 上的二次跳动」的复活）。出口瞬时 + 入口
+   300ms 的非对称 = 克制：入口运动牵引注意，出口消失由背景中和，整段读作一次 crossfade。
+   数值：--d3 = 300ms（交互窗上限，与 M3 standard 过渡同值）；--ease-out（第 42 次登记
+   缓动）；translateY(12px) 取本仓入场词汇家族中位（证据块 blockIn 8px / 卡片 pushIn
+   18px），占内容列宽 ~1%。纯 paint 通道：transform/opacity 不参与布局测量（第 21 次窄屏
+   横截基线与第 29/38 次弹层 mMinC 门逐字节不动）。降级走第 43 次 responsive.css 末块
+   的 transition-duration: 0.01s !important（无新增 @media，check-cascade 媒体序仍 7 项）。 */
+@starting-style {
+  .view.active { opacity: 0; transform: translateY(12px); }
+}
+/* Visual hiding (iteration 9): only the active view renders. display:none takes
+   the whole subtree out of layout+paint (no rendering cost while hidden) and
+   out of the accessibility tree, composing with the aria-hidden+inert state
+   that switchView keeps on non-current views. The .active class is the single
+   source of truth for both the visual state and the nav highlight, so the
+   initial markup already hides every view that lacks .active. Not !important:
+   .hidden's display:none !important targets .run-panel/.player/.modal/.lightbox,
+   whose scope never overlaps a .view. */
+.view:not(.active) { display: none; }
+.view-title { margin-bottom: 22px; }
+.view-title h2 { font-size: 24px; letter-spacing: .3px; }
+.view-title p { color: var(--ink-3); margin-top: 4px; font-size: var(--f13); }
+

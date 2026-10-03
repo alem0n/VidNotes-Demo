@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文档库 · 视记 VidNotes</title>
+<!-- iteration 70: 多页拆分 I 期——本页 = 文档库（doc-grid + 文档弹层 + lightbox）。
+     ?doc=<runId> 深开本 run 的笔记弹层（run.html「查看讲义」的跨页等价落点）；
+     弹层内「回放生成轨迹」跨页跳 history.html#history/<run>（fragment 家族不变）。 -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="app.css">
+</head>
+<body data-page="library">
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">视<span>记</span></div>
+    <div class="brand-text">
+      <b>VidNotes</b>
+      <em>视频 → 笔记，全自动</em>
+    </div>
+  </div>
+  <nav class="nav" aria-label="视图导航">
+    <a class="nav-item" href="index.html">转换</a>
+    <a class="nav-item active" href="library.html" aria-current="page">文档库 <span id="libCount" class="count">1</span></a>
+    <a class="nav-item" href="history.html">历史轨迹 <span id="histCount" class="count">1</span></a>
+  </nav>
+  <div class="topbar-right">
+    <span class="pill">由运行记录自动重建轨迹</span>
+  </div>
+</header>
+
+<main id="main">
+<!-- ============ PAGE: LIBRARY ============ -->
+<section id="view-library" class="view active">
+  <div class="view-title">
+    <h2>文档库</h2>
+    <p>每份笔记都附带可回放的生成轨迹。</p>
+  </div>
+  <div id="docGrid" class="doc-grid"></div>
+</section>
+</main>
+
+<div id="docModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="docModalTitle">
+  <div class="modal-backdrop"></div>
+  <div class="modal-card">
+    <button class="modal-close" id="docModalClose" aria-label="关闭">×</button>
+    <div id="docModalBody"></div>
+  </div>
+</div>
+
+<div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="图片放大预览">
+  <div class="lb-backdrop"></div>
+  <button class="lb-close" id="lbClose" aria-label="关闭">×</button>
+  <button class="lb-nav lb-prev hidden" id="lbPrev" type="button" aria-label="上一张" disabled>‹</button>
+  <button class="lb-nav lb-next hidden" id="lbNext" type="button" aria-label="下一张" disabled>›</button>
+  <img src="" alt="">
+  <div class="lb-caption" aria-live="polite"></div>
+</div>
+
+<footer class="footer">
+  <div class="footer-cols">
+    <div>
+      <h3>无感，但可回放</h3>
+      <p>转换过程你无需介入；每条轨迹都可随时回放：它做过什么、何时遇到障碍、如何自动恢复、最终凭什么通过验收。</p>
+    </div>
+    <div>
+      <h3>数据来源</h3>
+      <p>轨迹、阶段、关卡与交付物均由系统运行记录（session 记录）自动重建与润色呈现，非人工摆拍。</p>
+    </div>
+    <div>
+      <h3>边界</h3>
+      <p>界面只呈现行为与产物：内部提示、签名、协议字段等实现细节不进入展示层。</p>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

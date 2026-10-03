@@ -1,0 +1,85 @@
+/* ---------- footer ---------- */
+.footer { border-top: var(--hairline); background: var(--paper); padding: 30px var(--s28) 44px; }
+.footer-cols { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s28); }
+.footer h3 { font-size: var(--f13); margin-bottom: 6px; }
+.footer p { font-size: var(--f12); color: var(--ink-3); line-height: 1.7; }
+
+@media (max-width: 980px) {
+  /* iteration 11: .player-cols.two was missing here — its specificity (0-2-0)
+     beat this rule (0-1-0), so the two-column track survived at <=980px and the
+     fixed 280px aside overflowed the .player box by 32px at 360px. Matching the
+     specificity restores the intended single column.
+     iteration 66: .run-side 追加进同一塔缩选择器列表。
+     iteration 68: .run-side 随组件整体下线而从列表移除（底部数据带已不存在：
+     art-rows 迁入 #runFoot、#runMetrics 删除）；nbRule980 的 selSet 检查只
+     要求含 .run-body / .player-cols.two，移除不破，媒体出现序亦不新增。 */
+  .run-body, .player-cols, .player-cols.two { grid-template-columns: 1fr; }
+  .convert-form { flex-direction: column; }
+  .footer-cols { grid-template-columns: 1fr; }
+  .topbar-right { display: none; }
+}
+
+/* iteration 11: narrow-viewport minimums (driven by measurement, not by a
+   design breakpoint): at <=640px css px the transport's five children
+   (play 76 + gap 12 + speeds 170 + gap 12 + clock 120 = 390, plus a usable
+   scrubber) no longer fit the player's content box (vw - 104); the stage-step
+   names are hard-clipped by their own overflow:hidden at every measured width
+   (360/414/480/560); and the topbar's 28px padding + 32px gap push the nav
+   3px past the bar at 360px. Minimal, layout-preserving fixes only:
+   wrap instead of shrink, cap the flex basis, drop the hard min-width. */
+@media (max-width: 640px) {
+  .topbar { gap: var(--s16); padding: 0 var(--s16); }
+  .transport { flex-wrap: wrap; }
+  /* the scrubber is an operable APG slider (iteration 10): a zero-width slider
+     is unusable, so it gets a floor and a wrap-friendly basis instead of
+     collapsing to nothing */
+  .transport .scrubber { flex: 1 1 140px; min-width: 140px; }
+  .transport .clock { min-width: auto; }
+  .stage-step { min-width: 108px; }
+  .stage-stepper { flex-wrap: wrap; }
+  /* the auto-fill 300px floor overflows a view content box narrower than that
+     (vw - 56 < 300, i.e. vw < 356); min() lets the floor yield to the container
+     while leaving every width >= 356 exactly as before */
+  .doc-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+}
+
+/* iteration 11: the very small phone band (<=360 css px). The topbar's natural
+   need is brand 111 + gap + nav 178; with 16px gap/padding that only fits
+   down to ~355, so tighten both here. Nothing else changes at this width. */
+@media (max-width: 360px) {
+  .topbar { gap: var(--s10); padding: 0 var(--s10); }
+  .nav-item { padding: 7px var(--s10); }
+}
+
+/* iteration 77: 原片回放面的 900px 塌列块随 #view-source 整体删除（check-cascade 的
+   RECORDED_MEDIA 8→7 项同步登记）。同块内 .topbar:has(.nav-item[data-view="source"])
+   实测为死选择器（导航锚从不携带 data-view 属性，第 63 次遗留）——随块清除。顶栏
+   320 css-px 残留（~1.2px 超内宽）仍在 2px 预算内。 */
+
+/* iteration 43: WCAG 2.3.3 (AAA) — interaction-triggered motion must be
+   disableable. Collapsed, not removed: fill modes stay, so a ~0s duration
+   lands on the completed frame (removing the animation would freeze the
+   from-frame and break the layout it resolves to); the infinite typing
+   cursor keeps its visible static state via iteration-count 1. :focus-visible
+   outlines are state indicators, not motion, and carry no transition of
+   their own — untouched. !important + last-in-link-order wins over .fast's
+   important duration overrides in stack.css. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  /* iteration 51: delay 治理面补全。第 43 次本块只收 duration（+ iteration-count），
+     不收 delay ⇒ 错峰阶梯的延迟原样保留：reduced-motion 下内容仍按间隔依次显形
+     （fill: backwards 的延迟窗内保持首帧 = 不可见），「~0s duration lands on the
+     completed frame」的本块自述原则被延迟推开。追加 delay 归零的三条理由：① 这是对
+     本块自身原则的补全而非新治理面（W3C C39 的目标是让用户 prevent animations
+     from being displayed，延迟是错峰本体的组成部分——级联由延迟产生）；② 零回归：
+     全仓仅 .sc-evidence.fast（stack.css）声明过 animation-delay 且值为 0s，
+     transition-delay 零声明 ⇒ 本追加只治理新增的错峰阶梯；③ 媒体序仍 7 项、块位置
+     仍是拼接序最末、!important 权威不变（零新增 @media）。 */
+  *, *::before, *::after {
+    animation-duration: 0.01s !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01s !important;
+    transition-delay: 0s !important;
+  }
+}

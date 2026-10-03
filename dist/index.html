@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>视记 VidNotes · 视频自动转笔记</title>
+<!-- iteration 70: 多页拆分 I 期——本页 = 落地页（hero + 表单 + cvMsg + trust-row）。
+     顶栏的每一个 tab 都是独立 html 页面（锚点导航 + 本页 aria-current="page"），
+     runPanel 卡片提取为独立页 run.html（表单提交经 URL 交接参数跳转过去）。
+     第 78 期：本页 = convert 页，文件名改 index.html（首页 = 提交转换地址的页；
+     页身份 token data-page="convert" 与视图语义不变）。样式表入 src/styles/main.css
+     （@import 序 = 级联序），模块入口 src/scripts/main.js；构建期 build-inlined.js
+     分别换成 dist/app.css 与 data.js + app.js 经典束（file:// 零模块/零 fetch），
+     public/（favicon/media）原样拷到 dist/ 根。 -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="app.css">
+</head>
+<body data-page="convert">
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">视<span>记</span></div>
+    <div class="brand-text">
+      <b>VidNotes</b>
+      <em>视频 → 笔记，全自动</em>
+    </div>
+  </div>
+  <nav class="nav" aria-label="视图导航">
+    <!-- iteration 70: tab = 独立页面。锚点原生携带键盘可达与 href 深链；
+         .active + aria-current="page" 标记本页（base.css 的 .nav-item 规则
+         同时认 class 与属性，视觉与 AT 双通道不变）。 -->
+    <a class="nav-item active" href="index.html" aria-current="page">转换</a>
+    <a class="nav-item" href="library.html">文档库 <span id="libCount" class="count">1</span></a>
+    <a class="nav-item" href="history.html">历史轨迹 <span id="histCount" class="count">1</span></a>
+  </nav>
+  <div class="topbar-right">
+    <span class="pill">由运行记录自动重建轨迹</span>
+  </div>
+</header>
+
+<main id="main">
+<!-- ============ PAGE: CONVERT（落地页） ============ -->
+<section id="view-convert" class="view active">
+  <!-- 子内容逐字不变（52 的首屏错峰在每页加载时自然播：多页形态的入场编排）。
+       第 16 次 #cvMsg 校验通道逐字不变：存在且为空，:empty 折叠出口布局。 -->
+  <div class="convert-hero" id="convertHero">
+    <h1>把一节视频，变成一份能读懂的笔记</h1>
+    <p class="hero-sub">粘贴链接，剩下的交给系统：取字幕、选教学图、核验每个数字、写成可排版的中文笔记。你不需要懂任何工具。</p>
+    <form id="convertForm" class="convert-form">
+      <input id="urlInput" class="url-input" type="text" placeholder="YouTube / Bilibili / X 视频链接" value="https://www.youtube.com/watch?v=VNYe3Cnk5Pw" autocomplete="off">
+      <select id="modeSelect" class="mode-select">
+        <option value="auto">自动判断类型</option>
+        <option value="conceptual-talk">侧重观点梳理</option>
+        <option value="technical-slide">侧重机制与推导</option>
+      </select>
+      <select id="demoPace" class="mode-select">
+        <option value="brisk">轻快演示 · 约 1.5 分钟</option>
+        <option value="instant">极速演示 · 约 0.5 分钟</option>
+        <option value="immersive">沉浸节奏 · 约 6 分钟</option>
+      </select>
+      <button type="submit" class="btn-primary">开始转换</button>
+    </form>
+    <p id="cvMsg" class="cv-msg" role="status" aria-live="polite" aria-atomic="true"></p>
+    <div class="trust-row">
+      <span>✓ 全程无需人工介入</span><span>✓ 每个数字都有出处</span><span>✓ 交付前自动验收</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer-cols">
+    <div>
+      <h3>无感，但可回放</h3>
+      <p>转换过程你无需介入；每条轨迹都可随时回放：它做过什么、何时遇到障碍、如何自动恢复、最终凭什么通过验收。</p>
+    </div>
+    <div>
+      <h3>数据来源</h3>
+      <p>轨迹、阶段、关卡与交付物均由系统运行记录（session 记录）自动重建与润色呈现，非人工摆拍。</p>
+    </div>
+    <div>
+      <h3>边界</h3>
+      <p>界面只呈现行为与产物：内部提示、签名、协议字段等实现细节不进入展示层。</p>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

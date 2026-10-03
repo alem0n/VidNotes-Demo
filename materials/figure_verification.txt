@@ -1,0 +1,140 @@
+=== 00:15:15 @ 15:15 (915s) ===
+  >>> [15:15] is, you know, better in a way that's
+  >>> [15:14] We're just going to make something that
+  >>> [15:18] more resilient, that might scale farther
+  >>> [15:11] So you say forget about being better.
+      [15:21] and we're just going to analyze everything. Before we could analyze
+
+=== 00:16:00 @ 16:00 (960s) ===
+  >>> [16:01] make this analyzer better. You just need
+  >>> [15:58] often times you don't actually need to
+  >>> [16:04] to make it more applicable. And so then
+      [16:07] by casting a wider net, you find more
+      [15:51] scale where we were analyzing for example every program shipped into repositories for vulnerabilities. Now,
+
+=== 00:22:45 @ 22:45 (1365s) ===
+  >>> [22:49] analyses either explicitly in this case
+      [22:52] of most static analyses or implicitly in
+      [22:37] flow, a result of injection of attack or control content, might exhibit multi-threaded behavior or require multi-to behavior. These are all properties of a vulnerability and
+      [22:35] vulnerability might be a result of data
+      [22:55] the case of pasting things into GPT and many fuzzing approaches. These analyzers target specific vulnerability properties.
+
+=== 00:23:45 @ 23:45 (1425s) ===
+  >>> [23:46] vulnerabilities. And I'll uh give you an
+  >>> [23:48] example of a a paper we recently
+      [23:39] the agentic age. So, let me show you how we think about vulnerability properties. Not just finding the vulnerabilities, but the properties of the
+      [23:51] published. Actually, it is coming out
+      [23:52] next week. So, this is a bit of a
+
+=== 00:26:15 @ 26:15 (1575s) ===
+  >>> [26:14] We found dozens of flaws ranging from uh
+  >>> [26:19] Bluetooth uh um device takeovers to
+      [26:07] speaking, led to a new zero day vulnerability in Open Harmony.
+      [26:24] privacy leaks, location, all of this very fun stuff.
+      [26:29] in open harmony because we started from the vulnerability properties that we extracted from Android bugs
+
+=== 00:27:15 @ 27:15 (1635s) ===
+  >>> [27:15] this this will all be irrelevant. And luckily, Arizona State University in
+      [27:20] their infinite wisdom allowed us a
+      [27:09] be built into the properties. Maybe when we all have mythos access,
+      [27:07] models keep getting better. Maybe it'll
+      [27:23] glimpse into whether this really matters
+
+=== 00:29:30 @ 29:30 (1770s) ===
+  >>> [29:31] to various reports online part of the
+  >>> [29:28] this and and mythos part of it according
+  >>> [29:33] trick is a really clever workflow and
+      [29:25] beat it. Bummer. But then we looked into
+      [29:36] workflows are kind of the the hip latest
+
+=== 00:31:00 @ 31:00 (1860s) ===
+  >>> [31:00] What what the hell do we do with that?
+  >>> [31:02] We are finding them way way faster than
+      [31:06] we can report to them because you don't
+      [31:08] want to just send tons of slot. You want
+      [30:50] And now we're sitting on well over a thousand local privilege escalation vulnerabilities in the Linux kernel.
+
+=== 00:31:30 @ 31:30 (1890s) ===
+  >>> [31:29] agentic age? because it feels like
+  >>> [31:32] responsible disclosure is screwed and it
+  >>> [31:26] mean for a responsible disclosure in the
+  >>> [31:34] was already screwed before the scale
+      [31:24] actually report them. So what does this
+
+=== 00:32:15 @ 32:15 (1935s) ===
+  >>> [32:14] embedded devices and we went and extracted the properties of those reproduced those vulnerabilities
+      [32:22] on other devices that we had in the lab.
+      [32:26] And we found that basically for every vulnerability that you disclose,
+      [32:02] in the embedded devices space that when you disclose vulnerabilities, you're making people less safe. We analyzed disclosed vulnerabilities on
+      [32:31] depending on how you count, depending on
+
+=== 00:33:00 @ 33:00 (1980s) ===
+  >>> [32:59] And we don't have a better solution. So
+  >>> [33:02] we're dropping all the bugs on Twitter. No, I'm just kidding. Um,
+      [33:06] we're taking small steps to trying to
+      [32:52] you very quickly become very upset with the current state of responsible disclosure.
+      [33:08] find a replacement, a better solution. Starting with something that's pretty hip nowadays.
+
+=== 00:34:45 @ 34:45 (2085s) ===
+  >>> [34:44] Couple of hands. So, the agents are in.
+  >>> [34:47] Agents are very good at writing Rust.
+      [34:50] And uh when I had infinite codecs, I
+      [34:53] thought, well, screw it. I'll just
+      [34:36] buggy tech debt, and we rewrite everything in Rust. Who's in?
+
+=== 00:35:45 @ 35:45 (2145s) ===
+  >>> [35:46] it doesn't work. Why doesn't it work? Why can't we be free of our tech debt?
+      [35:51] Well, because when we rewrite stuff in
+      [35:54] Rust or rewrite re-implement stuff, the vulnerability properties come with us.
+      [35:34] "Oh, I'm running my own Rust stuff. That's weird." Um,
+      [35:32] noticed some weird behavior. I'm like,
+
+=== 00:37:00 @ 37:00 (2220s) ===
+  >>> [37:01] have the agents do formal verification
+  >>> [36:58] people can say, "Yes, but what if you also
+  >>> [36:56] because we're in in Rust land. And
+  >>> [37:04] to eliminate logic errors?" And that's a
+      [37:06] cool future direction of research, but
+
+=== 00:37:15 @ 37:15 (2235s) ===
+  >>> [37:13] affect some crazy person's Rust rewrite
+  >>> [37:17] pet project. This affects the real world.
+  >>> [37:11] And what's more is this doesn't just
+      [37:08] it's not a reality yet. not at scale.
+      [37:22] Right as I was doing this, there was a
+
+=== 00:39:30 @ 39:30 (2370s) ===
+  >>> [39:28] what about human learning in the agentic age?
+  >>> [39:33] Do we still need to know cyber security? What do you think?
+      [39:23] models, in my opinion it is misguided. Then
+      [39:39] Maybe. Yes. I run pawn college, an open cyber security education platform.
+      [39:17] than the negative. So all of this talk about restricting capable openw weight models, restricting next generation
+
+=== 00:41:00 @ 41:00 (2460s) ===
+  >>> [41:00] working outside the research paper which
+  >>> [40:58] prototypes often ended up not really
+  >>> [41:03] was observed by research and academics alike.
+      [40:55] unlike in the industry academic research
+      [40:53] research paper and the technique and
+
+=== 00:41:30 @ 41:30 (2490s) ===
+  >>> [41:30] My first paper 15 years ago, well, this
+  >>> [41:33] one actually was 11 years ago analyzed
+      [41:36] firmware for memory uh sorry for authentication bypass vulnerabilities. It had three samples
+      [41:22] leading to this bad behavior. Now the agents can scale. Why?
+      [41:18] human effort capability to run on
+
+=== 00:42:45 @ 42:45 (2565s) ===
+  >>> [42:41] the future of vulnerability research. an autonomous sharpening pipeline where academics that and academic like industry
+      [42:38] And we can do this autonomously. This is
+      [42:53] researchers with a good understanding of
+      [42:56] the research process of how to evaluate
+      [42:58] things properly with a good grasp of the data sets can build self-improving systems
+
+=== 00:27:30 @ 27:30 (1650s) ===
+  >>> [27:29] realize it was by accident, Arizona State University gave every employee
+  >>> [27:33] infinite codeex usage before it was cool to do so.
+  >>> [27:26] because by accident, and we didn't
+      [27:23] glimpse into whether this really matters
+      [27:38] And it turned out that this was a
+

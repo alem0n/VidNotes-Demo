@@ -1,0 +1,254 @@
+/* ---------- modal ---------- */
+/* iteration 48: the doc modal's reveal beat ("动效表达" cut 4; overlay
+   language instance 1 of 2 — .lightbox in stack.css is instance 2). The
+   .hidden class flip (display:none !important, base.css) stays the single
+   carrier of open/close semantics: the focus-trap release, the focus return
+   and the Escape stacking all settle inside the same synchronous task,
+   before any paint (library.js, verbatim). ENTER, on removing .hidden:
+   the mother box carries ONE fade for scrim + surface together
+   (@starting-style opacity 0, 300ms = --d3, same window and curve as the
+   view entrance of iteration 45 and the player unveiling of iteration 47);
+   the surface .modal-card adds the single shape beat — a paper rise of 8px,
+   the low end of the family's translate vocabulary (blockIn 8 / view 12 /
+   pushIn 18). A child transform cannot move the mother box, and translateY
+   contributes nothing to the right/width/scrollWidth/offsetWidth values the
+   run-modal-narrow gates read, so mMinC 157/165/173/209 and every clipping
+   key stay byte-identical. EXIT, on adding .hidden: asymmetric and faster —
+   opacity drops over --d15 (150ms; Atlassian "make exit motion faster than
+   entrances", M3 duration Short3), with display kept in the transition list
+   behind allow-discrete so the none flip lands at the END of that window
+   (the enter direction flips immediately — the dialog is focusable at 0ms,
+   motion only paints). pointer-events:none in the hidden state makes the
+   fading overlay click-through for its whole exit window instead of
+   intercepting the page behind it. Zero keyframes, zero new tokens,
+   zero new @media: --d3/--d15/--ease-out are iteration-42 registrations and
+   the iteration-43 reduced-motion block collapses both directions to the
+   completed frame in 10ms. */
+.modal { position: fixed; inset: 0; z-index: var(--z-modal); display: flex; align-items: center; justify-content: center; transition: opacity var(--d3) var(--ease-out), display var(--d15) allow-discrete; }
+.modal.hidden { opacity: 0; pointer-events: none; transition: opacity var(--d15) var(--ease-out), display var(--d15) allow-discrete; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(20,22,35,.45); backdrop-filter: blur(3px); }
+.modal-card { position: relative; background: var(--paper); border-radius: 18px; width: min(620px, 92vw); max-height: 82vh; overflow-y: auto; padding: 30px; box-shadow: var(--shadow-overlay); transition: transform var(--d3) var(--ease-out); }
+/* iteration 48: the entrance starting points. Scoped to :not(.hidden) so a
+   hidden overlay never matches (the narrow fixture and every closed probe
+   state stay untouched), and re-applied on every open because the .hidden
+   flip is also the display flip. The animated nodes are the STATIC markup
+   (.modal/.modal-card in index.html), never #docModalBody's subtree — that
+   innerHTML is rewritten on every openDocModal, so a transition there would
+   have no previous value (the iteration-46 dead-code lesson). */
+@starting-style {
+  .modal:not(.hidden) { opacity: 0; }
+  .modal:not(.hidden) .modal-card { transform: translateY(8px); }
+}
+.modal-close { position: absolute; top: var(--s14); right: var(--s16); border: none; background: none; font-size: 22px; color: var(--ink-3); }
+.modal-close:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+.modal-card h2 { font-size: 20px; }
+.modal-card .m-sub { color: var(--ink-3); font-size: var(--f12); margin: var(--s4) 0 var(--s16); }
+.modal-card .m-facts { display: flex; gap: var(--s6); flex-wrap: wrap; margin-bottom: 16px; }
+.modal-card .m-body { background: var(--line-2); border-radius: var(--r10); padding: var(--s14); font-size: 12.5px; color: var(--ink-2); line-height: 1.8; }
+.modal-card .m-actions { display: flex; gap: var(--s10); margin-top: 18px; }
+
+/* iteration 58: 弹层正文的错峰编排（「动效表达」第十三切面——阅读面的内容编排）。
+   48 给了弹层开盖（母盒淡入 + .modal-card 升纸 300ms），51 给了 .m-pages
+   13→16 页纸带的发牌（120–570ms 起播、30ms/步）；正文其余内容——.m-facts chips、
+   .m-body 摘要、.m-claims 出处表（mc-table 11 行）、.m-actions 两枚按钮——
+   随开盖静态闪现。弹层是观看者驻留阅读的表面，本段把正文按**阅读序**编为错峰
+   就位：概览（chips 与 51 纸带同基起步）→ 摘要（m-body）→ 深究（出处表）→
+   行动（按钮）。「facts 是概览先、表是深究后」的先总后细序 = F 型扫描的
+   top+left 优先；h2 与 .m-sub 骑 48 的 .modal-card 升纸（单焦点原则，本段只补
+   正文四组）。
+   阶梯数值（均可溯源）：基延迟 var(--d12) = 120ms = 48 揭幕的到访尾部（51 同基，
+   --ease-out 前置极陡、45 实测 t150 已 0.928）⇒ chips 与 51 纸带构成「概览带」
+   同带同基同步距（30ms/步 = 51 已登记的带内密集步距，与 IBM 表格 20ms 同档）；
+   段间偏移 120ms（--d12 复用为段间偏移）：.m-body 360ms、.m-claims 480ms、
+   .m-actions 840ms；表行 540ms 起 30ms/步（11 行 540–840ms），短窗取
+   var(--d15) = 150ms（Material m2「Small elements with small transition areas
+   … have short durations」+ Atlassian 50–150ms 档，与本仓 46/47/49/50 的状态窗
+   同值；其余内容拍沿用 blockIn 家族的 --d3 = 300ms 到场档）⇒ 总窗 1140ms
+   （= 51 纸带 780 + 360：弹层是驻留阅读面而非扫描面，深读段落落在 .modal-card
+   82vh 首屏折叠线之下，节拍随阅读扫描下移，观看者下滚时或见尾部发牌或已落定）。
+   基础规则纯长手、不用 animation 简写（51 的级联教训：简写重置 animation-delay
+   会吃掉阶梯）；阶梯规则只声明 animation-delay（无动画指派时零效果，动画只由
+   基础规则指派）。fill 取 backwards：延迟窗内保首帧（错峰机制必需），活动窗
+   结束后不保留任何帧 ⇒ 元素回落自身声明（.fact 的底色、.btn-primary 与
+   .btn-ghost 的 hover 与 active 态、.ev-page 的 hover 词汇逐字存活）。表行
+   单独一条基础规则（duration 与其余内容拍不同档）。
+   机制（51 实证同源）：openDocModal 每次开层重写 #docModalBody innerHTML ⇒
+   新节点 ⇒ animation 在新建节点同样播放 ⇒ 每次开层重演；两条开层路径
+   （doc-card 点击与 Enter / convert 的 #btnViewDoc（convert.js:358））全部
+   收敛于同一个 openDocModal 函数。作用域钉 #docModal:not(.hidden)（48/51
+   防御性先例）：闭层时选择器不匹配 ⇒ 动画实例移除、正文回落自然态（48 的
+   150ms 出口淡出由母盒 opacity 罩住整层，不受影响）。
+   边框机制登记（如实）：.mc-table 为 border-collapse: collapse，对 tbody tr 施加
+   transform 时，飞行窗内相邻两行的共享边框按两行位移差瞬时分叉（机制页实测：
+   最大读数 ≤ 8px、单条缝寿命 ≤ 150ms、行高恒定 27.5px、横向零溢出），行处于
+   半透明抵达中读作「滑入就位」，全部落定后边框网格完全恢复。
+   字节安全（50 裁决的安全通道）：opacity + translateY 全 paint-only。读点地图：
+   GROUPS 的 .fact（ink2）与 .m-actions 内 .btn-ghost（ink2）/ .btn-primary
+   （white）读 computed color + bgOf 祖先链——opacity 与 transform 不入计算色，
+   宿主与祖先背景声明逐字零改；run-modal-narrow 的 mMinC / mCardHsb /
+   mTblScroll / mSecScroll / mClipN / mColMin 读 .modal-card 与 .m-claims 与
+   .mc-table 子树的 right 与 scrollWidth 与 clientWidth 与 offsetWidth，
+   translateY 零贡献（51 的 .ev-page 在同一弹层夹具已实证 mMinC
+   173/165/157/209 逐字节）；cl* 行文本/shape/scope 闭包与 tf* 与 ln* 焦点序
+   全为 DOM 级与属性级，与渲染态无关。降级：第 43 次收口块（含 51 补入的
+   delay 归零）10ms 内落完成帧（四段同时落定 = 降级的应有语义）。零新增
+   keyframe / token / 媒体查询 / JS / HTML / 探针。 */
+#docModal:not(.hidden) .m-facts .fact,
+#docModal:not(.hidden) .m-body,
+#docModal:not(.hidden) .m-claims,
+#docModal:not(.hidden) .m-actions {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+#docModal:not(.hidden) .mc-table tbody tr {
+  animation-name: blockIn;
+  animation-duration: var(--d15);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+#docModal:not(.hidden) .m-facts .fact:nth-child(1) { animation-delay: var(--d12); }
+#docModal:not(.hidden) .m-facts .fact:nth-child(2) { animation-delay: 150ms; }
+#docModal:not(.hidden) .m-facts .fact:nth-child(3) { animation-delay: 180ms; }
+#docModal:not(.hidden) .m-facts .fact:nth-child(4) { animation-delay: 210ms; }
+#docModal:not(.hidden) .m-facts .fact:nth-child(5) { animation-delay: 240ms; }
+#docModal:not(.hidden) .m-body { animation-delay: 360ms; }
+#docModal:not(.hidden) .m-claims { animation-delay: 480ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(1) { animation-delay: 540ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(2) { animation-delay: 570ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(3) { animation-delay: 600ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(4) { animation-delay: 630ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(5) { animation-delay: 660ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(6) { animation-delay: 690ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(7) { animation-delay: 720ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(8) { animation-delay: 750ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(9) { animation-delay: 780ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(10) { animation-delay: 810ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(11) { animation-delay: 840ms; }
+/* 第 72 次数据重锚 10→11 条数字出处后追 1 级（30ms/步同带）——同 .m-pages
+   阶梯的机械追加式；行数再增时继续在此追加同级（delay 只由阶梯声明）。 */
+#docModal:not(.hidden) .m-actions { animation-delay: 840ms; }
+
+/* iteration 13: the doc-modal claims appendix (traceability for "每个数字都有
+   出处"). It reuses the moment-stack .ev-table tokens — 11px grid, ink-3
+   headers, ink-2 cells, dashed line-2 row bottoms — so the appendix reads as
+   the same design language, plus the pill tokens for the badge. All new text
+   pairs audited >= AA on the modal's paper backdrop (docs/Explore_13.md):
+   ink-3 5.982 / ink-2 7.526 / accent 6.288 on paper; the badge is the same
+   green/green-soft pair as the .st-quality pill (iteration-20 deepened to
+   5.734, 10px/600). The row
+   header keeps the claim text at regular weight so the column headers stay
+   the only bold row of the table. */
+.modal-card .m-claims { margin-top: 16px; }
+.modal-card .m-claims h3 { font-size: var(--f12); color: var(--ink-3); letter-spacing: 1px; margin-bottom: 8px; }
+.mc-count { color: var(--accent); font-weight: 600; margin-left: 6px; }
+.mc-note { font-size: var(--f11); color: var(--ink-3); line-height: 1.6; margin-bottom: 8px; }
+.mc-note b { color: var(--ink-2); font-weight: 600; }
+.mc-table { width: 100%; border-collapse: collapse; font-size: var(--f11); }
+.mc-table th { text-align: left; color: var(--ink-3); font-weight: 600; padding: var(--s4) var(--s8); border-bottom: var(--hairline); }
+/* iteration 42: 表头带（paint-only：不改 min-content，mMinC 门与 clAA 保持） */
+.mc-table thead th { background: var(--line-2); }
+/* the row header carries the long claims; `anywhere` (unlike break-word) DOES
+   count for min-content sizing, so the table can shrink below the width of an
+   unbreakable Latin word (“Android”) on a 320 css-px viewport instead of
+   overflowing its section (measured: min-content 236 -> 209 css px) */
+.mc-table tbody th { font-weight: 400; color: var(--ink-2); padding: var(--s5) var(--s8); border-bottom: var(--divider); line-height: 1.5; overflow-wrap: anywhere; }
+.mc-table td { padding: var(--s5) var(--s8); border-bottom: var(--divider); color: var(--ink-2); line-height: 1.5; }
+.mc-table time { font-family: var(--font-mono); font-size: var(--f10); color: var(--ink-3); white-space: nowrap; }
+/* The badge exists only for the positive branch: every row of this dataset is
+   in_notes=yes, so a "not in the notes" class would be a rule whose class atom
+   never appears in the live DOM — the iteration-12 dead-rule discipline
+   (drAtoms0) forbids exactly that. A row that is NOT in the notes therefore
+   renders the plain cell text "未入笔记" (ink-2 on paper, 7.526) without a
+   class, so the absence of the badge is itself the signal. */
+.mc-in { font-size: var(--f10); font-weight: 600; border-radius: var(--r8); padding: var(--s1) 7px; white-space: nowrap; color: var(--green); background: var(--green-soft); }
+
+/* iteration 20: below the 320 css-px audit floor (iteration 11's narrowest
+   measured band), the doc-modal claims table's min-content (210 css px:
+   claim 27 / value 47 / time 56 / badge 80) outgrows the modal card's content
+   box (92vw - 2×30px padding - 15px own vertical scrollbar = 201 at 300 css
+   px, 183 at 280, 164 at 260 — measured in the open-modal iframe probe). The
+   supporting columns are the nowrap badge (80) and the nowrap <time> (56), so
+   only horizontal paddings are trimmed in this band; the table's geometry at
+   >=320 css px is untouched (the iteration-11/13 narrow rules stay verbatim).
+   After: min-content 182 <= content 196 at 260 css px — verified at 300/280/
+   260 in the open-modal state (no section/table/card horizontal overflow). */
+@media (max-width: 319px) {
+  /* iteration 29: the iteration-20 narrowing bought 22px (209 -> 187) which
+     covered the >= 260 css-px card content box (196). Measured at 240 css px
+     (run-modal-narrow WIDTHS extension): the claims section itself drops to
+     178 and the table's min-content 187 overflows it by 9px (mSecScroll=false
+     @187c178; nothing crosses the card and no card-level scrollbar appears,
+     but the table paints 9px into the scrollbar gutter). Same lever, one more
+     notch: 2px more card padding (content 178 -> 180) and 2px less cell /
+     badge padding (min-content 187 -> ~171), so 240 has ~9px slack again. The
+     >= 320 layout is untouched — this block only ever matches below 320.
+     220 css px stays below the coverage floor (content 164 < 171) and is
+     registered as the leftover in docs/Explore_29.md. */
+  .modal-card { padding: 22px var(--s12); }
+  .mc-table th, .mc-table td { padding: var(--s5) var(--s3); }
+  .mc-in { padding: var(--s1) var(--s4); }
+}
+/* iteration 31: the 220 css-px leftover (registered below the 240 device
+   floor in iteration 29) is closed with the same lever, one more notch —
+   card horizontal padding 12 -> 8, cell padding 3 -> 2, badge padding
+   4 -> 3 — so the claims table min-content 173 -> 165 and the 220 css-px
+   card content box 163 -> 171, slack 6. The notch is a SEPARATE top-level
+   block placed AFTER the 319 block, not a nested one: the first attempt
+   nested it inside the 319 block and dropped that block closing brace,
+   which swallowed the rest of the stylesheet into the unmatched 319 media
+   scope — measured at 1280 css px, the top-level media-rule list fell from
+   319/980/640/360 to 319 alone and .sc-head .m-tag (later in the file)
+   computed 14px/400/0px/0px instead of 10px/600/1px/8px (run-main: 6
+   deterministic false). As a top-level block after the 319 one, the cascade
+   at <= 239 css px is the intended one (equal specificity, later source
+   order wins) while >= 240 keeps matching exactly the rules it matched
+   before, so the iteration-29 numbers stay byte-identical (240
+   mSecScroll=true@182c182, slack 9). Measured pre-fix at 220:
+   mSecScroll=false@173c163 — the table paints 10px into the card
+   scrollbar gutter (still inside the card: mTblIn true, mCardHsb false,
+   mClipN 0cnone). The nowrap <time> column keeps its identity semantics
+   (font-size and white-space never levers); the scroll-container
+   alternative (overflow-x:auto on .m-claims) is rejected because a
+   scrollable section falsifies the mSecScroll/mCardHsb gates by
+   construction and adds a modal-level horizontal scrollbar
+   (docs/Explore_31.md). 200 css px is the new registered leftover:
+   content 153 < 165 with these same rules. */
+@media (max-width: 239px) {
+  .modal-card { padding: 22px var(--s8); }
+  .mc-table th, .mc-table td { padding: var(--s5) var(--s2); }
+  .mc-in { padding: var(--s1) var(--s3); }
+}
+/* iteration 38: the 200 css-px leftover (registered at the end of the 239
+   notch above) is closed with the same lever, one more notch — card
+   horizontal padding 8 -> 6, cell padding 2 -> 1, badge padding 3 -> 2 —
+   so the claims table min-content 165 -> 155 (per column 27/35/44/60 ->
+   25/33/42/58) and the 200 css-px card content box 153 -> 157, slack 2.
+   THE BOUNDARY IS 219, NOT 199: a max-width:199px block would not match a
+   200 css-px viewport at all (200 > 199), so the iteration-38 gate at 200
+   would still measure the 239 notch and keep overflowing. The boundary
+   must be >= 200 (cover the gated width) and < 220 (this block must never
+   match the >= 220 widths whose rules stay byte-identical); 219 also
+   closes the whole 198–212.9 band, where the 239 notch itself overflows
+   (its content box 0.92w - 31 >= 165 needs w >= 213, while this notch's
+   0.92w - 27 >= 155 holds from w = 197.8). Layouts at 210–219 gain slack
+   they did not have under the 239 notch (214 was a 0.9px marginals there).
+   Same top-level-block-after discipline as iteration 31 (never nested
+   inside the 319/239 blocks — see the brace-swallowing incident in
+   iteration 31's notes): equal specificity, later source order wins at
+   <= 219, and >= 220 keeps matching exactly the rules it matched before.
+   180 css px is the new registered leftover: the card content box is
+   0.92*180 - 27 = 138.6 < 155 there and the table crosses the card edge
+   (measured pre-notch 180: mCardHsb=true@165c150, mTblIn=false, mClipN=35)
+   — covering it would need to break the nowrap identity semantics (the
+   <time>/badge columns) or shrink fonts below the 240 css-px device floor,
+   so the padding lever stops here at its 1px-per-side floor. Fonts, font
+   sizes, white-space and overflow-wrap are untouched, same as every
+   previous notch. */
+@media (max-width: 219px) {
+  .modal-card { padding: 22px var(--s6); }
+  .mc-table th, .mc-table td { padding: var(--s5) var(--s1); }
+  .mc-in { padding: var(--s1) var(--s2); }
+}
+

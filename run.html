@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>转换演示 · 视记 VidNotes</title>
+<!-- iteration 70: 多页拆分 I 期——本页 = runPanel 卡片独立页（三区舞台 + 管道车间 +
+     交付卡）。由 convert.html 的表单经 URL 交接参数（?url=&mode=&pace=）到达；
+     顶栏 tab 归属「转换」（演示是转换流的延续）。runPanel 不再 .hidden：
+     页面本身就是演示舞台，加载即呈现、boot 即启动（runFoot 与 pipelineScene
+     仍按既有 hidden 生命周期由演示进程摘除）。iteration 74（运营方六指令）：
+     run-head 的 #cvMsg 离散通告通道（22/25/28 的调速/暂停/冻结回返通告）与
+     交付卡的 #runArtifacts 交付物自检（49 的 art-rows）双双退役——通告文本线
+     在跨页形态多余、自检与交付卡信息层级重复；#demoSpeeds 中档 2.5×→6×
+     （默认倍速）；.stack-zone 294→324（管道车间同步收窄 30）；runPanel 与
+     sticky topbar 顶距 20px。 -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body data-page="run">
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">视<span>记</span></div>
+    <div class="brand-text">
+      <b>VidNotes</b>
+      <em>视频 → 笔记，全自动</em>
+    </div>
+  </div>
+  <nav class="nav" aria-label="视图导航">
+    <a class="nav-item active" href="index.html" aria-current="page">转换</a>
+    <a class="nav-item" href="library.html">文档库 <span id="libCount" class="count">1</span></a>
+    <a class="nav-item" href="history.html">历史轨迹 <span id="histCount" class="count">1</span></a>
+  </nav>
+  <div class="topbar-right">
+    <span class="pill">由运行记录自动重建轨迹</span>
+  </div>
+</header>
+
+<main id="main">
+<!-- ============ PAGE: RUN（runPanel 独立页） ============ -->
+<section id="view-convert" class="view active">
+  <!-- 66-69 叠加的三区结构逐字搬入：顶部 run-head（运输组 + stage-stepper）→
+       中区两栏（左 .stack-zone 滚动口 324px（74：294+30）/ 右 #pipelineScene
+       842px（74：872−30））→ .run-foot 交付卡。id/role/aria-label/hidden 初态
+       逐字不变 ⇒ pipeline.js、pl*/ds* 断言读点零失锚。结构差异：① #runPanel
+       不再带 hidden（页面即舞台）；② 74：run-head 的 #cvMsg 与交付卡的
+       #runArtifacts 双双退役（元素删除，探针读点随宿主退役）；③ 74：#demoSpeeds 中档 = 6×（75 期整组退役，见下）；第 69 次滚动口
+       （.stack-demo 限高 700 + tabindex/role/aria-label）逐字不变。
+     iteration 75（运营方四指令）：#demoSpeeds 演示倍速组删除——演示完全
+     按提交时所选节奏（pace 交接参数，表单默认 brisk = 6×）；交付卡「查看
+     讲义」改为「下载讲义」锚点（assets/notes.pdf 自携本体，75 期新增）；
+     lightbox 增左右翻页钮并修复 ×/背景点击关闭。 -->
+  <div id="runPanel" class="run-panel">
+    <div class="run-head">
+      <div>
+        <div class="run-title" id="runTitle">准备中…</div>
+        <div class="run-sub" id="runSub">—</div>
+      </div>
+      <div class="run-transport">
+        <button type="button" class="btn-ghost run-pause hidden" id="btnPauseRun" aria-pressed="false">⏸ 暂停</button>
+        <!-- 75: #demoSpeeds 演示倍速组删除——演示完全按提交时所选节奏（pace 交接
+             参数唯节拍源；表单默认 brisk = 6×）；player 五档调速仍在历史回放页。
+             运输组现 = 暂停钮 + 时钟。 -->
+        <div class="run-clock" id="runClock">00:00</div>
+      </div>
+    </div>
+    <div class="stage-stepper" id="stageStepper"></div>
+    <div class="run-body">
+      <div class="stack-zone">
+        <div class="stack-head">正在做 <span class="stack-hint">新动作持续入栈 · 点开的都是实物证据</span></div>
+        <div class="stack stack-demo" id="runStack" tabindex="0" role="region" aria-label="正在做：机器动作栈，可滚动"></div>
+      </div>
+      <div id="pipelineScene" class="pipeline-scene hidden" role="group" aria-label="管道车间：机器动作场景"></div>
+    </div>
+    <div class="run-foot hidden" id="runFoot">
+      <div class="run-foot-actions">
+        <!-- iteration 70: 三按钮跨页化（同页 switchView 路径退役）；iteration 75：
+            第一桥由「查看讲义」（library 弹层深开）改为「下载讲义」——纯声明式
+             锚点（href + download：file:// 与 http:// 均触发浏览器下载，右键另
+             存 / 中键 / Enter 全可达，零 JS 接线）；library.html?doc=<run> 弹层
+             深链仍独立存活（其自身功能面，不再由本桥承载）。
+             回放这次轨迹 → history.html#history/<run>（fragment 家族不变）；
+             再转一次 → convert.html（表单页，52 首屏即入场编排）。 -->
+        <a class="btn-primary" id="btnDownloadDoc" href="assets/notes.pdf" download="视记 VidNotes 笔记.pdf">下载笔记</a>
+        <button class="btn-ghost" id="btnReplayRun">回放这次轨迹</button>
+        <button class="btn-ghost" id="btnConvertAgain">再转一次</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="图片放大预览">
+  <div class="lb-backdrop"></div>
+  <button class="lb-close" id="lbClose" aria-label="关闭">×</button>
+  <button class="lb-nav lb-prev hidden" id="lbPrev" type="button" aria-label="上一张" disabled>‹</button>
+  <button class="lb-nav lb-next hidden" id="lbNext" type="button" aria-label="下一张" disabled>›</button>
+  <img src="" alt="">
+  <div class="lb-caption" aria-live="polite"></div>
+</div>
+
+<footer class="footer">
+  <div class="footer-cols">
+    <div>
+      <h3>无感，但可回放</h3>
+      <p>转换过程你无需介入；每条轨迹都可随时回放：它做过什么、何时遇到障碍、如何自动恢复、最终凭什么通过验收。</p>
+    </div>
+    <div>
+      <h3>数据来源</h3>
+      <p>轨迹、阶段、关卡与交付物均由系统运行记录（session 记录）自动重建与润色呈现，非人工摆拍。</p>
+    </div>
+    <div>
+      <h3>边界</h3>
+      <p>界面只呈现行为与产物：内部提示、签名、协议字段等实现细节不进入展示层。</p>
+    </div>
+  </div>
+</footer>
+
+<script src="src/scripts/main.js" type="module"></script>
+</body>
+</html>

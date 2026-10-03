@@ -1,0 +1,2073 @@
+/* src/styles/main.css — 样式表入口（iteration 78，目录结构重构 I 期）。
+ *
+ * 单一职责：本文件只是级联序的**声明清单**——@import 的顺序就是级联序
+ * （CSS Cascade L6 §6.1 Order of Appearance：独立 link 的声明 treated as if
+ * concatenated in linking order；同级 @import 的级联序 = 出现序）。
+ * 构建器（build-inlined.js）递归内联下列 import，按本序拼接为 dist/app.css
+ * ——逐字节口径与 70–77 期的「页内连续 7 link 块按文档序拼接」完全相同
+ * （迁移前后 sha 一致即为本轮保序证明）。@import 语法硬约束：只能位于其他
+ * 规则之前，故本文件不放任何规则。
+ *
+ * 分层目录 = 7-1 架构精简版（sass-guidelin.es 的 base/components/utilities）：
+ *   base/       设计 token、reset、排版与原子元素样式
+ *   components/ 视图与组件样式（convert / pipeline / views / modal / stack）
+ *   utilities/  响应式处方档链（reduced-motion 收口块保持拼接序最末）
+ *
+ * 未采用原生 @layer 的裁决（iteration 78，0.1 原则 1：无第二真实用例不引入）：
+ * 分层会改变优先级语义——层内 important 声明的优先级**反序**（越早声明的层
+ * important 越强），将打破 responsive.css 末位收口块「!important + 拼接序最末
+ * 压过 stack.css 的 .fast」的权威（第 43 次自述原则）。import 序已承载等价
+ * 的可预测级联；待确有「需层隔离的第三方/主题样式」再引入 @layer。
+ */
+
+:root {
+  --bg: #f7f6f3;
+  --paper: #ffffff;
+  --ink: #1c2333;
+  /* iteration 11: ink-3/green darkened for WCAG AA — see docs/Explore_11.md.
+     ink-3 #8a94a6 -> #5b6472: 2.61-3.06 -> 5.11-5.98 on every real backdrop
+     green #0e8a5f -> #047857: 3.72-4.36 -> 4.69-5.48 (and white-on-green 4.36 -> 5.48) */
+  --ink-2: #4a5568;
+  --ink-3: #5b6472;
+  --line: #e5e1d8;
+  /* iteration 11: SC 1.4.11 — a form control whose border is the only visual
+     indicator of its presence needs >=3:1 against the adjacent colour; #e5e1d8
+     is 1.21-1.30. Used only by .url-input/.mode-select borders. */
+  --line-strong: #8e8877;
+  --line-2: #efede8;
+  /* iteration 29: CVD lightness ladder. WCAG 1.4.1's Note: colour differences
+     that "also have a significant difference in lightness ... counts as an
+     additional visual distinction", and under any colour vision deficiency
+     lightness is the only dimension every deficiency type keeps — but hue is
+     not reliable (the green/cyan pair sat 0.003 apart in relative luminance,
+     so a deutan/tritan user could not tell 执行/关卡 pills apart by lightness
+     at all; the text labels carried the meaning per G14). The six pill tokens
+     are rescaled into an ascending ladder L = .034/.050/.066/.082/.098/.113
+     (cyan/red/accent/amber/violet/green; violet and green keep their
+     iteration-20 values), so every pair of pills differs by >= 0.015 and every
+     hue-confusable pair (green-cyan, green-red, amber-red, accent-violet,
+     accent-cyan) by >= 0.031. Uniform >= 0.05 gaps are provably impossible
+     with the >= 5.0 pill-pair floor: six values need a 0.25 span, while the
+     light end is pinned at L ~ .137 by the pastel soft fills and the dark end
+     by 10px hue readability (~.03). Darkening is also monotone-safe for
+     contrast: the pill-pair minimum RISES 5.365 -> 5.734 (green is now the
+     minimum) and white-on-accent 6.29 -> 9.06. --accent deepening is
+     product-wide (buttons/logo/nav) — registered side effect, see
+     docs/Explore_29.md for the full before/after matrices. */
+  --accent: #3c35af;
+  --accent-soft: #eef0fe;
+  /* iteration 20: --green deepened by the same uniform 10% channel scaling as
+     the iteration-12 amber/red prescription (docs/Explore_12.md leftover ②),
+     off the registered 4.882 edge to the >=5.0 "safe-margin" tier: on its
+     own soft fill 4.882 -> 5.734 (margin 1.23 over 4.5); >=5.51 on every real
+     backdrop. Numbers and full matrix in docs/Explore_20.md. */
+  --green: #046c4e;
+  --green-soft: #e7f5ee;
+  /* iteration 12: both tokens were referenced only by dead rules (the
+     .m-decision/.m-recovery pill selectors never matched the real
+     .stack-card.st-<kind> markup). They are revived by the rewritten
+     .st-decision .m-tag pill, and are deepened 10% off the 4.569 edge that
+     iteration 11 registered as a borderline pass (margin < 0.1 over 4.5:1):
+     on their own soft fill amber 4.569 -> 5.388, red (below) 4.569 -> 5.365.
+     SC 1.4.3 thresholds are not rounded, so the 10px/600 pill text (normal
+     text, not large) needs the raw value >= 4.5.
+     iteration 29: both are darkened one rung further for the CVD lightness
+     ladder (above) — amber 5.388 -> 7.250, red 5.365 -> 9.223. */
+  --amber: #833d06;
+  --amber-soft: #fdf3e3;
+  /* iteration 12: same deepening for .st-recovery .m-tag (4.569 -> 5.365).
+     iteration 29: darkened for the lightness ladder (5.365 -> 9.223). */
+  --red: #722707;
+  --red-soft: #fdeee4;
+  /* iteration 20: same deepening for --cyan, the iteration-12 matrix minimum
+     (4.727, margin 0.23): on cyan-soft 4.727 -> 5.581 (margin 1.08). After
+     both deepenings the six pill pairs are all >=5.365 — docs/Explore_20.md.
+     iteration 29: darkened to the bottom ladder rung for CVD separation from
+     green (5.581 -> 10.994). */
+  --cyan: #073947;
+  --cyan-soft: #e6f3f7;
+  --violet: #6d28d9;
+  --violet-soft: #f1ebfd;
+  /* iteration 42: 尺度 token（色板逐字不动；数值=登记值；语义与豁免见 docs/Explore_42.md） */
+  /* 间距/尺度尺 */
+  --s1: 1px; --s2: 2px; --s3: 3px; --s4: 4px; --s5: 5px; --s6: 6px;
+  --s8: 8px; --s10: 10px; --s12: 12px; --s14: 14px; --s16: 16px; --s20: 20px;
+  --s28: 28px;
+  /* 圆角档位：14 容器/药丸 · 12 控件 · 10 小块 · 8 芯片 · 4 轨条（M3 shape 4/8/12/16） */
+  --r14: 14px; --r12: 12px; --r10: 10px; --r8: 8px; --r4: 4px;
+  /* 阴影层级（M3 elevation：resting 0..+3，+4/+5 交互态） */
+  --shadow-panel: 0 1px 2px rgba(28,35,51,.05), 0 8px 24px rgba(28,35,51,.06);
+  --shadow-raised: 0 12px 30px rgba(28,35,51,.10);
+  --shadow-raised-accent: 0 12px 30px rgba(60,53,175,.10);
+  --shadow-btn: 0 4px 14px rgba(60,53,175,.26);
+  --shadow-btn-hover: 0 6px 18px rgba(60,53,175,.34);
+  --shadow-thumb: 0 6px 14px rgba(28,35,51,.18);
+  --shadow-knob: 0 2px 6px rgba(60,53,175,.28);
+  --shadow-overlay: 0 24px 60px rgba(0,0,0,.30);
+  --shadow-lightbox: 0 24px 60px rgba(0,0,0,.50);
+  --ring-focus: 0 0 0 3px var(--accent-soft);
+  /* 边框/分隔语义（--control-border 是 WCAG 1.4.11 控件唯一指示器，语义不动） */
+  --hairline: 1px solid var(--line); --divider: 1px dashed var(--line-2);
+  --control-border: 1.5px solid var(--line-strong); --outline-focus: 3px solid var(--accent);
+  --font-mono: ui-monospace, "SF Mono", Consolas, monospace;
+  /* 字阶（有限档位；h 后缀 = 0.5px CJK 密度半档） */
+  --f10: 10px; --f11: 11px; --f12: 12px; --f13: 13px; --f14: 14px;
+  /* 动效：时长档（交互 <=300ms；揭示动画保持原值）+ 缓动 */
+  --d1: .1s; --d12: .12s; --d14: .14s; --d15: .15s; --d3: .3s; --d4: .4s; --d45: .45s; --d5: .5s; --d6: .6s; --d8: .8s;
+  --ease-out: cubic-bezier(.2,.9,.3,1);
+  --z-topbar: 60; --z-modal: 200; --z-lightbox: 300;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+/* iteration 67: 根元素横向裁剪（全出血舞台 vw 突围的对治）。第 67 次 .run-panel 以
+   width:100vw + 负边距边缘到边缘（convert.css）：vw 单位含经典滚动条宽度（headless
+   Chromium 实测 15px：narrow 基线 nbVw=320 / nbScrollW=305 即在场证明），无本规则则竖
+   滚动条在场时舞台右缘溢出 clientWidth 而生横向滚动条。用 clip 而非 hidden：clip 不建
+   立滚动容器（MDN overflow-x：clip 另外禁止滚动、不成滚动盒），hidden 会使 body 成为
+   滚动容器从而破坏 position: sticky（benfrain 实证 clip 与 sticky 共存）——topbar 的
+   sticky 不受影响；scroll-behavior 为独立属性、与 overflow 传播无涉（smooth 滚动门
+   逐字不动，run-skspace / 主探针 37 次以降滚动门验收照常）。被裁去的仅是舞台的纯背景/
+   内边距区（内容带 var(--s28) 槽线），视觉零损失；横向溢出回归仍可由
+   documentElement.scrollWidth 读出（裁剪不改其内容测量口径 ⇒ nbOvf 门照常工作）。 */
+html { scroll-behavior: smooth; overflow-x: clip; }
+body {
+  font: 14px/1.6 -apple-system, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color: var(--ink); background: var(--bg);
+}
+button { font-family: inherit; cursor: pointer; }
+.hidden { display: none !important; }
+
+/* ---------- top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: var(--z-topbar);
+  display: flex; align-items: center; gap: 32px;
+  padding: 0 var(--s28); height: 60px; background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px); border-bottom: var(--hairline);
+}
+.brand { display: flex; align-items: center; gap: var(--s10); }
+.logo {
+  width: 34px; height: 34px; border-radius: var(--r10); display: flex; align-items: center; justify-content: center;
+  background: var(--accent); color: #fff; font-weight: 800; font-size: 15px; letter-spacing: -1px;
+}
+.logo span { background: linear-gradient(180deg,#fff,#c7d2fe); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.brand-text b { font-size: 15px; letter-spacing: .3px; display: block; }
+.brand-text em { font-style: normal; font-size: var(--f10); color: var(--ink-3); }
+.nav { display: flex; gap: var(--s4); }
+.nav-item {
+  border: 0; background: none; font: inherit; /* <button> reset: keep the link-like look */
+  /* iteration 70: tab 成为独立页面的锚点（<a>）；同一重置原则扩到锚点专属默认值：
+     下划线与默认链接色两个会破坏「像按钮一样的 tab」读数的默认样式一并归零
+     （color 已声明为 ink-2，此处只补 text-decoration；零新增 token、零动效声明） */
+  text-decoration: none;
+  padding: 7px var(--s14); border-radius: var(--r10); color: var(--ink-2); font-size: var(--f13); cursor: pointer;
+  display: flex; align-items: center; gap: var(--s6); font-weight: 500;
+  position: relative; z-index: 0; /* iteration 50: 伪元素洗与指示条的包含块；z-index 0 把负 z-index 伪元素罩进宿主自身层叠上下文（画在宿主背景之上、内容之下）；relative 不改变盒模型 */
+}
+.nav-item:hover { background: var(--line-2); }
+.nav-item.active, .nav-item[aria-current="page"] { color: var(--accent); }
+/* iteration 50: 控制层 active 态的迁移语言（「动效表达」第六切面）。字节安全裁决（首次派发失败后
+   root 分类，详见 Explore_50.md §5）：对比比扫描（inject-main.2 的 GROUPS 与 bgOf）读
+   computed color 与祖先链 backgroundColor，探针虚拟钟冻结 JS 调度而 CSS 过渡走实时钟 ⇒
+   file/http 双路读点可落在不同插值进度（首次失败的 .count@5.76 ↔ .fact@6.43 实证）。
+   故 color/background-color 过渡一律不挂宿主（.nav-item 与其子 .count 同在 ink2 组、
+   .nav-item.active 在 accent 组——宿主与后代皆被扫描或经继承入扫描），active 洗与指示条
+   全部改走伪元素安全通道：① ::before 洗 = opacity 交叉淡入（伪元素被 bgOf 的
+   parentElement 链结构性排除、亦不入 body 子树几何扫描）——伪元素取代宿主背景承载
+   accent-soft 洗，宿主背景恒为透明；② ::after 迁移指示条 = transform scaleX（同上
+   结构性排除，且 transform 零布局贡献）。宿主 fg 翻转保持瞬时（= 第 49 次前既有行为；
+   AT 语义 aria-current 由 switchView 类翻转同任务先行，动效只落画面 = 第 45 次可中断
+   口径）。同窗 --d15 = 150ms 交互态窗 + --ease-out，与 46 stepper / 47 质量行 /
+   49 交付勾选同一支跨视图状态语言；双向同窗（覆盖式选择翻转无进出场主体，非 48
+   弹层进出非对称语义）；hover 交互态保持宿主瞬时（扫描安全优先，不挂第二过渡）。 */
+.nav-item::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: var(--accent-soft); opacity: 0; transition: opacity var(--d15) var(--ease-out); }
+.nav-item.active::before, .nav-item[aria-current="page"]::before { opacity: 1; }
+/* iteration 50: 迁移指示条（重音通道；首次 WIP 已验证为字节安全可复用部分，凭据 = 伪元素
+   结构性排除 + transform 零布局贡献）。2px = --s2、--accent 既有登记值；bottom -6px
+   落在 60px sticky topbar 的药丸下方与下边框之间（宿主 rect 不变——nbTopbar 读
+   .nav/.topbar 的 right、nbOvfEls 的 body 子树扫描不含伪元素）。transform-origin 用
+   center 而非 46 推进轴的 left：nav 是无方向选择集，「这里被选中」而非「自左推进」；
+   旧项 retract 与新项 extend 同窗同时 = 标记读作迁到另一项（47 frontier 游标的同族
+   位置语言）。选择器镜像既有 active 复合规则——switchView 的同一 forEach lockstep 翻转
+   两者。状态由 fg + 洗 + 条与 aria-current 承载，指示条是第三通道而非唯一指示器
+   （WCAG 1.4.1）；accent on topbar 白 = 9.04 ≥ 3（SC 1.4.11 不适用于装饰性指示条）。
+   降级：第 43 次末块的三连（`*`、`*::before`、`*::after`）收敛 0.01s 落完成帧。 */
+.nav-item::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: var(--s2);
+  background: var(--accent); transform: scaleX(0); transform-origin: center;
+  transition: transform var(--d15) var(--ease-out); }
+.nav-item.active::after, .nav-item[aria-current="page"]::after { transform: scaleX(1); }
+.count { background: var(--line); border-radius: var(--r8); font-size: var(--f10); padding: 0 var(--s6); font-family: var(--font-mono); }
+.topbar-right { margin-left: auto; }
+/* iteration 42: .pill 去默认控件边框（标签非控件）；ink-3/line-2 = 5.113 >= AA */
+.pill { font-size: var(--f11); color: var(--ink-3); background: var(--line-2); padding: var(--s5) var(--s12); border-radius: var(--r14); }
+
+/* ---------- transport two-state layer（第 56 次，「动效表达」第十二切面 +「智能状态与反馈」） ---------- */
+/* 落点裁决：本段在 base.css 而非 style.css —— style.css 已 492/500 行触线（原则 2「接近上限时
+   优先重构模块边界」，但为 10 条规则拆新样式表是为抽象而抽象），而 base.css 已承载「跨视图
+   控件状态层」段（45 视图容器转场 / 50 nav active 迁移），运输双态与之同族同语言，同段落延续。
+   级联零冲突实读：style.css 的 .transport .btn-ghost / .run-transport .btn-ghost 只声明 padding、
+   .btn-ghost:hover 只声明 border-color+color —— 本段与之属性正交（hover 的 border-accent 与
+   playing 的 border-accent 同值，谁胜视觉逐位相同）。 */
+/* 覆盖对象 = 两处「双态切换型」运输钮：convert 演示的 #btnPauseRun（⏸ 暂停 ↔ ▶ 继续）与
+   player 回放的 #plPlay（▶ 播放 ↔ ⏸ 暂停，终态 ↺ 重播）。label 承载动作（NN/g 媒体播放器
+   idiom：The Play icon is replaced with Pause when the video is playing，icon indicates the
+   state that the system will move to）、aria-pressed 承载状态（APG toggle button）——两者皆由
+   setPauseBtn / setPlayBtn 同步任务写下，本段零改写入口径，动效只骑视觉层。 */
+/* 触发机制（机制页实证）：状态呈现直接由 aria-pressed 取值派生——两条「取值分列」的规则在每次
+   取值翻转时其一失配另一条新匹配。但同一动画名在 Chromium 里被视作「已解析动画未变」⇒ 不重播
+   （机制页对照：通配 [aria-pressed] 单条规则与两规则同名皆不重播，只有两方向「异名」
+   keyframes 才在每次翻转重播）⇒ 到场拍必须 swapPlay（进入播放）/ swapPause（进入暂停）两名。
+   display 翻转（钮从 .hidden 出现 / player 揭幕）经同一重匹配机制同任务起播（45/51/54 口径）。 */
+/* 字节安全（root 第 50 次裁决硬约束）：.btn-ghost 在 inject-main.2 GROUPS.ink2 组内 ⇒ 宿主
+   color/background-color 过渡为风险通道（首次失败实证 .count@5.76 ↔ .fact@6.43）⇒ 本段全部
+   通道 = transform / box-shadow / border-color / 伪元素 opacity / keyframes（opacity+transform），
+   宿主色翻转保持瞬时（:hover 既有色翻转逐字不动）。playing 持续标记为「静态」三路（border /
+   3px 左轨 / halo 阴影，NN/g「a shadow to indicate that the button has been pressed and now
+   it's active」的物理征象）——非常驻呼吸（常驻循环被第 43 次末块 iteration-count:1 停在首帧）；
+   paused = 三路同窗收敛 + 演示运输区 wash + label 到场拍。降级：第 43 次末块三连把本段全部
+   通道收敛 0.01s 落完成帧（含伪元素）。 */
+.transport .btn-ghost, .run-transport .btn-ghost {
+  position: relative; overflow: hidden; /* 轨的包含块 + 圆角裁剪（46 .stage-step::after 词汇），relative/overflow 零盒模型变化 */
+  transition: transform var(--d1) var(--ease-out), border-color var(--d15) var(--ease-out),
+    box-shadow var(--d15) var(--ease-out);
+}
+/* press 力反馈：52 的 .btn-primary 三态范式同型同值（Atlassian 高频交互 < 150ms、即时起播）——
+   作用域仅两处运输区（.transport / .run-transport）：刻意不扩到 .btn-ghost 全族，避免 55 的
+   flyCapture 从 #btnReplayRun 取 rect/视觉快照时把 hover 的位移/阴影带进飞行层起点 quad。 */
+.transport .btn-ghost:hover, .run-transport .btn-ghost:hover { transform: translateY(-1px); box-shadow: var(--shadow-btn-hover); }
+.transport .btn-ghost:active, .run-transport .btn-ghost:active { transform: translateY(1px); box-shadow: none; }
+/* 补 #plPlay 缺失的键盘焦点钩子（仓内 .run-pause/.doc-card/.scrubber 既有声明逐字同值；
+   .run-pause 自己的 :focus-visible 保留在 style.css 逐字不动） */
+.transport .btn-ghost:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+/* playing 持续标记（aria-pressed=true）三路静态：accent 边 + accent halo + 3px 左轨。
+   状态本身已由 label（⏸/▶）+ aria-pressed + 转瞬即止的时钟承载，三路标记是加强而非唯一
+   指示器（WCAG 1.4.1）；border-width 随 hairline 1px 不变 ⇒ 几何零变化。 */
+.btn-ghost[aria-pressed="true"] { border-color: var(--accent); box-shadow: var(--shadow-btn); }
+.btn-ghost[aria-pressed="true"] { animation: swapPlay var(--d3) var(--ease-out); }
+.btn-ghost[aria-pressed="false"] { animation: swapPause var(--d3) var(--ease-out); }
+.btn-ghost[aria-pressed]::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: var(--s3);
+  background: var(--accent); opacity: 0; transition: opacity var(--d15) var(--ease-out); }
+.btn-ghost[aria-pressed="true"]::before { opacity: 1; }
+/* 演示运输区的「已暂停」wash（可选伴面，纯 CSS）：演示存活且钮取 false（手动暂停或第 25 次离场
+   自动冻结）⇒ 钮可见且态唯一 ⇒ wash 读作「演示已暂停」；演示结束时 convert.js:350 整钮隐藏
+   （hidePauseBtn），不存在「已结束却被标成已暂停」的窗口。读点论证：伪元素被 bgOf 的
+   parentElement 链结构性排除、宿主与祖先背景声明逐字不变 ⇒ 机器读点零变化；渲染侧全 alpha
+   实算 ink-3 on accent-soft = 5.29 / accent on accent-soft = 7.99 ≥ AA（52 氛围层同口径）。
+   宿主 position:relative + z-index:0 = 52 氛围层同款的零盒模型层叠上下文。 */
+.run-transport { position: relative; z-index: 0; }
+.run-transport::after { content: ""; position: absolute; inset: -7px; z-index: -1;
+  border-radius: var(--r12); background: var(--accent-soft); opacity: 0;
+  transition: opacity var(--d15) var(--ease-out); }
+.run-transport:has(.run-pause[aria-pressed="false"])::after { opacity: 1; }
+/* label 到场拍：glyph 直换（textContent）无包裹节点 ⇒ 动画主体 = 按钮元素本身（47 的
+   swap+元素动画模式；::first-letter 在 Chromium 对 button 实证无伪元素 ⇒ 无法隔离 glyph）。
+   主体是整颗控件 ⇒ 刻意不用 scale 家族（整体缩放读作故障）；形态取 blockIn 家族的
+   opacity + translateY(4px)（内容自下方升位），窗 = --d3 300ms 到场档（与 45/47/52 同家族），
+   与标记的 150ms 状态窗构成同面双通道异窗（.doc-card 的 120/150 先例）。fill 默认 none ⇒
+   落定后 :hover/:active 的 transform 与过渡逐字存活（52 机制页同款验证）。
+   两名同体（swapPlay/swapPause 形态逐字相同）是 Chromium 重播机制的必需，非方向差异。 */
+@keyframes swapPlay { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes swapPause { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ---------- views ---------- */
+.view {
+  max-width: 1180px; margin: 0 auto; padding: 40px var(--s28) 72px;
+  /* iteration 45: 进入转场（「动效表达」第一切面）。transition 不含 display，故出口
+     保持「类翻转即离 layout」——第 9 次滚动语义的前提逐字不变（出口同任务离 layout、
+     文档高度当帧塌陷为单视图、翻转后 scrollTo(0,"instant") 复位的目标页仍是单视图页）。
+     可中断：AT 语义（aria-hidden/inert/aria-current）/ 焦点逃逸 guard / 滚动复位 /
+     viewswitch 派发全部在类翻转的同一任务内先行落定，300ms 只是落画面。 */
+  transition: opacity var(--d3) var(--ease-out), transform var(--d3) var(--ease-out);
+}
+/* iteration 45: @starting-style = display:none → block 的首帧起点（进入方向唯一的纯 CSS
+   原语；出口方向不加 allow-discrete 是刻意的——出口过波会让出口视图在过渡期内留在
+   layout：双视图叠高 + incoming 落其下被遮，且同帧 instant 复位会瞄到带出口视图高度的
+   页面，即第 9 次注释「collapsing document 上的二次跳动」的复活）。出口瞬时 + 入口
+   300ms 的非对称 = 克制：入口运动牵引注意，出口消失由背景中和，整段读作一次 crossfade。
+   数值：--d3 = 300ms（交互窗上限，与 M3 standard 过渡同值）；--ease-out（第 42 次登记
+   缓动）；translateY(12px) 取本仓入场词汇家族中位（证据块 blockIn 8px / 卡片 pushIn
+   18px），占内容列宽 ~1%。纯 paint 通道：transform/opacity 不参与布局测量（第 21 次窄屏
+   横截基线与第 29/38 次弹层 mMinC 门逐字节不动）。降级走第 43 次 responsive.css 末块
+   的 transition-duration: 0.01s !important（无新增 @media，check-cascade 媒体序仍 7 项）。 */
+@starting-style {
+  .view.active { opacity: 0; transform: translateY(12px); }
+}
+/* Visual hiding (iteration 9): only the active view renders. display:none takes
+   the whole subtree out of layout+paint (no rendering cost while hidden) and
+   out of the accessibility tree, composing with the aria-hidden+inert state
+   that switchView keeps on non-current views. The .active class is the single
+   source of truth for both the visual state and the nav highlight, so the
+   initial markup already hides every view that lacks .active. Not !important:
+   .hidden's display:none !important targets .run-panel/.player/.modal/.lightbox,
+   whose scope never overlaps a .view. */
+.view:not(.active) { display: none; }
+.view-title { margin-bottom: 22px; }
+.view-title h2 { font-size: 24px; letter-spacing: .3px; }
+.view-title p { color: var(--ink-3); margin-top: 4px; font-size: var(--f13); }
+/* ---------- convert hero ---------- */
+/* iteration 52: 氛围层宿主（「体验美学」氛围层）。position relative + z-index 0 = 零盒模型
+   变化（第 50 次 nav-item/run-item 同款裁决），只为给 ::before 光晕建立层叠上下文：
+   负 z-index 伪元素画在宿主透明背景之上、内容之下，页面底色从渐变的透明区透出来。
+   宿主自身 backgroundColor 保持 transparent（氛围只画在伪元素上）⇒ 扫描读点
+   （inject-main.2 的 bgOf 沿 parentElement 链合成祖先 backgroundColor）结构性
+   不变——机器侧零退化；渲染侧的诚实实算（渐变叠 --bg 的最坏合成对比比）见
+   Explore_52.md §1：全 alpha 最坏 ink 12.9 / ink-2 6.19 / green 5.30，均 >= AA。 */
+.convert-hero { text-align: center; padding: 56px var(--s20) 36px; position: relative; z-index: 0; transition: opacity var(--d15) var(--ease-out), transform var(--d15) var(--ease-out), display var(--d15) allow-discrete; }
+/* iteration 66: 整体退场（场景切换的出口半边）——表单提交后整个 hero（标题 / 副标 /
+   #convertForm / #cvMsg 反馈区 / trust-row）离开舞台，为 runPanel 三区宽屏让位。
+   词汇逐字取自第 48 次 modal / lightbox 的出口非对称（modal.css 已确立的 2:1
+   口径：进入 --d3=300ms / 出口 --d15=150ms；出口快于进入 = M3 easing-and-duration
+   的「exit transitions … require less attention」），三通道同窗同曲线：
+   ① opacity 1→0（paint-only，与 52 首屏错峰、::before 氛围层同窗衰减）；
+   ② transform translateY(-12px)（内容上浮离场，向上 = 下方新舞台顶替的运镜方向）；
+   ③ display block→none 落在窗**末**（allow-discrete 的出口方向 none 翻转在过渡结束
+      时落定）⇒ 出口窗内元素仍在 a11y 树，故另在 JS 同步任务内先写 aria-hidden=true
+      使树摘除即时（不积到 150ms 翻转），退场元素即时移出 a11y 树。
+   出口窗内 pointer-events 通透（本规则内声明）：双击不会在退场中途重复提交。
+   回返（摘 .is-exited）= 跳回口径（47/49 的回退同语义）：display 在窗首翻回
+   block（allow-discrete 进入方向即时翻转），父级 opacity/transform 无过渡起点
+   （刻意无 @starting-style = 不为首次绘制增新动画）⇒ 父级瞬回，**子级 52 错峰随
+   子树重建重播**（display:none→block 的子树获得新鲜渲染 ⇒ blockIn 家族自然重放
+   = 回返的呈现仪式，零新增 keyframe）。降级：responsive.css 末块（43+51）
+   把三通道收敛 0.01s 落完成帧，退场即时落 none。 */
+.convert-hero.is-exited { opacity: 0; transform: translateY(-12px); pointer-events: none; display: none; }
+/* iteration 52: 氛围层本体——静态渐变 mesh 光晕（纯 CSS、零动画、零在线资源，产物
+   静态可用）。两层径向渐变：accent 光晕居中偏上（h1 区最强 .07）、violet 光晕
+   左上（.05），皆向透明衰减（66%/70% 衰减点），trust-row 所在底部带落在衰减尾外
+   ⇒ 其渲染底色仍是 --bg（green 5.960 不变）。刻意纯静态：常驻循环动效在
+   第 43 次收口块（iteration-count 1）下会停在首帧，静态 mesh 既满足「开场氛围」
+   又结构性免降级治理（零新增 @media/零新增 keyframe/零新增 token——rgba 字面量
+   为既有 --accent/--violet 的 RGB 分量）。inset 0 ⇒ 伪元素不越宿主盒，对
+   documentElement.scrollWidth 与 body 子树几何扫描零贡献（伪元素亦不在 body* 内）。 */
+.convert-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(64% 54% at 50% -14%, rgba(60,53,175,.07), transparent 66%),
+    radial-gradient(40% 38% at 7% 24%, rgba(109,40,217,.05), transparent 70%);
+}
+.convert-hero h1 { font-size: 32px; letter-spacing: .5px; line-height: 1.35; }
+.hero-sub { color: var(--ink-2); margin: var(--s12) auto var(--s28); max-width: 620px; font-size: var(--f14); line-height: 1.8; }
+.convert-form { display: flex; gap: var(--s8); max-width: 760px; margin: 0 auto; }
+.url-input {
+  flex: 1; padding: 13px 18px; font-size: var(--f14); border: 1.5px solid var(--line-strong);
+  border-radius: var(--r12); background: var(--paper); outline: none; transition: border-color var(--d15);
+  font-family: var(--font-mono);
+}
+/* iteration 11: WCAG 1.4.3 covers placeholder text ("This success criterion
+   applies to text in the page, including placeholder text"). The UA default is
+   rgb(117,117,117) = 4.26 on --bg and 4.61 on paper; ink-3 is 5.53/5.98.
+   opacity:1 defends against older UAs compositing the placeholder at ~0.5. */
+.url-input::placeholder { color: var(--ink-3); opacity: 1; }
+.url-input:focus { border-color: var(--accent); box-shadow: var(--ring-focus); }
+.mode-select { padding: 13px var(--s14); font-size: var(--f13); border: 1.5px solid var(--line-strong); border-radius: var(--r12); background: var(--paper); color: var(--ink-2); outline: none; }
+.btn-primary {
+  background: var(--accent); color: #fff; border: none; border-radius: var(--r12);
+  padding: 13px 26px; font-size: var(--f14); font-weight: 600; box-shadow: var(--shadow-btn);
+  transition: transform var(--d1), box-shadow var(--d15);
+}
+/* iteration 52: CTA 主角化（反馈面）——力反馈三态全走安全通道（transform / box-shadow /
+   outline），宿主 background-color 过渡一律不做（.btn-primary 在 inject-main.2 的
+   white 扫描组：#fff on accent = 9.06，宿主 bg 须恒为 accent——第 50 次首次失败的
+   风险通道禁令）。悬停 = 升起 1px + 既有 --shadow-btn-hover 加深（M3 States 的 hover
+   语义 + elevation 家族的阴影高度惯例）；按下 = 收缩到 --shadow-btn（按压 = 高度
+   收缩的物理语义，保留既有 translateY(1px)）；焦点 = 仓内既有焦点钩子逐字复用
+   （.doc-card/.scrubber/.run-pause/.stack-card 同一声明：:focus-visible only，
+   keyboard only、never on click）。过渡骑既有 transition（transform --d1=100ms /
+   box-shadow --d15=150ms，Atlassian interactions 50–150ms 窗），零新增声明。
+   本类覆盖三处实例（convert 首屏 CTA / #btnViewDoc / #mReplay），家族一致。 */
+.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-btn-hover); }
+.btn-primary:active { transform: translateY(1px); box-shadow: var(--shadow-btn); }
+.btn-primary:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+.btn-ghost { background: var(--paper); border: var(--hairline); border-radius: var(--r12); padding: 13px var(--s20); font-size: var(--f13); color: var(--ink-2); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+/* iteration 16: inline feedback for #convertForm (#cvMsg doubles as its own
+   polite live region — see convert.js). --amber on the hero backdrop (--bg,
+   .convert-hero has no own background) is 5.479: >= 4.5 for the 13px normal
+   text (SC 1.4.3); as the invalid control's border it is the same 5.479,
+   >= 3:1 (SC 1.4.11, mirroring --line-strong's role as the control's visual
+   indicator). :empty keeps an unannounced message out of layout entirely
+   (a trailing-space nudge never matches :empty). */
+.cv-msg { max-width: 760px; margin: var(--s10) auto 0; text-align: left; font-size: var(--f13); color: var(--amber); }
+.cv-msg:empty { display: none; }
+.url-input[aria-invalid="true"] { border-color: var(--amber); }
+.trust-row { display: flex; gap: 22px; justify-content: center; margin-top: 24px; color: var(--green); font-size: var(--f12); }
+
+/* iteration 52: 首屏呈现仪式——开场错峰（「动效表达」第八切面 + 叙事 spine 首屏冲击；
+   45 的容器转场是「舞台升起」，本段是「台上角色的登场编排」）。形态逐字复用证据词
+   汇 blockIn（opacity 0→1 + translateY 8px，家族下端，同 46/47/48/51 四度先例），
+   同窗 --d3 + --ease-out；fill 取 backwards（51 同款实证）：延迟窗内保首帧（错峰机制
+   必需），活动窗结束后不保留任何帧 ⇒ 元素回落自身声明 ⇒ .btn-primary 的
+   hover/active transform 与其 --d1/--d15 过渡逐字存活（机制最小化页实测）。
+   **只用长手属性、不用 animation 简写**（51 的级联教训：简写会把 animation-delay
+   一并重置为 0，简写规则的特异性还会压过下面的阶梯规则，错峰被吃掉）。
+   节拍：h1 ←--d12=120ms（母拍 300ms 的 40% 点：--ease-out 前置极陡、45 实测母拍
+   150ms 已 0.928 ⇒ 内容起拍落在母拍到访尾部，两拍连续而非同帧同向叠加——
+   母拍与内容拍的信息量不同：前者是「视图抵达」，后者是「7 步呈现序」，
+   通道结构性正交：子 transform 不动父盒、opacity 为乘法复合的嵌套淡入）；
+   其后 60ms/步（motion.dev stagger(0.05)–stagger(0.1) 带、高于 m1 的 20ms 扫描上限
+   ——首屏是呈现仪式而非可扫描列表，间隔须演示距离可辨）：hero-sub 180、
+   .url-input 240、两个 .mode-select 300/360、CTA（控件簇末拍/主角）420、
+   .trust-row（收尾拍）480 ⇒ 末拍起播 + 单元窗 = 总窗 780ms（= 51 已登记的
+   root ~800ms 预算）。阶梯规则只声明 animation-delay（无动画指派时不产生效果，
+   动画只由本段那条合并基础规则指派——nth-child 序 = 视觉序 = 「自上而下」
+   m1 的 populate 方向）。
+   作用域钉 #view-convert.active（48/51 的防御性先例）：.view:not(.active) 的
+   display:none 使整个子树不渲染 ⇒ 动画实例移除；返回时 display 翻转 + 作用域
+   重匹配 ⇒ 动画在新建渲染上重播（51 机制页重入 rAF 实证），三条进入路径
+   （boot 默认视图 / nav 点击 + hashchange-reconcile / 深链回退 app）全部收敛于
+   同一个 switchView 类翻转、同构一致；零 JS / 零 HTML 改动。
+   安全通道：opacity + transform 全 paint-only；扫描读点地图（GROUPS 首屏五组 /
+   run-narrow nbForm 六元素 right 读点 / bh* 类级）先映射后挂载，风险通道零落地，
+   详见 Explore_52.md §1/§3。降级：第 43 次收口块（含 51 补入的 delay 归零）
+   10ms 内落完成帧（7 拍同时落定 = 降级的应有语义）。 */
+#view-convert.active .convert-hero h1,
+#view-convert.active .hero-sub,
+#view-convert.active .convert-form > *,
+#view-convert.active .trust-row {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+#view-convert.active .convert-hero h1 { animation-delay: var(--d12); }
+#view-convert.active .hero-sub { animation-delay: 180ms; }
+#view-convert.active .convert-form > .url-input { animation-delay: 240ms; }
+#view-convert.active .convert-form > .mode-select:nth-child(2) { animation-delay: 300ms; }
+#view-convert.active .convert-form > .mode-select:nth-child(3) { animation-delay: 360ms; }
+#view-convert.active .convert-form > .btn-primary { animation-delay: 420ms; }
+#view-convert.active .trust-row { animation-delay: 480ms; }
+
+/* ---------- run panel ---------- */
+/* iteration 59: 演示主舞台的揭幕（「动效表达」第十四切面——叙事链「首屏仪式（52 hero 错峰）
+   → 按下「开始转换」→ [舞台升起] → 阶段推进（46）→ 交付收束（49）」缺失的一环）。此前
+   convert.js startConvert 里 classList.remove("hidden") 是 display:none→block 硬切换，
+   entire 主舞台（run-head/运输组/阶段步进/时刻栈/交付面板）整块闪现；47 已为 player 建立
+   「.hidden 摘除 = 揭幕」的家族模板（母盒 opacity-only --d3 + @starting-style + 内容子
+   8px），48 把模板落到覆盖层（有关闭路径者加 allow-discrete 出口非对称）——本段是同构
+   而未入族的 convert 主舞台实例，也是观看者主动按下按钮后的「回礼」时刻。
+   母盒只挂 opacity（读点地图：inject-main.2:469 读 .run-panel 的 computed
+   backgroundColor（ctFocus 的 3:1 门）、run-narrow 的 nbRunHead 读 .run-transport 与
+   #runPanel 的 right——opacity 不入计算色与任何 rect，47/48/49 三度实证的母盒安全通道，
+   run-foot 同款）。出口刻意不带 allow-discrete、无出口规则：全仓对 #runPanel 的类写只有
+   startConvert 一处 remove（实读）——演示结束后面板保持可见（交付按钮 runFoot 就在面板内
+   继续可用），重跑提交（stopRun + 重建内容）只在已可见的面板内复位内容（stepper/arts
+   就地类翻转 = 46/49 的既有词汇），无任何把 hidden 加回的路径 ⇒ 无关闭即无出口过渡
+   （47 的 #player 同口径；48 的出口非对称只适用于有关闭路径的覆盖层）。触发器 = 表单
+   submit（点击/Enter——iteration-16 的 #cvMsg 验证反馈先行落定，揭幕只落画面）的同一
+   同步任务，与 main.js 的 scrollIntoView(smooth) 同任务发起 ⇒ 页面下滑与舞台升起合成
+   一条连续运镜（47「滚动叙事」的同构）；0ms 可用（display 进入方向即时翻转、立即可
+   聚焦），300ms 只是落画面（M3 standard / NN/g 大幅面档，与 45/47/48 同窗同曲线）。
+   内容子第二拍 = 三拍封顶（演示面板信息密度高，子拍宜少不宜多、贪多读作「一组一起抖」）：
+   直接内容子 .run-head → .stage-stepper → .run-body（阅读序 = F 型 top+left 优先的
+   头部 → 步进 → 躯干），形态逐字复用 blockIn（opacity + translateY 8px 家族下端，
+   零新增 keyframe），基延迟 var(--d3) = 300ms = 母盒揭幕窗末（58 同款裁决：母拍是母盒
+   本身，若取 51/52/54 的 --d12 = 120ms 会与母盒 opacity 窗同窗起步 = 47 否决的双重拍
+   形态；母拍 1.0 起拍 = 54「0.95+ 起拍」实证口径的严格版），60ms/步（家族呈现序步距）、
+   总窗 720ms。.run-foot 刻意排除在内容拍外（家族边界裁决）：49 的交付拍在 finishConvert
+   摘 hidden 时独立揭幕（自身 transition + @starting-style，见文件末段），若并入本作用域
+   （开演时作用域即匹配、但其时 display:none、结束摘 hidden 时才起播）会与 49 的 opacity
+   transition 同窗叠加且 animation 级压住它 ⇒ 吞掉 49 的交付拍语义，故 49 逐字保留、
+   runFoot 不入本作用域。
+   既有节拍全部原构（本轮验收线）：46 的 stepActivate 与状态色/填充条声明挂在 .stage-step
+   的内容子（与本轮的容器拍是嵌套乘法复合——父 opacity × 子 opacity、子 transform 不动
+   父盒——非同触发器同向叠加；容器是步进的父，其 transform 会平移步盒，但步进是单行
+   flex（display:flex 无 wrap）⇒ 6 盒同排、tops 本来全相等，且探针冻结首帧的平移量是整数
+   8px（Math.round(x+8) == Math.round(x)+8，任意取舍边界同向保持）⇒ nbStepsN 的 top 去重
+   计数两端不变；46 当年改挂内容子正是因为把 transform 挂到 .stage-step 自身、飞行分数值
+   改变 top 分布——本面的整数首帧 + 同排等值两端成立，故容器挂载安全）；49/56/50/52 的
+   声明逐字不动。基础规则只用长手属性、不用 animation 简写（51 的级联教训：简写会把
+   animation-delay 重置为 0、简写特异性还压过阶梯规则吃掉错峰）；三条阶梯规则只声明
+   animation-delay（无动画指派时不产生效果，动画只由本段基础规则指派）。fill 取
+   backwards：延迟窗内保首帧（错峰机制必需），活动窗结束后不保留任何帧 ⇒ 元素回落自身
+   声明 ⇒ 46/49/56 的既有 hover/激活/状态拍（.btn-primary 力反馈、.run-pause 双态、
+   .speeds 指示条、.art-row 挣得拍）逐字存活（若用 both/forwards 终值会压住基础态）。
+   作用域钉 .run-panel:not(.hidden)（47/48/51/58 防御性先例）：narrow 夹具 #runPanel 无
+   hidden ⇒ 作用域匹配但 paint-only ⇒ 7×23 逐字节；重跑路径不重 hidden ⇒ 动画实例不
+   重建（一次开演语义，与 47 的 player 母盒在重复 openPlayer 下的同行为家族一致）。
+   降级：第 43 次收口块（含 51 补入的 animation-delay / transition-delay 归零）把本段
+   全部通道收敛到 10ms 内落完成帧（三拍同时落定 = 降级的应有语义）。零新增
+   keyframe/token/@media/JS/HTML/探针。 */
+/* iteration 67: 全出血舞台（运营方指令「将 runPanel 扩大到整个界面而不是限制在卡片
+   中」）：解除第 64 次的卡片视铬（border/r14/shadow）与 .view 的 1180 限宽 + 水平
+   内边距双重限制，成为边缘到边缘的全宽纸面舞台。突围 = width:100vw +
+   margin-left:calc(-50vw + 50%)：百分比边距相对包含块（view 内容盒）内联尺寸，
+   与视口居中几何相消 ⇒ 左缘恒落视口 0（任意视口、含 vw≤1180 段成立；同技法：
+   chriskirknielsen Breakout Container / CSS-Tricks Full-Width Containers in
+   Limited Width Parents）。DOM / .view / hero 零动（hero 本体为本轮硬线）。
+   vw 含经典滚动条宽度 ⇒ 溢出由 base.css 根元素 overflow-x:clip 对治（详见该注释）。
+   去卡片后的分区感以既有 token 承载（M3 Dividers：full-bleed divider 强调区段
+   分离）：stage-stepper border-bottom 顶带封线 / run-side border-top 中→底封线 /
+   run-foot 既有 dashed 交付拍（第 49 次）逐字不动。水平内边距 var(--s28) 对齐
+   topbar（padding: 0 var(--s28)）与 footer（30 var(--s28)）的仓内槽线。
+   背景刻意保留 var(--paper)：① inject-main.2:469 ctFocus 直读本元素 computed
+   backgroundColor 作 accent 3:1 门第二背景，透明会使 crOf(accent, transparent)
+   无定义（对比比 = 语义不变量，harness 契约不动）；② 面板内全部内件（.metric
+   纷片 / .artifacts-check / .pipeline-scene 纸卡 / .stack-card 纸卡）相对面板的
+   背景关系逐字节不变（面板本来即 paper），去卡片只动外视铬；③ 全宽纸带 vs --bg
+   页面（#fff vs #f7f6f3）= topbar（rgba 白 + hairline）同族带状语言。几何类
+   读点（nb* / 镜头实测）随新布局 re-baseline；语义不变量（零横溢、对比比、
+   揭幕拍、focus/时序键）零变。 */
+/* iteration 68: 回卡片 + 20px 外边距（运营方指令「runPanel 还是卡片效果比较好，只不过
+   左右两边留 20px 作为外边距就可以了」）：恢复卡片视铬（border/r14/shadow-panel
+   三个既有 token，与 #pipelineScene 场景卡同语言；67 解除卡片视铬的裁决被本指令
+   取代，突围几何保持）；让位恒 20px —— margin-left = -50vw + 50% + 20 ⇒ 元素
+   左缘 = x0 − 0.5vw + 0.5W + 20：vw>1180 段 x0=(vw−1180)/2+28、W=1124 ⇒ 20；
+   vw≤1180 段 x0=28、W=vw−56 ⇒ 20（百分比相对 view 内容盒，与视口居中几何
+   相消，同 67 的推导法）；width = 100vw − 40 ⇒ 右缘 = vw − 20 ≤ clientWidth
+   ⇒ 零横溢出（overflow-x:clip 兑底 vw 含滚动条），无需 max() 封顶。去卡片时期的
+   border-top 全宽封线由卡片全边取代（stage-stepper border-bottom 顶带封线与
+   .run-foot dashed 交付拍逐字保留）；--paper 底保留（ctFocus 对比比门 + 内件
+   背景关系双零变，67 的①②③裁决逐字存活）。几何类读点随新布局 re-baseline
+   （narrow 基线 + nb* 计数）；语义不变量（零横溢、对比比、揭幕拍、focus/时序
+   键）零变。 */
+/* iteration 74: run 页舞台贴顶（运营方指令「runPanel 与 topbar 的间距调整为
+   20px」）：.view 的 40px 顶槽只服务 convert 页 hero；run 页 view 顶槽归零后
+   runPanel 自己的 margin-top（20px）即与 60px sticky topbar 的视觉间距，恒
+   20px、任意视口成立（body[data-page] 页级作用域：经典束五页共享零串扰；
+   hero 的 40px 顶槽与 45 的入场过渡逐字不动）。 */
+body[data-page="run"] .view { padding-top: 0; }
+.run-panel { background: var(--paper); border: var(--hairline); border-radius: var(--r14); box-shadow: var(--shadow-panel); padding: var(--s20) var(--s28) var(--s28); margin-top: 20px; margin-left: calc(-50vw + 50% + 20px); width: calc(100vw - 40px); transition: opacity var(--d3) var(--ease-out); }
+.run-panel:not(.hidden) > .run-head,
+.run-panel:not(.hidden) > .stage-stepper,
+.run-panel:not(.hidden) > .run-body {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+.run-panel:not(.hidden) > .run-head { animation-delay: var(--d3); }
+.run-panel:not(.hidden) > .stage-stepper { animation-delay: 360ms; }
+.run-panel:not(.hidden) > .run-body { animation-delay: 420ms; }
+/* iteration 68: 揭幕阶梯四拍回三拍（.run-side 底带整体下线，第 66 次的第四拍随之
+   退役）：head 300 / stepper 360 / body 420，总窗 720ms（59 的三拍封门口径）；
+   .run-foot 仍刻意排除（49 交付拍独立揭幕的边界裁决逐字不变）。 */
+@starting-style { .run-panel:not(.hidden) { opacity: 0; } }
+/* iteration 22: flex-wrap makes the head wrap-safe at css-px widths where
+   title + dwell control no longer fit one line (measured: without it the
+   transport overflows the 320 css-px viewport by 21px). Inert whenever the two
+   items fit — so every width the narrow baseline measures keeps its layout */
+.run-head { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; }
+.run-title { font-size: 19px; font-weight: 700; }
+.run-sub { color: var(--ink-3); font-size: var(--f12); margin-top: 2px; }
+.run-clock { font-family: var(--font-mono); font-size: 22px; color: var(--accent); font-weight: 600; }
+/* iteration 22: the run panel's dwell control — same shape as the player's
+   .transport (button left of the time readout, gap 12px). The button reuses
+   .btn-ghost (--paper/--ink-2/--line, registered >= AA) and is only sized
+   down like .transport .btn-ghost; no new :root token, so the live-read
+   contrast matrix is unchanged. Focus follows the house convention
+   (.doc-card / .scrubber / [data-lightbox]): keyboard only, never on click. */
+/* iteration 29: the transport gets the iteration-22 .run-head treatment —
+   flex-wrap. Measured in the narrow fixture (which now carries #btnPauseRun +
+   #demoSpeeds in their visible state): at 320 css px the three controls'
+   min-content (pause ~70 + speeds ~112 + clock ~66 + 2×12 gap) exceeds the
+   panel content box (216), pushing #runClock 10px past the panel's right edge
+   (fixture nbRunHeadN=277t287). The wrap is inert wherever the row fits
+   (panel slack is 25px+ at 360 and above: 317t292 / 332t307 / 371t310 …), so
+   the >= 360 layout is byte-identical; only the <= 320 band wraps, the same
+   trade the player's .transport makes at <= 640. iteration 75: the group is
+   gone (28's #demoSpeeds retired); the wrap survives as the transport's
+   narrow guard over 暂停钮 + 时钟 (two controls fit every width, so the
+   wrap is now inert at all 7 gate widths — kept as the belt-and-braces
+   guard: inert ≠ dead, it still caps any future transport child). */
+.run-transport { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s6) var(--s12); }
+.run-transport .btn-ghost { padding: var(--s8) var(--s16); }
+.run-pause:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+/* iteration 28's #demoSpeeds group (and its .demo-speeds button:focus-visible
+   rule) retired in iteration 75 — operator instruction: the demo runs purely
+   at the submission-time pace; the player's #plSpeeds is the app's only
+   runtime speed group. The shared .speeds family (style.css) keeps serving
+   that one instance; this rule was the demo-specific focus outline, deleted
+   with its element (the 12th-iteration dead-rule caliber: zero matches). */
+/* iteration 67: 顶带封线（去卡片后的区段分离，M3 full-bleed divider 语义）：
+   padding-bottom + border-bottom 叠在既有 margin var(--s20) 0 之外 ⇒ 分隔线两侧
+   各 20px 留白（封线不贴内容）；step 盒几何不动（border 与 padding 均不改
+   .stage-step 的 top ⇒ nbStepsN rows / nbDesk stepsTop 两端口径不变）。 */
+.stage-stepper { display: flex; gap: var(--s6); margin: var(--s20) 0; padding-bottom: var(--s20); border-bottom: var(--hairline); }
+/* iteration 46: the stepper's progression beat (motion second facet). Three
+   paint-only channels ride ONE class flip that renderStepper (convert.js)
+   now performs in place — the per-tick innerHTML rewrite had destroyed node
+   identity, leaving the transition below permanently dead (a transition
+   needs a previous value on the SAME node). ① state crossfade of bg/border/
+   text colour at --d15 (150ms = interaction window ceiling: Atlassian
+   interactions 50–150ms, NN/g simple feedback ~100ms). ② entrance of the
+   newly activated step: stepActivate at --d3 300ms + --ease-out (same
+   window/curve as the iteration-45 view entrance), mounted on the step's
+   CONTENT children (.s-name/.s-hint) — not on .stage-step itself: nbStepsN
+   (narrow third path) counts distinct getBoundingClientRect().top of the six
+   step boxes; a chip-level transform shifts that rect and the probe's
+   virtual clock freezes the animation at its starting frame (verified: row
+   count +1 on 6 of 7 widths). A child's transform cannot move the parent's
+   box, so the narrow gate stays byte-identical, zero probe change, beat
+   unchanged (container crossfades in place, content arrives). ③ progression
+   axis: bottom 3px fill bar via ::after (position: relative anchors it,
+   overflow: hidden clips it to the corner radius) reusing the player
+   .ribbon-seg vocabulary — scaleX 0 → .active .5 (accent) → .done 1 (green),
+   origin left, --d3 + --ease-out. Reduced motion: the iteration-43 closing
+   block's 0.01s !important covers elements and pseudo-elements — no new
+   @media. */
+.stage-step {
+  flex: 1; border: var(--hairline); border-radius: var(--r10); padding: 9px var(--s10); background: var(--line-2);
+  position: relative; overflow: hidden;
+  transition: background-color var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out);
+}
+.stage-step::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform var(--d3) var(--ease-out), background-color var(--d15) var(--ease-out); }
+.stage-step .s-name { font-size: var(--f12); font-weight: 600; color: var(--ink-3); white-space: nowrap;
+  transition: color var(--d15) var(--ease-out); }
+.stage-step .s-hint { font-size: var(--f10); color: var(--ink-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stage-step.done { background: var(--green-soft); border-color: #bbe3d2; }
+.stage-step.done .s-name { color: var(--green); }
+.stage-step.done::after { transform: scaleX(1); background: var(--green); }
+.stage-step.active { background: var(--accent-soft); border-color: #cdd2fb; }
+.stage-step.active .s-name { color: var(--accent); }
+.stage-step.active .s-name, .stage-step.active .s-hint { animation: stepActivate var(--d3) var(--ease-out); }
+.stage-step.active::after { transform: scaleX(.5); }
+@keyframes stepActivate { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+/* iteration 66: 中区两栏（上中下三区结构的中间区）——左 .stack-zone 轨迹演示列
+   1/4、右 #pipelineScene 3/4（运营方指定比例）。minmax(0, …) 抑制网格项
+   min-content 反噬（场景内 auto-fit 分支在窄轨自动塌单列，零横向溢出）。
+   塌缩：≤980px 由 responsive.css 既有 980 媒体块塌单列，堆叠序 = DOM 序
+   （先「正在做」后机器场景 = 两栏阅读序左→右的延续）。 */
+/* iteration 67: 中区宽度重分配（1:3 比例 → stack 固定轨道 264px + pipeline 取全部
+   剩余；minmax(0,1fr) 语义与 980 媒体块坦单列口径逐字不变）。 */
+/* iteration 68: stack 固定轨道 264 → **294**（运营方指令「stack-zone 区域要扩大
+   30px」，+30 整）。1280 视口新口径：面板边盒 1240（100vw−40）− 内边距 56 ⇒
+   内容 1184；294 + gap 18 ⇒ pipeline = 872（相对 67 的 942 = −30（stack 让位）
+   −40（卡片外边距），双层来源如实登记；pipe-cols auto-fit 自然重排，内容由既有
+   自适应规则承载，零新增组件/数据）。 */
+/* iteration 74: stack 固定轨道 294 → **324**（运营方指令「stack-zone 加宽 30px、
+   管道车间 pipe-title 同步收窄 30px」）：右轨 minmax(0,1fr) 自动吸收 −30 ⇒
+   1280 视口 pipeline = 842（68 次 872 − 30）；pipe-title 无固定宽（随场景盒
+   同步收窄 30px 的机制即此），s2 二项重排见 pipeline.css。 */
+.run-body { display: grid; grid-template-columns: 324px minmax(0, 1fr); gap: 18px; }
+/* 同栏窄带补丁：左列（第 67 次起固定轨道、第 68 次 264→294px）在窄视口段
+   stack-head 的长提示需折行（wrap 在宽段惰性、零影响）。 */
+.run-body .stack-head { flex-wrap: wrap; }
+/* iteration 12: the .now-card family (5 rules) was deleted — no element with
+   those classes exists (the "current step" card became .stack-head +
+   .stack-card in the iteration-8 redesign), and dead rules mislead maintainers. */
+/* iteration 68: 底部数据带 .run-side 整体下线（运营方指令「run-side 组件可以移除，
+   我认为没有存在必要了」）：#runMetrics 纯重复数字删除（每项在仓内另有呈现路径，
+   见 Explore_68.md §1 消重论证），#runArtifacts 的 art-rows 迁入 #runFoot（上方
+   DOM，置于按钮之上）；.run-side / .metric-grid / .metric 规则随之删除（第 12 次
+   死规则口径——残留类名零匹配（inject-main.2 的两个 .metric* 读点同步删除）。
+   iteration 74：#runArtifacts / art-rows 随 artifacts-check 组件退役再次整体
+   下线（容器 + 规则族 + convert.js 的 ARTS/renderArts，见下方 74 注释）。 */
+/* iteration 74: 交付物自检组件下线（运营方指令「移除底部 artifacts-check 组件」）。
+   删除面：.artifacts-check 容器两条规则 + .art-row/.art-row.ok/.art-row .dot/
+   .art-row.ok .dot 四条规则（第 12 次死规则口径——残留类名零匹配）；convert.js
+   的 ARTS 常量 / renderArts（构建一次后就地翻转，46/49 的节点身份机制）与三处
+   调用同步删除。第 49 次双拍拆解：① 挣得节拍（qEarn glyph + dot 行色交叉淡入）
+   宿主即 art-rows ⇒ 随组件退役；@keyframes qEarn 仍服务回放器验收清单（同源
+   不同宿主，style.css 保留）② 交付卡揭幕（.run-foot 母盒 opacity-only --d3 +
+   @starting-style + 摘 .hidden 同任务，重跑复位是「跳回」语义故不含 display 的
+   allow-discrete）逐字存活——交付卡现为 .run-foot-actions 单子，flex-direction
+   列向 + dashed 封线 + gap 零改。 */
+.run-foot { display: flex; flex-direction: column; gap: var(--s10); margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--line); transition: opacity var(--d3) var(--ease-out); }
+/* iteration 68: 交付卡改列向（历史：art-rows 容器在上、按钮成组在下；74 起
+   art-rows 容器退役，交付卡 = .run-foot-actions 单子）——.run-foot-actions
+   行向 flex + wrap 承载窄屏换行（22/29 的既有口径）；49 的 opacity 揭幕与
+   @starting-style 逐字不动（flex-direction 只改主轴，opacity 过渡与读点零涉）。 */
+.run-foot-actions { display: flex; gap: var(--s10); flex-wrap: wrap; }
+@starting-style { .run-foot:not(.hidden) { opacity: 0; } }
+/* pipeline.css — 管道车间（Pipeline Scene，第 64 次组件群 II）。
+ * 单一职责：#view-convert 内 #pipelineScene 的呈现（六相位主体；
+ * 第 68 次 .pipe-rail 相位轨道移除——与顶部 stageStepper 逐项重复，移除即消重；
+ * 第 69 次 .ph-label 相位标题与 .pipe-recovery 绕行条移除——相位名同样由
+ * stageStepper 承载、recovery 时刻由「正在做」栈卡片承载，移除即消重）。
+ *
+ * 网格下限一律 min(100%, Npx)：320 css-px 极窄视口（仓内 319 媒体档）也不溢出——
+ * 实测缺陷登记：minmax(Npx) 的固定下限在 320 px 下溢出 29 px。
+ * 色板逐字取自既有 token（base.css :root），零新增 token、零改既有视图色板
+ * （第 62 次失败的直接规避）。零真 @media（check-cascade 的媒体序 8 项不登记
+ * 新条目）——窄屏由网格自身的 auto-fit / auto-fill 与 flex-wrap 承担。
+ * 刻意不在注释内书写形如 .cut-* 的连写：星杠序列会提前终止本注释、把碎片粘进
+ * 下一条选择器（第 63 次实测吞掉过 .source-stage 的网格规则——同类陷阱登记在案）。
+ * 相位三态（pending 灰 / active 紫 / done 绿）逐字复用 .stage-step 的既有读点
+ * 组合（convert.css：active = accent-soft + accent、done = green-soft + green），
+ * 与阶段步进器同语言是本组件的刻意裁决（新皮肤 = 新色板 = 第 62 次失败形态）。
+ * 动效档位：母盒揭幕 = --d3 = 300ms opacity-only + @starting-style（第 47/59 次
+ * 家族模板）；单元态翻转 = --d15（第 50 次词汇）；第 80 次新增 4 族 keyframe
+ * （verdictStamp / valuePop / triPing / triConfirm，详见文件内 s2 评分段），blockIn
+ * 仍复用 stack.css；全部 transition / animation 由 responsive.css 末块的
+ * prefers-reduced-motion 收口统一治理（第 43 次 + 51 补丁）。 */
+
+/* ---------- 母盒揭幕：与 .run-panel 同一模式的镜像（第 59 次模板） ---------- */
+.pipeline-scene {
+  background: var(--paper);
+  border: var(--hairline);
+  border-radius: var(--r14);
+  box-shadow: var(--shadow-panel);
+  padding: var(--s20);
+  margin-bottom: var(--s12);
+  transition: opacity var(--d3) var(--ease-out);
+}
+.pipeline-scene:not(.hidden) > .pipe-head,
+.pipeline-scene:not(.hidden) > .pipe-body {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+.pipeline-scene:not(.hidden) > .pipe-head { animation-delay: var(--d3); }
+.pipeline-scene:not(.hidden) > .pipe-body { animation-delay: 360ms; }
+@starting-style { .pipeline-scene:not(.hidden) { opacity: 0; } }
+/* iteration 66: 场景作为 .run-body 右栏网格项（由 runPanel 上方兄弟节点移入，
+   DOM 重构许可面）：卡片本体语义逐字不变（纸卡 / 边 / 阴影 / 揭幕模板），
+   仅底部 margin 归零——栏内不需要卡片间匇，零高度变化由网格单元吸收。 */
+.run-body > .pipeline-scene { margin-bottom: 0; }
+/* 无出口规则：全仓对 #pipelineScene 的 hidden 类写只有 startConvert 一处 remove
+   （演示结束后场景与面板一并保持可见，重跑只在已可见的容器内复位状态 ——
+   resetPipeline 的就地清零 = 46/49 的既有词汇），无关闭即无出口过渡。 */
+
+/* ---------- 相位头：标题（第 68 次：.pipe-rail 相位轨道移除——与顶部 stageStepper 逐项重复 ⇒ 移除即消重；pipe-head 退为单标题形态，flex 容器自适应零改） ---------- */
+.pipe-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s12);
+}
+.pipe-title b { font-size: var(--f14); color: var(--ink); font-weight: 600; }
+.pipe-title span { display: block; font-size: var(--f11); color: var(--ink-3); margin-top: 2px; }
+
+/* ---------- 相位主体：一次只显一相（相位 = 当前轨迹状态） ---------- */
+.pipe-body { margin-top: var(--s16); }
+.pipe-phase:not([hidden]) {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+}
+.pipe-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: var(--s12); }
+.pipe-s2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: var(--s12); align-items: start; }
+/* iteration 74: 抽帧阶段竖排（运营方指令「三个横向排布动画组件修改为
+   pipe-probe 和 pipe-scores 组件竖向排布」）：probe + scores 两卡包进
+   .pipe-s2-side（列向 grid），.pipe-s2 遂为二项网格 = cuts 一列 + 侧列
+   （probe 上 / scores 下——scores 仍居末位，位置不变）。auto-fit 280px 下限
+   与窄屏塌缩零改：scene 内容 < 572px 时整体单列（先 cuts 后侧列），零新增
+   @media（本文件零真 @media 纪律逐字不变）。 */
+.pipe-s2-side { display: grid; gap: var(--s12); align-content: start; }
+
+/* ---------- 卡片（相位内的一个机器动作区） ---------- */
+.pipe-card {
+  background: var(--bg);
+  border: var(--hairline);
+  border-radius: var(--r12);
+  padding: var(--s14);
+}
+.pc-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--s8);
+  margin-bottom: var(--s10);
+}
+.pc-head > span:first-child { font-size: var(--f12); font-weight: 600; color: var(--ink); }
+.pc-badge { font-size: var(--f10); color: var(--ink-3); text-align: right; white-space: nowrap; }
+.factline { font-size: var(--f11); color: var(--ink-3); margin-top: var(--s10); }
+
+/* ---------- 单元点亮词汇：chip / 步骤行（toggle(force) 驱动，幂等） ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font-size: var(--f11); color: var(--ink-3);
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--paper);
+  /* iteration 76: 点亮手势——未亮 chip 微缩"待命"，点亮相位 scale→1 + 既有色通道
+     （transform = paint-only，零布局贡献，49/50 的通道纪律） */
+  transform: scale(0.94);
+  transition: background var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out), color var(--d15) var(--ease-out), transform var(--d15) var(--ease-out);
+}
+.chip.on { background: var(--green-soft); border-color: #bbe3d2; color: var(--green); transform: scale(1); }
+
+.dl-steps, .latex-flow {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 6px;
+}
+.dl-steps li, .latex-flow li {
+  display: flex; align-items: center; gap: 8px;
+  font-size: var(--f12); color: var(--ink-3);
+  opacity: 0.5;
+  transition: opacity var(--d15) var(--ease-out), color var(--d15) var(--ease-out);
+}
+.dl-steps li i, .latex-flow li i {
+  width: 9px; height: 9px; border-radius: 3px; flex: none;
+  background: var(--line-strong);
+  transition: background var(--d15) var(--ease-out);
+}
+.dl-steps li.on, .latex-flow li.on { opacity: 1; color: var(--ink); }
+.dl-steps li.on i, .latex-flow li.on i { background: var(--green); }
+
+/* 运营方指令 ①②④⑤（84 期）：四张列表流式到场——构建期不再预渲染暗色待命行，
+   条目随相位进度逐个插入（诞生即 .on，blockIn 入场一次；幂等：同计数零写入）。
+   基态的未亮暗色行不再出现于任何渲染路径（将来要恢复「待命行」语义时，
+   基态规则仍在，重新插入不带 .on 的条目即可）。 */
+.dl-steps li.on, .latex-flow li.on, .sub-tracks li.on, .rt-chip.on {
+  animation-name: blockIn; animation-duration: var(--d15); animation-timing-function: var(--ease-out);
+}
+
+/* s1 下载：分步进度条（determinate，CI 管道词汇）+ 端点事实与封面到达 */
+.dl-bar { height: 6px; border-radius: 3px; background: var(--line-2); margin-top: var(--s12); overflow: hidden; }
+.dl-bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 3px; transition: width var(--d45) var(--ease-out); }
+.dl-end {
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s12); flex-wrap: wrap;
+  font-size: var(--f11); color: var(--ink-3); margin-top: var(--s10);
+  opacity: 0.35; transition: opacity var(--d3) var(--ease-out);
+}
+.dl-end.arrived { opacity: 1; }
+.dl-end img { width: 64px; height: 36px; object-fit: cover; border-radius: var(--r4); border: var(--hairline); }
+
+/* s1 字幕轨：4 轨逐条落位 + 健康度 */
+.sub-tracks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.sub-tracks li {
+  display: flex; align-items: center; gap: 8px;
+  font-size: var(--f12); color: var(--ink-2);
+  opacity: 0.5; transition: opacity var(--d15) var(--ease-out);
+}
+.sub-tracks li code {
+  font-family: var(--font-mono); font-size: var(--f11);
+  background: var(--accent-soft); color: var(--accent);
+  padding: 2px 8px; border-radius: var(--r4);
+  transition: background var(--d15) var(--ease-out), color var(--d15) var(--ease-out);
+}
+.sub-tracks li.on { opacity: 1; }
+.sub-tracks li.on code { background: var(--green-soft); color: var(--green); }
+.sub-final { font-size: var(--f11); color: var(--ink-3); margin-top: var(--s10); opacity: 0.5; transition: opacity var(--d15) var(--ease-out); }
+.sub-final.arrived { opacity: 1; }
+.sub-health {
+  font-size: var(--f11); color: var(--ink-3); margin-top: var(--s8);
+  padding: 6px 10px; border-radius: var(--r8); border: 1px dashed var(--line-2);
+  opacity: 0.45; transition: opacity var(--d15) var(--ease-out);
+}
+.sub-health.ok { opacity: 1; background: var(--green-soft); border-color: #bbe3d2; color: var(--green); }
+
+/* ---------- s2 抽帧网格：35 帧 = 35 次调用的唯一候选名（第 65 次逐帧生长 / 第 72 次重锚三批 L78/L97/L116）---------- */
+/* 到场语义（运营方指令「帧不是同时准备好的，而是随着每一帧加入所在容器逐渐增高」）：
+ * 未落帧的格 display:none ⇒ 零预留槽位、零骨架梳（notes/05-pacing 的「零预留空间」
+ * 原则同族）；点亮（.on）那一帧由 padding-bottom 通道从零面积生长到 16/9 槽位。
+ * 为什么是 padding-bottom 而不是 aspect-ratio：aspect-ratio 是尺寸派生量、过渡
+ * 离散（不可插值）；padding 是可插值属性（长度/百分比逐帧解析），56.25% = 9/16×
+ * 100% 相对包含块宽度 ⇒ 高度 = 0.5625×宽。2px 边框补偿（border-box 口径，
+ * base.css `*` 实读）：padding-bottom: calc(56.25% - 2px) + 上下各 1px 边框 =
+ * 0.5625×宽 ⇒ border-box 高与旧 aspect-ratio: 16/9 逐字节相等 = 落定态几何零变。
+ * 进入过渡含 display 的 allow-discrete（进入方向即时翻转到 block，第 48 次
+ * modal/lightbox 同家族），@starting-style 提供首帧（零面积/透明）；出口语义 =
+ * 基态不声明 transition ⇒ 摘 .on 瞬时消失（reset 就地清零，46/49 词汇、与 47 「回退
+ * 是跳回」同口径）；降级由 responsive.css 末块（第 43 次 + 51 补丁）把全部通道
+ * 收敛到 10ms 落完成帧，零新增 @media/token/keyframe。 */
+.cut-batch + .cut-batch { margin-top: var(--s12); }
+.cb-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.cb-head b { font-size: var(--f11); color: var(--ink); font-weight: 600; }
+.cb-head span { font-size: var(--f10); color: var(--ink-3); }
+.cb-cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 84px), 1fr)); gap: 6px; }
+.cut-cell {
+  position: relative;
+  border: 1px solid var(--line); border-radius: var(--r8);
+  background: var(--line-2); overflow: hidden;
+  display: none;  /* 未落帧的格不占空间：无预留槽位 / 零骨架（含 2px 边框梳与行隙也不留） */
+}
+.cut-cell.on {
+  display: block;
+  padding-bottom: calc(56.25% - 2px);  /* + 2px 边框 = 0.5625×宽 = aspect-ratio 16/9 同几何 */
+  opacity: 1; border-color: var(--accent);
+  transition: padding-bottom var(--d3) var(--ease-out), opacity var(--d3) var(--ease-out), border-color var(--d3) var(--ease-out), display var(--d3) allow-discrete;
+}
+@starting-style { .cut-cell.on { padding-bottom: 0; opacity: 0; } }  /* 点亮那一帧从零面积起跳 */
+.cut-cell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cc-t {
+  position: absolute; left: 3px; bottom: 3px;
+  font-size: 10px; line-height: 1.4; color: var(--ink);
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0 4px; border-radius: 3px;
+}
+.cut-note-cap { font-size: var(--f10); color: var(--ink-3); margin-bottom: 6px; }
+.cut-note {
+  font-size: var(--f11); color: var(--amber);
+  background: var(--amber-soft); border-radius: var(--r8);
+  padding: 6px 10px; margin-bottom: var(--s10);
+}
+
+/* ---------- s2 抽帧探头：原片画面 ↔ 刚取下的帧（因果对照） ---------- */
+/* iteration 80: 左格 = 双通道。video（16/9 播放器腔）为底，帧图覆盖层叠顶——
+ * 覆盖层在 video seek 首个落位前常驻镇场：无 byte-range 的静态服务会令
+ * Chromium 静默丢弃 currentTime 赋值、帧恒停 t≈0（旧「左格黑屏」根因；
+ * 帧图即原片该秒取下的真帧，无论哪条通道呈同一画面的因果对照）；落位后
+ * 覆盖层淡出（--d3）揭出视频本体。覆盖层与 video 同盒同 object-fit ⇒
+ * 揭幕零位移。 */
+.probe-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8); align-items: stretch; }
+/* 83 期：80 期双通道退休——左格从 <video>+绝对覆盖层改为直接显示的帧图 */
+.probe-source { margin: 0; }
+.probe-source img { /* 原片在这一秒的帧（与抽帧点同源真值） */
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain;
+  background: #000; border-radius: var(--r8);
+}
+.probe-source figcaption { font-size: var(--f10); color: var(--ink-3); margin-top: 4px; }
+.probe-cand { margin: 0; }
+.probe-cand img {
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  border: 1px solid var(--accent); border-radius: var(--r8); background: var(--line-2);
+}
+.probe-cand figcaption { font-size: var(--f10); color: var(--ink-3); margin-top: 4px; }
+.probe-why { font-size: var(--f10); color: var(--ink-3); margin-top: var(--s8); }
+
+/* ---------- s2 帧评分（真 info 值的升降条）与三向核验 ---------- */
+/* iteration 81：逐帧判别扫描条——L44 密集抽帧 86 样本的单行等宽刻度（grid
+ * 86 等分 + 1px 间距，任意卡宽自适应、窄屏不溢出），扫描窗（1/86 宽、
+ * 上下各溢出 2px 的光标条）随相位进度逐帧推进；扫过的刻度转亮 = 「该帧
+ * 已评分」。渲染语义零计时、幂等（judged = 相位进度的纯函数）。 */
+/* 82 期：列数改 grid-auto-flow column（适配 SCORE_FRAMES 数据驱动——旧硬编码 86 列随数据源替换退役） */
+.judge-strip { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 1px; margin-bottom: var(--s10); }
+.jt {
+  height: 10px; border-radius: 2px; background: var(--line-2);
+  transition: background var(--d15) var(--ease-out);
+}
+.jt.on { background: #cdd2fb; } /* 已判 = 浅紫（暗色 accent 的同族读数，区别于未判的灰） */
+.judge-scan { /* 扫描窗 = 「正在判这一帧」的光标（宽 = 1/N，由模板内联随 SCORE_FRAMES 落定） */
+  position: absolute; top: -2px; bottom: -2px;
+  left: 0%; background: var(--accent); border-radius: 2px;
+  box-shadow: 0 0 4px 1px rgba(60, 53, 175, 0.45);
+  transition: left var(--d3) var(--ease-out); pointer-events: none;
+}
+/* 84：帧过滤标签流（运营方指令 ③）——扫描条正下方逐个落 f_NNN 标签；滚动窗口
+   = 最近 JUDGE_WINDOW(10) 个 + 头部「…」表示还有很多（总数计数随徽章单调不减）。
+   min-height 预留一行高 = 首个标签到场时下方 score-rows 不位移（布局稳定性优先
+   于「零预留」教条——本行是纯星宫槽位，非骨架梳）。 */
+.judge-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; min-height: 22px; margin-bottom: var(--s10); }
+.jt-tag {
+  font-family: var(--font-mono); font-size: 10px; line-height: 1.6;
+  padding: 0 7px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+  animation-name: blockIn; animation-duration: var(--d15); animation-timing-function: var(--ease-out);
+}
+.jt-tag.is-pick { /* 入选教学图的帧转绿 = 「判过 ≠ 入选」的一眼可辨 */
+  background: var(--green-soft); color: var(--green);
+}
+.jt-tag.is-pick::before { /* 入选标记小方块（dl-steps li i / .cl-mark 同族词汇） */
+  content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 1.5px;
+  background: var(--green); margin-right: 4px; vertical-align: 1px;
+}
+.jt-more { font-size: 10px; color: var(--ink-3); padding: 0 2px; }
+/* iteration 80 评判动效族（组件性质 = 机器逐帧过堂 + 三方对齐核验，全部由
+ * class 翻转驱动 ⇒ 渲染幂等不变量逐字不变；零计时器 ⇒ 自动继承演示调速 /
+ * 暂停冻结-续播 / 视图隐藏冻结；reduced-motion 由 responsive.css 末块收口）：
+ *   行入场（blockIn）= 逐帧过堂 · 判定盖戳（verdictStamp）= 结论拍下 ·
+ *   评分值弹跳（valuePop）= 分数落定 · 三向脉冲（triPing）= 核验点亮 ·
+ *   对齐确认（triConfirm 三道 0/150/300 ms 阶梯 = 时间轴/字幕/画面文字逐一对齐）。
+ *   82 期：剔除划线（is-reject 的左→右 wipe）+ .sr-verdict.reject 随新数据退役——
+ *   纯幻灯片演讲的 179 帧无一被除（SCORES 判定行全为通过），is-reject 类原子
+ *   不再出现于任何页 ⇒ dr* 死规则门强制删除（0.1 原则 8）；SCORES 的 reject
+ *   布尔仍保留于 JS 数据模式，将来会话出现被除帧时需重建样式（删除原因与
+ *   复活路径见 docs/Explore_82.md）。
+ *   85 期（运营方指令「要有插帧的感觉；3 帧满了就自动将最后一个删除」）：
+ *   判定行从「预渲染暗底待命行 + litN 翻转」改为插入式滚动窗——未到判定
+ *   行不存在（#pipeScores 初始为空），扫描到达帧号才 prepend 插入（诞生即
+ *   .on ⇒ blockIn / valuePop / verdictStamp 三段入场一次播齐），插入后
+ *   >= SCORE_WINDOW(3) 删底部 .score-row（最旧）——与 84 期标签流同一 FIFO
+ *   语义；退场即时（零计时器）。基态 opacity .45 仅作未来「待命行」复活
+ *   的降级底（同 84 期四张列表基态规则的处置）。 */
+.score-rows { display: grid; gap: var(--s10); }
+.score-row {
+  opacity: 0.45; transition: opacity var(--d15) var(--ease-out);
+}
+.score-row.on { opacity: 1; animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out); }
+.score-row.on .sr-head span:last-child { /* 评分值落定弹跳（静通道：transform 零布局贡献） */
+  animation-name: valuePop; animation-duration: var(--d3); animation-timing-function: var(--ease-out);
+}
+.score-row.on .sr-verdict { /* 判定盖戳：结论拍下（延迟 150 ms = 评分值落定之后） */
+  animation-name: verdictStamp; animation-duration: var(--d3); animation-timing-function: var(--ease-out); animation-fill-mode: backwards; animation-delay: var(--d15);
+}
+.sr-head { display: flex; justify-content: space-between; font-size: var(--f11); color: var(--ink-2); }
+.sr-head span:last-child { font-family: var(--font-mono); color: var(--accent); }
+.sr-bar { height: 6px; border-radius: 3px; background: var(--line-2); margin-top: 4px; overflow: hidden; }
+.sr-bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 3px; transition: width var(--d5) var(--ease-out); }
+.score-row.on .sr-bar i { width: var(--w); }
+.sr-verdict { font-size: var(--f10); margin-top: 3px; }
+.sr-verdict.keep { color: var(--green); }
+.tri-verify { display: flex; gap: 6px; flex-wrap: wrap; margin-top: var(--s12); }
+.tri-track {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: var(--f10); color: var(--ink-3);
+  padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line);
+  opacity: 0.5;
+  transition: opacity var(--d15) var(--ease-out), background var(--d15) var(--ease-out), color var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out);
+}
+.tri-track i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); transition: background var(--d15) var(--ease-out); }
+.tri-track.on { opacity: 1; background: var(--accent-soft); border-color: #cdd2fb; color: var(--accent); }
+.tri-track.on i { background: var(--accent); animation-name: triPing; animation-duration: var(--d45); animation-timing-function: var(--ease-out); }
+.tri-verify.aligned .tri-track {
+  opacity: 1; background: var(--green-soft); border-color: #bbe3d2; color: var(--green);
+  /* 80: 对齐确认——三道阶梯 0 / 150 / 300 ms（同 52 首屏钋锼 60 ms/步的收敛拍），
+     from 帧回望未对齐的 accent 态 = 「三方逐一对齐」的叙事 */
+  animation-name: triConfirm; animation-duration: var(--d45); animation-timing-function: var(--ease-out); animation-fill-mode: backwards;
+}
+.tri-verify.aligned .tri-track:nth-child(1) { animation-delay: 0s; }
+.tri-verify.aligned .tri-track:nth-child(2) { animation-delay: var(--d15); }
+.tri-verify.aligned .tri-track:nth-child(3) { animation-delay: var(--d3); }
+.tri-verify.aligned .tri-track i { background: var(--green); }
+.tri-note {
+  font-size: var(--f10); color: var(--green);
+  background: var(--green-soft); border-radius: var(--r8);
+  padding: 4px 10px; margin-top: var(--s8);
+}
+.tri-note:not([hidden]) { /* 80: 核验通过收束条到场（blockIn 家族下端） */
+  animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out);
+}
+/* 80: 评判动效族的 keyframe（blockIn 复用 stack.css）——盖戳带 -2deg 微幅倾斜 =
+   「拍下结论」的触感（M3 emphasized 同族快窗 300 ms）；triPing 为点亮的
+   单次雷达脉冲，triConfirm from 帧回望未对齐态 */
+@keyframes verdictStamp { from { opacity: 0; transform: scale(1.16) rotate(-2deg); } to { opacity: 1; transform: none; } }
+@keyframes valuePop { from { transform: scale(1.28); } to { transform: none; } }
+@keyframes triPing {
+  from { box-shadow: 0 0 0 0 rgba(60, 53, 175, 0.5); }
+  to { box-shadow: 0 0 0 7px rgba(60, 53, 175, 0); }
+}
+@keyframes triConfirm { from { transform: scale(0.92); background: var(--accent-soft); color: var(--accent); } to { transform: none; } }
+
+/* ---------- s3 原片对照（76：联系表核对窗——素材驱动的核验动画） ---------- */
+/* 联系表 = 86 帧密集样本（assets/contact.jpg）；核对窗随已核验条数扫过表宽
+   （renderS3 写 left%，0→88%；窗宽 12% ⇒ 末条到边）。窗的巨型 box-shadow 被
+   .verify-scan 的 overflow 裁剪 = 窗外压暗的 spotlight —— "逐条回看原片画面" */
+.verify-scan { position: relative; overflow: hidden; border: var(--hairline); border-radius: var(--r8); }
+.verify-sheet { display: block; width: 100%; opacity: 0.75; transition: opacity var(--d3) var(--ease-out); }
+.verify-window {
+  position: absolute; top: 0; bottom: 0; width: 12%; left: 0%;
+  border: 2px solid var(--accent); border-radius: 3px;
+  box-shadow: 0 0 0 9999px rgba(16, 18, 30, 0.35);
+  transition: left var(--d3) var(--ease-out);
+}
+.verify-window::after { /* 扫描线（窗顶 3px 强调线） */
+  content: ""; position: absolute; left: -2px; right: -2px; top: -2px; height: 3px;
+  background: var(--accent);
+}
+
+/* ---------- s5 交付成功动画（84 期，运营方指令 ⑥）---------- */
+/* 六相位落幕后拍下成功印章（verdictStamp 同族盖戳）+ 下载按钮。
+   85 期（运营方指令）：引导文案「讲义就在下方，点击下载」有误导感（暗示可点、
+   本体无控件）⇒ 换成声明式下载锚点（75 期裁决同款 href+download，零 JS 接线，
+   复用 .btn-primary 家族：accent 底白字 对比 9.06 + 力反馈三态）。ps-cue / 弹跳
+   chevron / cueBounce 随之删除（0.1 原则 8：删除优于兼容——机制历史见
+   docs/Explore_84.md）。 */
+.pipe-success {
+  display: flex; align-items: center; gap: var(--s12); flex-wrap: wrap;
+  padding: 10px 14px; margin-bottom: var(--s12);
+  background: var(--green-soft); border: 1px solid #bbe3d2; border-radius: var(--r8);
+}
+.pipe-success:not([hidden]) { animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out); }
+.ps-check {
+  width: 34px; height: 34px; flex: none; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--green); color: #fff; font-size: 18px; font-weight: 700; line-height: 1;
+  animation-name: verdictStamp; animation-duration: var(--d45); animation-timing-function: var(--ease-out);
+}
+.ps-text { display: grid; gap: 2px; }
+.ps-text b { font-size: var(--f13); color: var(--green); }
+.ps-text span { font-size: var(--f11); color: var(--ink-2); }
+.ps-download { margin-left: auto; align-self: center; } /* 右槽定位；视觉全继承 .btn-primary */
+
+/* ---------- s5 归档收束（76：交付物 arrival + 归档 chips） ---------- */
+.archive-row { display: flex; gap: var(--s16); align-items: center; flex-wrap: wrap; }
+.archive-artifact {
+  margin: 0; width: 168px; flex: none;
+  /* 交付物本体乘相面揭幕窗末之后一拍落位（59 家族：内容子自母盒窗末起拍） */
+  animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards; animation-delay: 150ms;
+}
+.archive-artifact img {
+  display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+  border: var(--hairline); border-radius: var(--r8); box-shadow: var(--shadow-panel);
+}
+.archive-artifact figcaption { font-size: var(--f10); color: var(--ink-3); margin-top: 4px; }
+.archive-side { flex: 1 1 240px; min-width: 0; }
+
+/* ---------- s3 数字声称（10 条带视频机器时间）+ 外部检索往返 ---------- */
+/* 82 期：27 条声称使列表过高 → 有界滚动（旧 11 条全显无需边界；max-height 取旧全显高度 ~11 行） */
+.claim-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; max-height: 360px; overflow-y: auto; }
+.claim-list li {
+  display: grid; grid-template-columns: auto 1fr auto auto; gap: 8px; align-items: center; /* 76: +cl-mark 列 */
+  font-size: var(--f11); color: var(--ink-2);
+  padding: 5px 8px; border-radius: var(--r8);
+  opacity: 0.45;
+  transition: opacity var(--d15) var(--ease-out), background var(--d15) var(--ease-out);
+}
+.cl-mark { /* 76: 核验标记——dl-steps li i / .dot 同族的 9px 方块（47/49 词汇），到点位 scale+亮绿 */
+  width: 9px; height: 9px; border-radius: 3px; flex: none;
+  background: var(--line-strong); opacity: 0.4; transform: scale(0.7);
+  transition: background var(--d15) var(--ease-out), opacity var(--d15) var(--ease-out), transform var(--d15) var(--ease-out);
+}
+.claim-list li.on .cl-mark { background: var(--green); opacity: 1; transform: scale(1); }
+.claim-list li.on { opacity: 1; background: var(--accent-soft); }
+.cl-val { font-weight: 600; color: var(--accent); white-space: nowrap; }
+.cl-time { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); white-space: nowrap; }
+.rt-zone { display: flex; flex-wrap: wrap; gap: 6px; }
+.rt-chip {
+  font-size: var(--f11); color: var(--ink-3);
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--paper);
+  transition: background var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out), color var(--d15) var(--ease-out);
+}
+.rt-chip.on { background: var(--cyan-soft); border-color: #b6d8e2; color: var(--cyan); }
+
+/* ---------- s4 编译交付：LaTeX 流 + 33 页逐页到达 + CJK 滚动 ---------- */
+/* 87 期（运营方指令「页面多时过于拥挤，可以多行，一行 10 个左右」）：
+   auto-fill + minmax 自适应换行。实测驱动值：卡内容宽 363 px ⇒
+   (363+5)/(34+5)≈9.3 ⇒ 每行 9 格 × ~36×48 px（aspect 3/4），33 页 =
+   9/9/9/6 共 4 行；取宽 34 而非 32（多塞 1 格但牺牲页码可读性，不取）。
+   73 期的「内联 style repeat(PDF.pages, 1fr)」同日退役（内联删除后真源回
+   CSS；页数再增 / 卡宽变更均无需改代码——auto-fill 天然按宽换行）。
+   min(100%, 34px) 下限 = 仓内既定 320 px 溢出护栏（与 .cb-cells 的
+   min(100%, 84px) 同族——见文件头的 320 px 溢出教训登记）。 */
+.pdf-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 34px), 1fr)); gap: 5px; margin-top: var(--s12); }
+.pdf-p {
+  position: relative; overflow: hidden; /* 76: 页面图铺满 + 页码作小徽标（去掉原居中数字） */
+  aspect-ratio: 3 / 4; border-radius: 2px;
+  background: var(--line-2);
+  transition: background var(--d15) var(--ease-out), border-color var(--d15) var(--ease-out);
+}
+.pdf-p.arrived { background: var(--paper); border: 1px solid var(--accent); }
+.pdf-p::after { /* 页码徽标——.cc-t 同族读数（半透明白底压在页面图上，数字语义不丢） */
+  position: absolute; left: 2px; bottom: 2px; z-index: 1;
+  font-size: 9px; line-height: 1.4; color: var(--ink);
+  background: rgba(255, 255, 255, 0.88); padding: 0 3px; border-radius: 2px;
+  content: attr(data-p);
+}
+.pdf-p img { /* 76: "编译出一页"——页面本体淡入（src 落到位才写，65 期 src-at-arrival） */
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity var(--d3) var(--ease-out);
+}
+.pdf-p.arrived img { opacity: 1; }
+.cjk-line { font-size: var(--f12); color: var(--ink-2); margin-top: var(--s12); }
+.cjk-line b { font-family: var(--font-mono); font-size: var(--f14); color: var(--accent); }
+.pdf-end {
+  font-size: var(--f11); color: var(--ink-3); margin-top: var(--s8);
+  opacity: 0.45; transition: opacity var(--d3) var(--ease-out);
+}
+.pdf-end.arrived { opacity: 1; color: var(--green); }
+/* ---------- library ---------- */
+.doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--s16); }
+.doc-card { background: var(--paper); border: var(--hairline); border-radius: var(--r14); box-shadow: var(--shadow-panel); padding: var(--s20); cursor: pointer; transition: transform var(--d12), box-shadow var(--d15); }
+.doc-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-raised); }
+.doc-card:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+/* iteration 51: 文档卡的「第二拍」到场（「动效表达」第七切面——内容的错峰到场的伴随面）。
+   45 只覆盖视图容器（.view 的 opacity + translateY 12px，母拍 300ms）；容器升起后
+   其内的文档卡随容器整体闪现，没有自己的到位拍——本规则补上 48 式的母盒→内容子
+   两拍结构在 library 视图里缺的第二拍。形态逐字复用证据块到场词汇 blockIn
+   （opacity 0→1 + translateY 8px，家族下端，同一套发牌语言的两面），同窗 
+   --d3 + --ease-out。延迟 var(--d12) = 120ms = 母拍的 40% 点（母拍到访尾部进入 ⇒
+   两拍连续而非同帧同向叠加，47 的教训口径）。fill 取 backwards（任务包点名必须
+   显式处理）：延迟窗内保持首帧，活动窗结束后不保留 ⇒ .doc-card:hover 的
+   translateY(-2px) 与其 transform --d12 / box-shadow --d15 双通道逐字存活
+   （animation 级高于所有非 !important 声明，若用 both/forwards 终值会压住 hover）。
+   作用域钉在 #view-library.active（48 的防御性先例）：作用域选择器随 switchView 的
+   类翻转自身翻转 ⇒ 动画实例重建 = **每次视图重入都重播**，三条进入路径
+   （nav 点击 / hashchange-reconcile / boot applyHashAtBoot 全部收敛于同一个
+   switchView，40 口径）同构一致；display:none 直系祖先时元素不渲染 ⇒ 动画不跑。
+   机制覆盖任意 N：nth-child 延迟阶梯的同模式在弹层 16 页面（stack.css）有 16 个活
+   实例；doc-grid 当前数据集只有 1 张卡（runs.length = 1，真实录制轨迹，root 方案 C
+   裁决不动数据），阶梯的第 2..16 步在本数据集是永不匹配的死规则（第 12 次死代码
+   纪律），故只写基础偏移；数据集若增长，阶梯是 .doc-grid > .doc-card:nth-child(k)
+   的机械追加。安全通道：opacity + transform 均 paint-only，扫描读点地图见
+   Explore_51.md §1（零计算色、零横向几何）。零新增 keyframe/token/@media；
+   降级由第 43 次收口块（本轮补入 delay 归零）10ms 内落完成帧。 */
+#view-library.active .doc-card { animation: blockIn var(--d3) var(--ease-out) backwards; animation-delay: var(--d12); }
+/* iteration 33: the moment-stack cards are focusable operable controls now
+   (collapsed = role=button, the library convention above), so they get the
+   same keyboard-only outline as every other operable control here — verbatim
+   the .doc-card / .scrubber / [data-lightbox] declaration (the iteration-20
+   focus-outline口径: only on :focus-visible, never on a mouse click) */
+.stack-card:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+.doc-thumb { height: 96px; border-radius: var(--r10); margin-bottom: 14px; display: flex; align-items: flex-end; padding: var(--s10) var(--s12); color: #fff; font-size: var(--f11); background: linear-gradient(135deg, #312e81, #4f46e5 55%, #7c3aed); }
+.doc-card h3 { font-size: 15px; }
+.doc-meta { font-size: var(--f11); color: var(--ink-3); margin-top: 4px; }
+.doc-facts { display: flex; gap: var(--s6); flex-wrap: wrap; margin-top: 12px; }
+.fact { font-size: var(--f11); background: var(--line-2); border-radius: var(--r8); padding: var(--s3) 9px; color: var(--ink-2); }
+.doc-status { margin-top: 12px; display: inline-flex; align-items: center; gap: var(--s6); font-size: var(--f12); color: var(--green); font-weight: 600; }
+
+/* ---------- history: run list ---------- */
+.run-list { display: flex; flex-direction: column; gap: var(--s10); margin-bottom: 26px; }
+/* iteration 50: 选中态的洗改走伪元素通道（字节安全：.run-item 的子 .ri-sub/.ri-meta 在
+   ink3 扫描组、.ri-name 在 ink 组、.ri-icon 在 accent 组，bgOf 合成链读宿主
+   backgroundColor ⇒ 宿主 background-color 过渡会让三组读点进实时插值并双路分叉，
+   首次失败的同类机制详见 Explore_50.md §5）。.selected 的 accent-soft 底洗移到
+   ::before 的 opacity 交叉淡入（伪元素被 bgOf 的 parentElement 链结构性排除 ⇒
+   子文本读点恒读宿主 paper 对比比 5.99/7.5/9.06 ≥ 静态矩阵 min 5.734，双路实测见
+   Explore_50.md §3）；inset 0 + border-radius inherit 零几何贡献（nbRunItem 读
+   .ri-meta 与 .run-item 的 right 不受影响）。border-color 的 --d12 通道逐字保留
+   （root 列为既有实证安全通道）+ 洗的 --d15 = 同面双通道（.doc-card 的
+   transform --d12 + box-shadow --d15 先例），修掉「border 过渡、背景瞬时」的
+   半过渡态。双向同窗：selected 与 unselected 是对等两态，无 48 弹层的进出非对称语义。 */
+.run-item {
+  display: flex; align-items: center; gap: var(--s16); background: var(--paper); border: var(--hairline);
+  border-radius: var(--r14); padding: 15px var(--s20); cursor: pointer; transition: border-color var(--d12);
+  position: relative; z-index: 0; /* iteration 50: 宿主层叠上下文，把负 z-index 洗罩进自身（画在纸背景之上、内容之下）；relative 不改变盒模型 */
+}
+.run-item:hover { border-color: var(--accent); }
+.run-item.selected { border-color: var(--accent); }
+.run-item::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  background: var(--accent-soft); opacity: 0; transition: opacity var(--d15) var(--ease-out); }
+.run-item.selected::before { opacity: 1; }
+.run-item .ri-icon { width: 38px; height: 38px; border-radius: var(--r10); background: var(--accent-soft); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 17px; }
+.run-item .ri-name { font-weight: 600; font-size: var(--f14); }
+.run-item .ri-sub { font-size: var(--f11); color: var(--ink-3); margin-top: 2px; }
+.run-item .ri-meta { margin-left: auto; text-align: right; font-family: var(--font-mono); font-size: var(--f11); color: var(--ink-3); }
+.run-item .ri-badge { background: var(--green-soft); color: var(--green); font-size: var(--f11); border-radius: var(--r10); padding: var(--s3) var(--s10); font-weight: 600; }
+
+/* iteration 54: history 视图的到场节拍（「动效表达」第十切面）——三视图开场家族的
+   第三实例与收口：convert 首屏 7 拍错峰（52）与 library doc-card 第二拍（51）
+   之后，history 仍是「容器淡入（45）后整块静态」。本段把同一家族的第二拍落到
+   第三视图：h2 → 副标 p → run 条目三拍，60ms/步自 --d12 起拍。形态逐字复用
+   blockIn（opacity 0→1 + translateY 8px，家族下端位移，--d3 与 --ease-out 同
+   九个切面）。双重拍问题（47 否决 run-item 入场的原始理由 = 同触发器同向叠加
+   无增益）的合法解 = 延迟于视图入场的第二拍：起始 --d12 = 120ms 是母拍 300ms
+   的 40% 点，--ease-out 前置极陡、第 45 次实测母拍 t150 已 0.928 ⇒ 内容拍
+   起在母拍的到访尾部（实测机制页：母拍 0.95 时 h2 仅 0.40）——母拍是「视图
+   抵达」、内容拍是「三拍呈现序」，信息量不同且通道结构性正交（子 transform
+   不动父盒、opacity 为乘法复合的嵌套淡入）。
+   基础规则只用长手属性、不用 animation 简写（51 的级联教训：简写重置
+   animation-delay，且简写内嵌的 delay=0 会先于阶梯覆盖错峰）；三条阶梯规则
+   只声明 animation-delay（无动画指派时不产生效果，动画只由本段基础规则指派）。
+   fill 取 backwards：延迟窗内保持首帧（错峰机制必需），活动窗结束后不保留
+   任何帧 ⇒ 元素回落自身声明 ⇒ 50 的 .run-item border-color --d12 通道与
+   选中态 ::before opacity --d15 洗逐字存活（animation 级高于所有非 !important
+   声明，若用 both/forwards 终值会压住基础态）。
+   作用域钉 #view-history.active（48/51/52 的防御性先例）：.view:not(.active)
+   的 display:none 使子树不渲染 ⇒ 动画实例移除；返回时 display 翻转 + 作用域
+   重匹配 ⇒ 每次视图重入都重播（三进入路径 = nav 点击 / hashchange-reconcile /
+   boot applyHashAtBoot 全部收敛于同一个 switchView 类翻转，4 0 口径）。
+   N=1 登记（51 的 root 方案 C 裁决延续）：当前数据集 runs.length === 1，单条
+   run 即第三拍；机制覆盖任意 N 的 nth-child 阶梯在有 16 个活实例的弹层纸带面
+   （stack.css 51 段）已落地，run-grid 的 N>1 扩展是 .run-list 子 nth-child(k)
+   的机械追加，当前不写（第 12 次死代码纪律）。
+   安全通道：opacity + transform 全 paint-only（扫描读点地图：GROUPS 的
+   .view-title p(h2 在 ink 组、.run-item .ri-sub/.ri-meta 在 ink3、.ri-name ink、
+   .ri-icon accent、.ri-badge green）读 computed color + bgOf 祖先链，opacity/
+   transform 均不入计算色；run-narrow 的 nbRunItem 读 .ri-meta 与 .run-item
+   的 right，translateY 零贡献；且 #view-history 在窄灯 fixture 标记里无
+   .active ⇒ 作用域不匹配、连冻结帧都不存在）⇒ 风险通道零落地，详见
+   Explore_54.md §1/§3。降级：第 43 次收口块（含 51 补入的 delay 归零）
+   10ms 内落完成帧（三拍同时落定 = 降级的应有语义）。本段不重声明 47 的
+   player 揭幕（只挂 .view-title 与 .run-list 子树，与 #player 是兄弟子树，
+   两套动画读数互不相交，深链叠加态的实测见 Explore_54.md §3）。 */
+#view-history.active .view-title h2,
+#view-history.active .view-title p,
+#view-history.active .run-list .run-item {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+#view-history.active .view-title h2 { animation-delay: var(--d12); }
+#view-history.active .view-title p { animation-delay: 180ms; }
+#view-history.active .run-list .run-item { animation-delay: 240ms; }
+
+/* ---------- player ---------- */
+/* iteration 47: 回放器揭幕（「动效表达」第三切面，history 叙事脊柱的入场节拍）。
+   第 45 次只覆盖了视图容器；作为叙事目的地的回放器（观看者眼睛落下的地方）
+   此前是「闪现」——一整块白卡片随 scrollIntoView 的下滑已经摆在那里。母盒
+   只挂 opacity：#player 是 rect 读点（run-main 的 plBoxA/plRectTop0 读 top、
+   run-narrow 的 nbPlayer/nbTrIn/nbScrub 读 player 与 transport 子的 right/
+   width），opacity 不入任何 rect 与计算色（bgOf 只走祖先 backgroundColor）；
+   位移挂给直接内容子——子 transform 不可能移动父盒，且一律 translateY 家族
+   （translateY 对 left/right/width 零贡献，translateX/scale 会被 right/width
+   读点捕捉）。揭幕起点钉在 .hidden 摘除的同一任务（与 scrollIntoView 同步
+   开始 = 「滚动叙事」：页面滑下去，机内四块内容上升就位），0ms 可用、300ms
+   只是落画面。数值：--d3 = 300ms 叙事级（M3 standard / NN/g 大幅面档，与
+   第 45 次视图转场同窗同曲线 = 同一语言的相邻两拍）；位移 8px = 本仓入场
+   家族下端（blockIn / 激活步内容子 8px < 视图 12px），层级递减而非同级两段。
+   无出口路径（第 40 次 uh* 登记的 player 无关闭语义），故 transition 不含
+   display、不加 allow-discrete（同第 45 次的克制口径）。降级零新增 @media：
+   第 43 次末块 transition-duration 0.01s !important 自动收口到完成帧。 */
+.player { background: var(--paper); border: var(--hairline); border-radius: var(--r14); box-shadow: var(--shadow-panel); padding: 24px; transition: opacity var(--d3) var(--ease-out); }
+.player:not(.hidden) > * { transition: transform var(--d3) var(--ease-out); }
+@starting-style {
+  .player:not(.hidden) { opacity: 0; }
+  .player:not(.hidden) > * { transform: translateY(8px); }
+}
+/* iteration 55：跨视图的焦点运镜——飞行层（两座桥 #btnReplayRun/#mReplay 点击后
+   由 player.js 的 flyCapture/flyToPlayer 创建，body 子节点、文档坐标系 absolute、
+   pointer-events none、aria-hidden）。五通道同窗同曲线 = WICG view-transitions 的
+   ::view-transition-group 形状定义（位置+尺寸+内容交叉淡入），与 45 视图转场 / 47
+   回放器揭幕 / 53 盒内更替逐字同窗（--d3=300ms = M3 container transform incoming
+   档）。box-shadow = 旅行高度（var(--shadow-panel) = 目的地 player 自身的表面高度，
+   M3 container transform 的 elevation 语义：源在离手时带起目的地的 高度），与层
+   同窗随 opacity 一起淡出。视觉快照与两个 quad 全部由 JS 内联（本规则只提供定位与
+   transition 基底），零探针/零断言读点（GROUPS 无此类选择器；窄屏静态夹具零匹配——
+   层只在桥点击中存在，且存在期 ≤ 800ms 兼底释放）。z-index 250 = modal 200 与
+   lightbox 300 之间（飞行期两覆盖层都关着）。reduced-motion 由 JS matchMedia 整段
+   跳过，本规则在 RM 下永不匹配；43 末块 0.01s 收敛是第二道。 */
+.fly-layer { position: absolute; z-index: 250; pointer-events: none; user-select: none;
+  box-shadow: var(--shadow-panel);
+  display: flex; align-items: center; justify-content: center; white-space: nowrap;
+  transition: left var(--d3) var(--ease-out), top var(--d3) var(--ease-out),
+    width var(--d3) var(--ease-out), height var(--d3) var(--ease-out),
+    opacity var(--d3) var(--ease-out); }
+.player-head { display: flex; justify-content: space-between; align-items: flex-start; }
+.player-title { font-size: 20px; font-weight: 700; }
+.player-sub { font-size: var(--f12); color: var(--ink-3); margin-top: 3px; }
+.player-status { background: var(--green-soft); color: var(--green); border-radius: var(--r12); padding: var(--s5) var(--s14); font-size: var(--f12); font-weight: 600; }
+.ribbon { display: flex; gap: var(--s4); margin: 18px 0 0; }
+.ribbon-seg { flex: 1; height: var(--s8); border-radius: var(--r4); background: var(--line-2); position: relative; overflow: hidden; }
+.ribbon-seg::after { content: ""; position: absolute; inset: 0; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform var(--d3); }
+.ribbon-seg.done::after { transform: scaleX(1); background: var(--green); }
+.ribbon-seg.active::after { transform: scaleX(.5); background: var(--accent); }
+.transport { display: flex; align-items: center; gap: var(--s12); margin: var(--s14) 0 var(--s20); }
+.transport .btn-ghost { padding: var(--s8) var(--s16); }
+.scrubber { flex: 1; height: var(--s28); position: relative; cursor: pointer; display: flex; align-items: center; }
+/* iteration 10: the scrubber is now a focusable slider (tabindex=0, role=slider),
+   so it needs a focus outline like every other operable control here. Same
+   convention as .doc-card / .modal-close / [data-lightbox] (:focus-visible =
+   keyboard focus only, never mouse click). Non-focused appearance is unchanged. */
+.scrubber:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+.scrub-fill { position: absolute; left: 0; right: auto; height: var(--s6); width: 0; background: var(--accent); border-radius: 3px; }
+/* iteration 12: .scrubber .track was deleted — the scrubber has no .track
+   child; the rail is the .scrubber box itself and the .scrub-fill covers it. */
+.scrub-head { position: absolute; width: var(--s16); height: var(--s16); border-radius: 50%; background: #fff; border: 2px solid var(--accent); left: 0; transform: translateX(-50%); box-shadow: var(--shadow-knob); pointer-events: none; }
+/* iteration 50: 速度档位组（控制层 active 态第二实例，exclusive single-select 的色块迁移）。
+   字节安全裁决（首次派发失败后 root 分类，Explore_50.md §5）：#plSpeeds button.active 在
+   white 扫描组、#plSpeeds button:not(.active) 在 ink3 扫描组——宿主被直接扫描，且
+   active 档的 #fff-on-accent 对比比读点依赖宿主 computed backgroundColor 恒为 accent
+   （若把底洗移到伪元素或 box-shadow，读点将变为 #fff on paper ≈ 1.06 ⇒ ctAA 门退化）
+   ⇒ 宿主 color/background-color 翻转保持瞬时（= 第 49 次前既有行为，扫描读点恒读终值、
+   双路逐字一致）。节拍改走唯一可用安全通道：::after 选中指示条（白色 2px 段内底边条，
+   transform scaleX 迁移，伪元素结构性不入 bgOf 与 body 子树几何扫描；spClip 的
+   scrollWidth 只计流内内容、绝对定位伪元素零贡献）。白 on accent = 9.06，装饰性指示条
+   （状态已由 accent 底 + #fff 字 + aria-current 三通道承载，非唯一指示器 WCAG 1.4.1）。
+   同窗 --d15 + --ease-out 与 nav 指示条同族（无方向选择集 ⇒ center origin 而非 46
+   推进轴的 left：换挡 = 旧档 retract + 新档 extend 同窗同时 = 色块迁移）。
+   本条声明现覆盖单实例（player #plSpeeds 五档；convert 演示 #demoSpeeds 三档已于 75 期随组退役，
+   第 28 次复用裁决）。刻意不加位移/缩放：档位是常驻控件（46 的 stepActivate 入场词汇
+   语义不符，挂上即每次换挡闪现重播）；降级由第 43 次末块 0.01s 落完成帧。 */
+.speeds { display: flex; border: var(--hairline); border-radius: var(--r8); overflow: hidden; }
+.speeds button { border: none; background: var(--paper); padding: var(--s6) var(--s10); font-size: var(--f11); color: var(--ink-3); position: relative; /* iteration 50: 指示条包含块；relative 不改变盒模型 */ }
+.speeds button::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: var(--s2);
+  background: #fff; transform: scaleX(0); transform-origin: center;
+  transition: transform var(--d15) var(--ease-out); }
+.speeds button.active::after { transform: scaleX(1); }
+.speeds button.active { background: var(--accent); color: #fff; }
+.clock { font-family: var(--font-mono); font-size: var(--f12); color: var(--ink-3); min-width: 120px; text-align: right; }
+/* iteration 10: AT-only channel. display stays block (never none) so the live
+   region stays in the accessibility tree; it is shrunk to 1px and clipped out
+   of the visual box and out of flow (position:absolute => zero contribution to
+   document height, so the docH* diagnostics of iteration 9 are unaffected). */
+.sr-only { position: absolute; width: var(--s1); height: var(--s1); margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+.player-cols { display: grid; gap: var(--s16); align-items: start; }
+.player-cols.two { grid-template-columns: minmax(0, 1fr) 280px; }
+/* iteration 12: 18 rules were removed here (.feed-* 4, .moment family 7,
+   .m-<kind> 10 = 21 dead rules in this block). They described a moment "feed"
+   whose markup no longer exists (the stack redesign renders
+   .stack-card.st-<kind> > .sc-head > .m-time/.m-tag/.m-text — see the pill
+   rules in the moment-stack section below). The two valuable declarations
+   (.m-time / .m-tag base) were ported verbatim; the six kind colours were
+   ported as .st-<kind> .m-tag; the four whole-card gradient washes were
+   dropped (they would fight the live .stack-card.expanded gradient and put a
+   coloured backdrop behind long text — the classification intent is carried
+   by the pill). Dead rules are deleted rather than left as compatibility
+   cruft so they cannot mislead a maintainer into thinking the feed exists. */
+.player-doc { display: flex; flex-direction: column; gap: var(--s12); }
+.pdoc-card { border: var(--hairline); border-radius: var(--r14); padding: var(--s16); background: linear-gradient(180deg, #fbfaff, var(--paper)); }
+.pdoc-card h4 { font-size: var(--f12); color: var(--ink-3); letter-spacing: 1px; margin-bottom: 8px; }
+.pdoc-card .d-title { font-weight: 700; font-size: var(--f14); }
+.pdoc-card .d-facts { display: flex; flex-wrap: wrap; gap: var(--s5); margin-top: 10px; }
+.pdoc-quality { border: var(--hairline); border-radius: var(--r14); padding: var(--s14) var(--s16); }
+.pdoc-quality h4 { font-size: var(--f12); color: var(--ink-3); letter-spacing: 1px; margin-bottom: 8px; }
+/* iteration 58: player 双栏侧栏的第二拍（「动效表达」第十三切面——阅读面的内容编排）。
+   47 揭幕把 .player-cols 作为母盒的一个内容子整体升起 8px（0–300ms），其内部
+   ——.stack-head 说明条与 aside.player-doc 的 pdoc-card 笔记摘要卡、
+   pdoc-quality 验收面板——在开盒瞬间静态闪现。这两列是观看者驻留阅读最久的
+   表面（左列时刻栈、右列交付物与验收），本段补上 47 揭幕之后的第二拍：三拍
+   沿阅读序错峰就位（.stack-head → pdoc-card → pdoc-quality，F 型扫描的
+   top+left 优先），读作「母盒被揭开，内容随后被呈递」。
+   时序裁决（相对 47）：基延迟 var(--d3) = 300ms = 母盒揭幕窗末。51/52/54 的
+   内容拍取 --d12=120ms（母拍到访尾部）是因为它们的母拍是视图容器；本面的母拍
+   是 player 母盒本身（47 的 .player opacity 与四个内容子的 8px 升起同窗
+   300ms）——若取 120ms 会与 .player-cols 的升起同窗同向叠加，即 47 当年否决
+   run-item 入场的双重拍形态，故取窗末 300ms（母拍此刻 = 1.0，是 54「母拍
+   0.95+ 起拍」实证口径的严格版）。节拍链：视图容器（45）→ player 揭幕（47，
+   与 54 的 run 第三拍同窗并行）→ 侧栏内容（本段）。60ms/步 = 52/54 的呈现序
+   步距；总窗 720ms。
+   嵌套位移合成（51/52 层级递减先例）：.player-cols 0–300ms 升 8px，其内容子
+   300–720ms 各自再升 8px——子 transform 不可能移动父盒（CSS 合成模型），
+   opacity 为乘法复合的嵌套淡入，非同帧同向叠加。形态逐字复用 blockIn
+   （opacity 0→1 + translateY 8px，家族下端，零新增 keyframe）。
+   基础规则纯长手、不用 animation 简写（51 的级联教训：简写会把 animation-delay
+   重置为 0 从而吃掉阶梯）；三条阶梯规则只声明 animation-delay。fill 取
+   backwards：延迟窗内保首帧（错峰机制必需），活动窗结束后不保留任何帧 ⇒
+   元素回落自身声明，47 的 q-row 状态色过渡与 50 的选中态 ::before 洗逐字存活。
+   作用域钉 .player:not(.hidden)（47 口径）：display:none 时子树不渲染 ⇒ 动画
+   实例移除；摘 .hidden = display 翻转 + 作用域重匹配 ⇒ 每次开盒重播。三条打开
+   路径同构：run-item 点击 / mReplay 与 btnReplayRun 桥（55）/ 深链 boot，全部
+   收敛于 openPlayer 的 .hidden 摘除 + renderDocCard 与 renderQuality 的
+   innerHTML 重写（animation 在新建节点同样播放，49 的机制发现）。边缘登记
+   （如实）：player 已开盒时再点同一 run-item 无 display 翻转 ⇒ .stack-head
+   （index.html 静态标记）不重播，与 47 的四内容子同行为（它们的 transition
+   同样只放一次）；pdoc 内层因 innerHTML 重写而重播。机制与 47 一致。
+   字节安全（50 裁决的安全通道）：opacity + translateY 全 paint-only。读点地图：
+   GROUPS 的 .stack-hint / .pdoc-card h4 / .pdoc-quality h4（ink3）读 computed
+   color + bgOf 祖先链合成 backgroundColor——opacity 与 transform 均不入计算
+   色，宿主与祖先背景声明逐字零改；run-narrow 的 nbPlayer 读 .pdoc-card 与
+   #player 的 right、nbOvfEls 扫 body 全体元素的 right，translateY 零贡献
+   （narrow 模板 #player 无 hidden ⇒ 作用域匹配但 paint-only，7×23 逐字节）。
+   降级：第 43 次收口块（含 51 补入的 delay 归零）10ms 内落完成帧。零新增
+   keyframe / token / 媒体查询 / JS / HTML / 探针。 */
+.player:not(.hidden) .stack-head,
+.player:not(.hidden) .player-doc .pdoc-card,
+.player:not(.hidden) .player-doc .pdoc-quality {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+.player:not(.hidden) .stack-head { animation-delay: var(--d3); }
+.player:not(.hidden) .player-doc .pdoc-card { animation-delay: 360ms; }
+.player:not(.hidden) .player-doc .pdoc-quality { animation-delay: 420ms; }
+.q-row { font-size: 11.5px; padding: var(--s5) 0; border-bottom: var(--divider); color: var(--ink-2); line-height: 1.5; }
+.q-row:last-child { border-bottom: none; }
+.q-row b { color: var(--green); margin-right: 6px; display: inline-block; transition: color var(--d15) var(--ease-out); }
+/* iteration 17: a quality row has two states, revealed as the replay crosses
+   the gate's transcript line (player.js updateQuality). The state is carried
+   by THREE channels so colour is never the only one (SC 1.4.1 G14): the glyph
+   (✓ vs ○), the sr-only status word (已通过/待通过) in the row's accessible
+   name, and the colour (green vs ink-3). Pending dims the glyph to ink-3;
+   the passed state is the default .q-row b green above. Contrast (11.5px
+   normal text, threshold 4.5): green glyph (iteration-20 #046c4e) on paper
+   #fff 6.44 / on bg #f7f6f3 5.96; ink-3 glyph on paper 5.982 / on bg 5.535 —
+   every pair ≥ AA with margin ≥ 1.46. The criterion text itself never
+   changes state: a
+   rubric is not an outcome, only the pass state is revealed. */
+.q-row.q-pending b { color: var(--ink-3); }
+/* iteration 47: 验收清单的编排揭示（同一叙事脊柱的第二机读点）：一次关卡揭示
+   = 三路信号同时到位、刻意无第四路。① 状态交叉淡入：行底色（.q-row）与 glyph
+   色（.q-row b，display 改 inline-block 供 transform 家族使用，sr-only 兄弟
+   绝对定位布局零参与）各 150ms = --d15 交互态窗，与第 46 次 stepper 状态翻转
+   同窗同曲线（跨视图的状态语言一致）。② glyph 到场：@keyframes qEarn 逐字复用
+   证据词汇 evPop 的数值语义（scale .6→1 + opacity 0→1，--d4 = 400ms，fill
+   both——落定后终值 == 基础态，无残值外溢）；「一项验收被挣得」与「证据块到场」
+   是同一动作语义，跨视图一致性优先于新造形态。③ 游标迁移 .q-front：.q-row::before
+   = 左侧 3px 绝对定位轨（零布局贡献），transparent → --accent + 行底
+   --accent-soft 洗，各 150ms 交叉淡入/淡出——frontier 由 player.js updateQuality
+   从已通过行中取 data-line 最大者迁移（quality 行序 [6,14,25,67,61,87,112,136,206]
+   非单调，DOM 末行 ≠ frontier，取 max-line 才是「与回放位置同步」的语义）。
+   刻意否决的形态：整行 vanishing 入场（判决文本常驻、第 17 次「a rubric is
+   not an outcome」——节拍只骑状态载体 glyph/色/轨，内容从不消失）；出口过渡
+   （seek 回退是「跳回」语义、hardSeek 自己的通告覆盖提交，覆盖式翻转瞬时即正确）。 */
+.q-row { position: relative; transition: background-color var(--d15) var(--ease-out); }
+.q-row::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: transparent; transition: background-color var(--d15) var(--ease-out); }
+.q-row.q-front { background: var(--accent-soft); }
+.q-row.q-front::before { background: var(--accent); }
+.q-row.q-pass b { animation: qEarn var(--d4) var(--ease-out) both; }
+@keyframes qEarn { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+/* ---------- modal ---------- */
+/* iteration 48: the doc modal's reveal beat ("动效表达" cut 4; overlay
+   language instance 1 of 2 — .lightbox in stack.css is instance 2). The
+   .hidden class flip (display:none !important, base.css) stays the single
+   carrier of open/close semantics: the focus-trap release, the focus return
+   and the Escape stacking all settle inside the same synchronous task,
+   before any paint (library.js, verbatim). ENTER, on removing .hidden:
+   the mother box carries ONE fade for scrim + surface together
+   (@starting-style opacity 0, 300ms = --d3, same window and curve as the
+   view entrance of iteration 45 and the player unveiling of iteration 47);
+   the surface .modal-card adds the single shape beat — a paper rise of 8px,
+   the low end of the family's translate vocabulary (blockIn 8 / view 12 /
+   pushIn 18). A child transform cannot move the mother box, and translateY
+   contributes nothing to the right/width/scrollWidth/offsetWidth values the
+   run-modal-narrow gates read, so mMinC 157/165/173/209 and every clipping
+   key stay byte-identical. EXIT, on adding .hidden: asymmetric and faster —
+   opacity drops over --d15 (150ms; Atlassian "make exit motion faster than
+   entrances", M3 duration Short3), with display kept in the transition list
+   behind allow-discrete so the none flip lands at the END of that window
+   (the enter direction flips immediately — the dialog is focusable at 0ms,
+   motion only paints). pointer-events:none in the hidden state makes the
+   fading overlay click-through for its whole exit window instead of
+   intercepting the page behind it. Zero keyframes, zero new tokens,
+   zero new @media: --d3/--d15/--ease-out are iteration-42 registrations and
+   the iteration-43 reduced-motion block collapses both directions to the
+   completed frame in 10ms. */
+.modal { position: fixed; inset: 0; z-index: var(--z-modal); display: flex; align-items: center; justify-content: center; transition: opacity var(--d3) var(--ease-out), display var(--d15) allow-discrete; }
+.modal.hidden { opacity: 0; pointer-events: none; transition: opacity var(--d15) var(--ease-out), display var(--d15) allow-discrete; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(20,22,35,.45); backdrop-filter: blur(3px); }
+.modal-card { position: relative; background: var(--paper); border-radius: 18px; width: min(620px, 92vw); max-height: 82vh; overflow-y: auto; padding: 30px; box-shadow: var(--shadow-overlay); transition: transform var(--d3) var(--ease-out); }
+/* iteration 48: the entrance starting points. Scoped to :not(.hidden) so a
+   hidden overlay never matches (the narrow fixture and every closed probe
+   state stay untouched), and re-applied on every open because the .hidden
+   flip is also the display flip. The animated nodes are the STATIC markup
+   (.modal/.modal-card in index.html), never #docModalBody's subtree — that
+   innerHTML is rewritten on every openDocModal, so a transition there would
+   have no previous value (the iteration-46 dead-code lesson). */
+@starting-style {
+  .modal:not(.hidden) { opacity: 0; }
+  .modal:not(.hidden) .modal-card { transform: translateY(8px); }
+}
+.modal-close { position: absolute; top: var(--s14); right: var(--s16); border: none; background: none; font-size: 22px; color: var(--ink-3); }
+.modal-close:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+.modal-card h2 { font-size: 20px; }
+.modal-card .m-sub { color: var(--ink-3); font-size: var(--f12); margin: var(--s4) 0 var(--s16); }
+.modal-card .m-facts { display: flex; gap: var(--s6); flex-wrap: wrap; margin-bottom: 16px; }
+.modal-card .m-body { background: var(--line-2); border-radius: var(--r10); padding: var(--s14); font-size: 12.5px; color: var(--ink-2); line-height: 1.8; }
+.modal-card .m-actions { display: flex; gap: var(--s10); margin-top: 18px; }
+
+/* iteration 58: 弹层正文的错峰编排（「动效表达」第十三切面——阅读面的内容编排）。
+   48 给了弹层开盖（母盒淡入 + .modal-card 升纸 300ms），51 给了 .m-pages
+   13→16 页纸带的发牌（120–570ms 起播、30ms/步）；正文其余内容——.m-facts chips、
+   .m-body 摘要、.m-claims 出处表（mc-table 11 行）、.m-actions 两枚按钮——
+   随开盖静态闪现。弹层是观看者驻留阅读的表面，本段把正文按**阅读序**编为错峰
+   就位：概览（chips 与 51 纸带同基起步）→ 摘要（m-body）→ 深究（出处表）→
+   行动（按钮）。「facts 是概览先、表是深究后」的先总后细序 = F 型扫描的
+   top+left 优先；h2 与 .m-sub 骑 48 的 .modal-card 升纸（单焦点原则，本段只补
+   正文四组）。
+   阶梯数值（均可溯源）：基延迟 var(--d12) = 120ms = 48 揭幕的到访尾部（51 同基，
+   --ease-out 前置极陡、45 实测 t150 已 0.928）⇒ chips 与 51 纸带构成「概览带」
+   同带同基同步距（30ms/步 = 51 已登记的带内密集步距，与 IBM 表格 20ms 同档）；
+   段间偏移 120ms（--d12 复用为段间偏移）：.m-body 360ms、.m-claims 480ms、
+   .m-actions 840ms；表行 540ms 起 30ms/步（11 行 540–840ms），短窗取
+   var(--d15) = 150ms（Material m2「Small elements with small transition areas
+   … have short durations」+ Atlassian 50–150ms 档，与本仓 46/47/49/50 的状态窗
+   同值；其余内容拍沿用 blockIn 家族的 --d3 = 300ms 到场档）⇒ 总窗 1140ms
+   （= 51 纸带 780 + 360：弹层是驻留阅读面而非扫描面，深读段落落在 .modal-card
+   82vh 首屏折叠线之下，节拍随阅读扫描下移，观看者下滚时或见尾部发牌或已落定）。
+   基础规则纯长手、不用 animation 简写（51 的级联教训：简写重置 animation-delay
+   会吃掉阶梯）；阶梯规则只声明 animation-delay（无动画指派时零效果，动画只由
+   基础规则指派）。fill 取 backwards：延迟窗内保首帧（错峰机制必需），活动窗
+   结束后不保留任何帧 ⇒ 元素回落自身声明（.fact 的底色、.btn-primary 与
+   .btn-ghost 的 hover 与 active 态、.ev-page 的 hover 词汇逐字存活）。表行
+   单独一条基础规则（duration 与其余内容拍不同档）。
+   机制（51 实证同源）：openDocModal 每次开层重写 #docModalBody innerHTML ⇒
+   新节点 ⇒ animation 在新建节点同样播放 ⇒ 每次开层重演；两条开层路径
+   （doc-card 点击与 Enter / convert 的 #btnViewDoc（convert.js:358））全部
+   收敛于同一个 openDocModal 函数。作用域钉 #docModal:not(.hidden)（48/51
+   防御性先例）：闭层时选择器不匹配 ⇒ 动画实例移除、正文回落自然态（48 的
+   150ms 出口淡出由母盒 opacity 罩住整层，不受影响）。
+   边框机制登记（如实）：.mc-table 为 border-collapse: collapse，对 tbody tr 施加
+   transform 时，飞行窗内相邻两行的共享边框按两行位移差瞬时分叉（机制页实测：
+   最大读数 ≤ 8px、单条缝寿命 ≤ 150ms、行高恒定 27.5px、横向零溢出），行处于
+   半透明抵达中读作「滑入就位」，全部落定后边框网格完全恢复。
+   字节安全（50 裁决的安全通道）：opacity + translateY 全 paint-only。读点地图：
+   GROUPS 的 .fact（ink2）与 .m-actions 内 .btn-ghost（ink2）/ .btn-primary
+   （white）读 computed color + bgOf 祖先链——opacity 与 transform 不入计算色，
+   宿主与祖先背景声明逐字零改；run-modal-narrow 的 mMinC / mCardHsb /
+   mTblScroll / mSecScroll / mClipN / mColMin 读 .modal-card 与 .m-claims 与
+   .mc-table 子树的 right 与 scrollWidth 与 clientWidth 与 offsetWidth，
+   translateY 零贡献（51 的 .ev-page 在同一弹层夹具已实证 mMinC
+   173/165/157/209 逐字节）；cl* 行文本/shape/scope 闭包与 tf* 与 ln* 焦点序
+   全为 DOM 级与属性级，与渲染态无关。降级：第 43 次收口块（含 51 补入的
+   delay 归零）10ms 内落完成帧（四段同时落定 = 降级的应有语义）。零新增
+   keyframe / token / 媒体查询 / JS / HTML / 探针。 */
+#docModal:not(.hidden) .m-facts .fact,
+#docModal:not(.hidden) .m-body,
+#docModal:not(.hidden) .m-claims,
+#docModal:not(.hidden) .m-actions {
+  animation-name: blockIn;
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+#docModal:not(.hidden) .mc-table tbody tr {
+  animation-name: blockIn;
+  animation-duration: var(--d15);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: backwards;
+}
+#docModal:not(.hidden) .m-facts .fact:nth-child(1) { animation-delay: var(--d12); }
+#docModal:not(.hidden) .m-facts .fact:nth-child(2) { animation-delay: 150ms; }
+#docModal:not(.hidden) .m-facts .fact:nth-child(3) { animation-delay: 180ms; }
+#docModal:not(.hidden) .m-facts .fact:nth-child(4) { animation-delay: 210ms; }
+#docModal:not(.hidden) .m-facts .fact:nth-child(5) { animation-delay: 240ms; }
+#docModal:not(.hidden) .m-body { animation-delay: 360ms; }
+#docModal:not(.hidden) .m-claims { animation-delay: 480ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(1) { animation-delay: 540ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(2) { animation-delay: 570ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(3) { animation-delay: 600ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(4) { animation-delay: 630ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(5) { animation-delay: 660ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(6) { animation-delay: 690ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(7) { animation-delay: 720ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(8) { animation-delay: 750ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(9) { animation-delay: 780ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(10) { animation-delay: 810ms; }
+#docModal:not(.hidden) .mc-table tbody tr:nth-child(11) { animation-delay: 840ms; }
+/* 第 72 次数据重锚 10→11 条数字出处后追 1 级（30ms/步同带）——同 .m-pages
+   阶梯的机械追加式；行数再增时继续在此追加同级（delay 只由阶梯声明）。 */
+#docModal:not(.hidden) .m-actions { animation-delay: 840ms; }
+
+/* iteration 13: the doc-modal claims appendix (traceability for "每个数字都有
+   出处"). It reuses the moment-stack .ev-table tokens — 11px grid, ink-3
+   headers, ink-2 cells, dashed line-2 row bottoms — so the appendix reads as
+   the same design language, plus the pill tokens for the badge. All new text
+   pairs audited >= AA on the modal's paper backdrop (docs/Explore_13.md):
+   ink-3 5.982 / ink-2 7.526 / accent 6.288 on paper; the badge is the same
+   green/green-soft pair as the .st-quality pill (iteration-20 deepened to
+   5.734, 10px/600). The row
+   header keeps the claim text at regular weight so the column headers stay
+   the only bold row of the table. */
+.modal-card .m-claims { margin-top: 16px; }
+.modal-card .m-claims h3 { font-size: var(--f12); color: var(--ink-3); letter-spacing: 1px; margin-bottom: 8px; }
+.mc-count { color: var(--accent); font-weight: 600; margin-left: 6px; }
+.mc-note { font-size: var(--f11); color: var(--ink-3); line-height: 1.6; margin-bottom: 8px; }
+.mc-note b { color: var(--ink-2); font-weight: 600; }
+.mc-table { width: 100%; border-collapse: collapse; font-size: var(--f11); }
+.mc-table th { text-align: left; color: var(--ink-3); font-weight: 600; padding: var(--s4) var(--s8); border-bottom: var(--hairline); }
+/* iteration 42: 表头带（paint-only：不改 min-content，mMinC 门与 clAA 保持） */
+.mc-table thead th { background: var(--line-2); }
+/* the row header carries the long claims; `anywhere` (unlike break-word) DOES
+   count for min-content sizing, so the table can shrink below the width of an
+   unbreakable Latin word (“Android”) on a 320 css-px viewport instead of
+   overflowing its section (measured: min-content 236 -> 209 css px) */
+.mc-table tbody th { font-weight: 400; color: var(--ink-2); padding: var(--s5) var(--s8); border-bottom: var(--divider); line-height: 1.5; overflow-wrap: anywhere; }
+.mc-table td { padding: var(--s5) var(--s8); border-bottom: var(--divider); color: var(--ink-2); line-height: 1.5; }
+.mc-table time { font-family: var(--font-mono); font-size: var(--f10); color: var(--ink-3); white-space: nowrap; }
+/* The badge exists only for the positive branch: every row of this dataset is
+   in_notes=yes, so a "not in the notes" class would be a rule whose class atom
+   never appears in the live DOM — the iteration-12 dead-rule discipline
+   (drAtoms0) forbids exactly that. A row that is NOT in the notes therefore
+   renders the plain cell text "未入笔记" (ink-2 on paper, 7.526) without a
+   class, so the absence of the badge is itself the signal. */
+.mc-in { font-size: var(--f10); font-weight: 600; border-radius: var(--r8); padding: var(--s1) 7px; white-space: nowrap; color: var(--green); background: var(--green-soft); }
+
+/* iteration 20: below the 320 css-px audit floor (iteration 11's narrowest
+   measured band), the doc-modal claims table's min-content (210 css px:
+   claim 27 / value 47 / time 56 / badge 80) outgrows the modal card's content
+   box (92vw - 2×30px padding - 15px own vertical scrollbar = 201 at 300 css
+   px, 183 at 280, 164 at 260 — measured in the open-modal iframe probe). The
+   supporting columns are the nowrap badge (80) and the nowrap <time> (56), so
+   only horizontal paddings are trimmed in this band; the table's geometry at
+   >=320 css px is untouched (the iteration-11/13 narrow rules stay verbatim).
+   After: min-content 182 <= content 196 at 260 css px — verified at 300/280/
+   260 in the open-modal state (no section/table/card horizontal overflow). */
+@media (max-width: 319px) {
+  /* iteration 29: the iteration-20 narrowing bought 22px (209 -> 187) which
+     covered the >= 260 css-px card content box (196). Measured at 240 css px
+     (run-modal-narrow WIDTHS extension): the claims section itself drops to
+     178 and the table's min-content 187 overflows it by 9px (mSecScroll=false
+     @187c178; nothing crosses the card and no card-level scrollbar appears,
+     but the table paints 9px into the scrollbar gutter). Same lever, one more
+     notch: 2px more card padding (content 178 -> 180) and 2px less cell /
+     badge padding (min-content 187 -> ~171), so 240 has ~9px slack again. The
+     >= 320 layout is untouched — this block only ever matches below 320.
+     220 css px stays below the coverage floor (content 164 < 171) and is
+     registered as the leftover in docs/Explore_29.md. */
+  .modal-card { padding: 22px var(--s12); }
+  .mc-table th, .mc-table td { padding: var(--s5) var(--s3); }
+  .mc-in { padding: var(--s1) var(--s4); }
+}
+/* iteration 31: the 220 css-px leftover (registered below the 240 device
+   floor in iteration 29) is closed with the same lever, one more notch —
+   card horizontal padding 12 -> 8, cell padding 3 -> 2, badge padding
+   4 -> 3 — so the claims table min-content 173 -> 165 and the 220 css-px
+   card content box 163 -> 171, slack 6. The notch is a SEPARATE top-level
+   block placed AFTER the 319 block, not a nested one: the first attempt
+   nested it inside the 319 block and dropped that block closing brace,
+   which swallowed the rest of the stylesheet into the unmatched 319 media
+   scope — measured at 1280 css px, the top-level media-rule list fell from
+   319/980/640/360 to 319 alone and .sc-head .m-tag (later in the file)
+   computed 14px/400/0px/0px instead of 10px/600/1px/8px (run-main: 6
+   deterministic false). As a top-level block after the 319 one, the cascade
+   at <= 239 css px is the intended one (equal specificity, later source
+   order wins) while >= 240 keeps matching exactly the rules it matched
+   before, so the iteration-29 numbers stay byte-identical (240
+   mSecScroll=true@182c182, slack 9). Measured pre-fix at 220:
+   mSecScroll=false@173c163 — the table paints 10px into the card
+   scrollbar gutter (still inside the card: mTblIn true, mCardHsb false,
+   mClipN 0cnone). The nowrap <time> column keeps its identity semantics
+   (font-size and white-space never levers); the scroll-container
+   alternative (overflow-x:auto on .m-claims) is rejected because a
+   scrollable section falsifies the mSecScroll/mCardHsb gates by
+   construction and adds a modal-level horizontal scrollbar
+   (docs/Explore_31.md). 200 css px is the new registered leftover:
+   content 153 < 165 with these same rules. */
+@media (max-width: 239px) {
+  .modal-card { padding: 22px var(--s8); }
+  .mc-table th, .mc-table td { padding: var(--s5) var(--s2); }
+  .mc-in { padding: var(--s1) var(--s3); }
+}
+/* iteration 38: the 200 css-px leftover (registered at the end of the 239
+   notch above) is closed with the same lever, one more notch — card
+   horizontal padding 8 -> 6, cell padding 2 -> 1, badge padding 3 -> 2 —
+   so the claims table min-content 165 -> 155 (per column 27/35/44/60 ->
+   25/33/42/58) and the 200 css-px card content box 153 -> 157, slack 2.
+   THE BOUNDARY IS 219, NOT 199: a max-width:199px block would not match a
+   200 css-px viewport at all (200 > 199), so the iteration-38 gate at 200
+   would still measure the 239 notch and keep overflowing. The boundary
+   must be >= 200 (cover the gated width) and < 220 (this block must never
+   match the >= 220 widths whose rules stay byte-identical); 219 also
+   closes the whole 198–212.9 band, where the 239 notch itself overflows
+   (its content box 0.92w - 31 >= 165 needs w >= 213, while this notch's
+   0.92w - 27 >= 155 holds from w = 197.8). Layouts at 210–219 gain slack
+   they did not have under the 239 notch (214 was a 0.9px marginals there).
+   Same top-level-block-after discipline as iteration 31 (never nested
+   inside the 319/239 blocks — see the brace-swallowing incident in
+   iteration 31's notes): equal specificity, later source order wins at
+   <= 219, and >= 220 keeps matching exactly the rules it matched before.
+   180 css px is the new registered leftover: the card content box is
+   0.92*180 - 27 = 138.6 < 155 there and the table crosses the card edge
+   (measured pre-notch 180: mCardHsb=true@165c150, mTblIn=false, mClipN=35)
+   — covering it would need to break the nowrap identity semantics (the
+   <time>/badge columns) or shrink fonts below the 240 css-px device floor,
+   so the padding lever stops here at its 1px-per-side floor. Fonts, font
+   sizes, white-space and overflow-wrap are untouched, same as every
+   previous notch. */
+@media (max-width: 219px) {
+  .modal-card { padding: 22px var(--s6); }
+  .mc-table th, .mc-table td { padding: var(--s5) var(--s1); }
+  .mc-in { padding: var(--s1) var(--s2); }
+}
+/* ---------- moment stack (the “正在做” stage) ---------- */
+.stack-zone { display: flex; flex-direction: column; min-width: 0; }
+.stack-head { font-size: var(--f13); font-weight: 700; color: var(--ink-2); display: flex; align-items: baseline; gap: var(--s10); margin-bottom: 10px; }
+.stack-hint { font-size: var(--f11); font-weight: 400; color: var(--ink-3); }
+.stack { display: flex; flex-direction: column; gap: var(--s8); min-height: 320px; }
+/* iteration 69: demo 栈的滚动口（运营方指令「将 stack-zone 改为带滚动条的界面」——
+ * 栈帧累积不再撑大外层：插针 pushIn 逐字不变，容器加限高 + overflow-y: auto；
+ * player 侧 #plStack 硬线不动 ⇒ 修饰类 .stack-demo 只挂 demo 栈 #runStack 一处）。
+ * 高度档 700px（px 定档，非 vh——vh 在 dynamic-toolbar 移动浏览器按最大视口径
+ * 漂移；仓内 px 先例 = responsive.css 的 .subs-list 340px 同族语言）：实测对齐
+ * pipeline 列最富相位中段内容高（s2@0.5 = body 630 + head 42 + padding 40 = 712，
+ * 取整十档对齐，两栏差 19px = 2.7%）；读作约 15 张紧凑卡的可读量（44px pitch）+
+ * sticky foot。min-height 320 基础规则逐字存活：演示早期帧少时窗口不被压低 */
+.stack-demo { max-height: 700px; overflow-y: auto; }
+/* 限高的必生效补丁：flex 列子项默认 flex-shrink:1 ⇒ 限高容器会把帧卡**压缩**
+ * 到容器高（实测 scrollHeight == clientHeight == 700、零滚动条——插针语义被压
+ * 变形）。flex:none 钊死子项高度 ⇒ 内容自然高溢出 ⇒ overflow 生效、滚动条在位、
+ * 卡片几何逐字不变（player 侧无限高，shrink 本就不触发，作用域只钉 demo 栈） */
+.stack-demo > .stack-card { flex: none; }
+/* stack-foot 在容器内 DOM 末位（stack.js ensureFoot 机制零改——不动append目标），
+ * sticky 钉滚动口底沿常驻 = 「保持在滚动区外可见」的等效达成：用户滚到历史读
+ * 「▲ 更早还有 N 个动作」不被卷走；player 侧无 .stack-demo ⇒ 容器非滚动体，
+ * sticky 退化为静态（视觉零变）。纸底遮衬防帧卡透底 */
+.stack-demo > .stack-foot {
+  position: sticky; bottom: 0;
+  background: var(--paper);
+  padding-top: var(--s4);
+  border-top: var(--hairline);
+}
+.stack-foot { text-align: center; font-size: var(--f11); color: var(--ink-3); font-family: var(--font-mono); padding: var(--s6) 0; }
+.stack-card { border: var(--hairline); border-radius: var(--r12); background: var(--paper); overflow: hidden; }
+.stack-card.enter { animation: pushIn var(--d45) var(--ease-out) both; }
+@keyframes pushIn { from { opacity: 0; transform: translateY(-18px) scale(.985); } to { opacity: 1; transform: none; } }
+.stack-card.collapsed { opacity: .68; cursor: pointer; }
+.stack-card.collapsed:hover { opacity: 1; border-color: var(--accent); }
+.stack-card.expanded { border-color: #c9cdfb; box-shadow: var(--shadow-raised-accent); background: linear-gradient(180deg,#fbfbff,var(--paper)); }
+.stack-card.compact .sc-head { padding: 7px var(--s10); }
+.sc-head { display: flex; align-items: center; gap: var(--s8); padding: 9px var(--s12); flex-wrap: wrap; }
+.stack-card.expanded .sc-head .m-text { font-size: 13.5px; font-weight: 700; }
+.stack-card.collapsed .sc-head .m-text { font-weight: 400; color: var(--ink-2); font-size: var(--f12); }
+/* iteration 12: the type pills. stack.js composes the card class as
+   `stack-card st-${m.kind} ...` and the head as span.m-time + span.m-tag +
+   span.m-text, so these selectors match the real markup (the pre-iteration
+   .moment/.m-<kind> rules never did — they were deleted). Colour is never the
+   only code: each pill carries its STACK_TAGS text label (执行/关卡/判断/
+   恢复/标记/交付), which is SC 1.4.1's G14 ("information conveyed by color
+   differences is also available in text"), and the six hues also separate by
+   lightness — and since iteration 29 that lightness separation is a measured
+   ladder, not a side effect: the six tokens' relative luminances are
+   .034/.050/.066/.082/.098/.113 (uniform ~.016 gaps; every hue-confusable
+   pair >= .031 — see the :root iteration-29 comment and docs/Explore_29.md).
+   Every text/fill pair is >= 4.5:1 for the 10px/600 normal text (min = green
+   5.734 after the iteration-29 ladder; the 20th-tier >=5.0 holds for all six);
+   --amber/--red were deepened off the 4.57 edge — numbers and method in
+   docs/Explore_12.md. */
+.sc-head .m-time { font-family: var(--font-mono); font-size: var(--f10); color: var(--ink-3); margin-right: 8px; }
+.sc-head .m-tag { font-size: var(--f10); border-radius: var(--r8); padding: var(--s1) 7px; margin-right: 6px; font-weight: 600; }
+.st-activity .m-tag { background: var(--accent-soft); color: var(--accent); }
+.st-quality .m-tag { background: var(--green-soft); color: var(--green); }
+.st-decision .m-tag { background: var(--amber-soft); color: var(--amber); }
+.st-recovery .m-tag { background: var(--red-soft); color: var(--red); }
+.st-milestone .m-tag { background: var(--cyan-soft); color: var(--cyan); }
+.st-done .m-tag { background: var(--violet-soft); color: var(--violet); }
+.sc-body { padding: 0 var(--s12) var(--s12); }
+.sc-detail { font-size: 12.5px; color: var(--ink-2); line-height: 1.75; white-space: pre-wrap; }
+.sc-detail.typing::after { content: "▍"; color: var(--accent); animation: blink var(--d8) steps(1) infinite; margin-left: 2px; }
+@keyframes blink { 50% { opacity: 0; } }
+.sc-evidence { }
+/* pending items occupy ZERO space — nothing is pre-allocated; each item grows
+   into existence on its turn, so the frame expands as content is generated */
+.sc-evidence .pending-item { display: none; }
+/* the evidence frame materializes together with its first item (deferred insert) */
+.sc-evidence .ev-block { animation: blockIn var(--d45) both; }
+@keyframes blockIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.sc-evidence .ev-title.in { display: inline-block; animation: evGrow var(--d5) both; transform-origin: top left; }
+.sc-evidence .ev-thumb.in { display: block; animation: evGrow var(--d6) both; transform-origin: top left; }
+.sc-evidence .ev-wide.in { display: block; animation: evGrow var(--d6) both; transform-origin: top center; }
+.sc-evidence .ev-page.in { display: block; animation: evGrowPage var(--d6) both; transform-origin: top center; }
+.sc-evidence .kv-pair.in { display: inline-block; animation: evPop var(--d4) both; }
+.sc-evidence .sec-chip.in { display: inline-block; animation: evPop var(--d4) both; }
+.sc-evidence .ev-table thead tr.in { display: table-row; animation: evRowIn var(--d3) both; }
+.sc-evidence .ev-table tbody tr.in { display: table-row; animation: evRowIn var(--d4) both; }
+.sc-evidence .vline.in { display: block; animation: evLineIn var(--d5) both; }
+.sc-evidence .ev-quotes.in { display: block; animation: evLineIn var(--d5) both; }
+.sc-evidence .ev-caption.in { display: block; animation: evRowIn var(--d45) both; }
+@keyframes evGrow { from { opacity: 0; transform: scale(.55); } to { opacity: 1; transform: none; } }
+@keyframes evGrowPage { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@keyframes evPop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@keyframes evRowIn { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+@keyframes evLineIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
+@keyframes evPage { from { opacity: 0; transform: perspective(700px) rotateY(-20deg) translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes evPop { from { opacity: 0; transform: scale(.78); } to { opacity: 1; transform: none; } }
+@keyframes evSlide { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+@keyframes evPass { from { opacity: 0; transform: translateX(12px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes evQuote { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+@keyframes evTitle { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+/* the “working” label while the evidence sequence is running */
+.sc-evidence.loading::before {
+  content: "正在生成证据…";
+  display: block; font-size: var(--f11); color: var(--ink-3);
+  font-family: var(--font-mono); margin: var(--s4) 0 var(--s6);
+}
+.sc-evidence.fast, .sc-evidence.fast * { animation-duration: var(--d14) !important; animation-delay: 0s !important; transition-duration: var(--d14) !important; }
+
+/* ---------- evidence blocks ---------- */
+.ev-block { margin-top: 8px; border: var(--hairline); border-radius: var(--r10); padding: var(--s10) var(--s12); background: rgba(255,255,255,.7); }
+.ev-title { font-size: var(--f11); font-weight: 700; color: var(--ink-2); letter-spacing: .3px; }
+.thumb-strip { display: flex; gap: var(--s6); margin-top: 8px; overflow-x: auto; padding-bottom: 2px; }
+.ev-thumb { height: 72px; border-radius: var(--r8); border: var(--hairline); object-fit: cover; cursor: zoom-in; transition: transform var(--d12), box-shadow var(--d12); }
+.ev-thumb:hover { transform: translateY(-2px); box-shadow: var(--shadow-thumb); }
+.ev-page { height: 88px; border-radius: var(--r8); border: var(--hairline); object-fit: cover; cursor: zoom-in; transition: transform var(--d12), box-shadow var(--d12); }
+.ev-page:hover { transform: translateY(-2px); box-shadow: var(--shadow-thumb); }
+.ev-wide { width: 100%; max-height: 180px; object-fit: cover; border-radius: var(--r8); border: var(--hairline); margin-top: 8px; cursor: zoom-in; }
+.ev-caption { font-size: var(--f11); color: var(--ink-2); margin-top: 8px; line-height: 1.55; }
+.ev-meta { color: var(--ink-3); font-family: var(--font-mono); font-size: var(--f10); margin-left: 6px; }
+.ev-quotes { margin-top: 8px; border-left: 3px solid var(--accent); padding-left: 10px; font-size: 11.5px; color: var(--ink-2); line-height: 1.7; background: var(--accent-soft); border-radius: 0 var(--r8) var(--r8) 0; padding-top: 6px; padding-bottom: 6px; }
+.ev-quotes div + div { margin-top: 4px; }
+.ev-quotes.ev-small { background: var(--cyan-soft); border-left-color: var(--cyan); font-size: var(--f11); }
+.ev-kv { display: flex; flex-wrap: wrap; gap: var(--s6); margin-top: 8px; }
+.kv-pair { font-size: var(--f11); border: var(--hairline); border-radius: var(--r8); padding: var(--s4) 9px; background: var(--paper); }
+.kv-pair b { color: var(--accent); margin-right: 6px; }
+.kv-pair span { color: var(--ink-2); }
+.ev-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: var(--f11); }
+.ev-table th { text-align: left; color: var(--ink-3); font-weight: 600; padding: var(--s4) var(--s8); border-bottom: var(--hairline); }
+.ev-table td { padding: var(--s5) var(--s8); border-bottom: var(--divider); color: var(--ink-2); line-height: 1.5; }
+.ev-verify { background: var(--green-soft); border-color: #bbe3d2; }
+.ev-verify .ev-title { color: var(--green); }
+.verify-lines { margin-top: 6px; font-family: var(--font-mono); font-size: var(--f10); color: var(--ink-2); line-height: 1.8; }
+.verify-lines .vline.pass { color: var(--green); font-weight: 600; }
+.ev-sections { display: flex; flex-wrap: wrap; gap: var(--s5); margin-top: 8px; }
+.sec-chip { font-size: var(--f11); border: var(--hairline); border-radius: var(--r8); padding: var(--s3) 9px; color: var(--ink-2); background: var(--paper); }
+.sec-chip em { font-style: normal; color: var(--ink-3); font-family: var(--font-mono); font-size: var(--f10); margin-left: 4px; }
+/* iteration 12: the .now-ev family (3 rules) was deleted — the inline evidence
+   row it styled became .sc-evidence / .ev-block, and no such element exists. */
+.m-pages { display: flex; gap: var(--s6); overflow-x: auto; margin: var(--s14) 0; padding-bottom: 4px; }
+/* iteration 51: 弹层 16 页纸带的「发牌式」错峰到场（「动效表达」第七切面——内容的错峰
+   到场）。48 给了弹层容器揭幕（母盒淡入 + .modal-card 升纸 8px，入口 300ms）；本段
+   是揭幕之后的第二拍：#docModalBody 每次开层都被 openDocModal 整体重写（节点身份
+   不存活 ⇒ 46 的「transition 无前值」死代码面），故形态用 ANIMATION 而非 transition——
+   keyframe 在新建节点同样播放（49 的机制发现），恰好给出「每次开层重发牌」的语义
+   （无需 JS 序贯加 .in 类，纯 CSS 零 JS）。形态逐字复用证据块到场词汇 blockIn
+   （opacity 0→1 + translateY 8px，与 46 stepActivate / 47 qEarn / 49 dot 同家族，
+   位移取家族下端）——刻意不取 translateX：读点地图已证明横向位移在纸带内无 rect
+   读点风险（run-modal-narrow 只读 .modal-card/.mc-table/.m-claims，run-narrow 夹具
+   弹层恒 hidden），不选的理由是家族一致性（本仓内容到场一律 translateY，方向信息
+   由下面的 nth-child 时间错峰承载 = Material m1「grid items populate left to
+   right」）。错峰数值（须可溯源）：单页 --d3 = 300ms + --ease-out；基础延迟
+   var(--d12) = 120ms = 母拍 300ms 窗的 40% 点（--ease-out 前置极陡，45 实测母拍
+   150ms 处已达 0.928 ⇒ 第二拍起在母拍的到访尾部：两拍连续、无死区空档，也非
+   47 教训的「同帧同向叠加」——第二拍的信息量是 16 步错峰本身）；每步 30ms
+   （root 方案 C 指定的 30–60ms 带下端，最贴近 Material m1 的 ≤20ms 上限）⇒ 末页
+   120 + 15×30 = 570ms 起播、+300ms 落定 = 总窗 870ms（≤ root ~800ms 预算为 13 页
+   口径；第 72 次数据重锚 13→16 页后总窗随页数线性 +90ms/页——不压缩步长以
+   保 30–60ms 带下端不破，线性超出在此如实登记）。
+   fill 取 backwards（任务包点名的 fill 冲突显式处理）：延迟窗内保持首帧（错峰的
+   机制必需），活动窗结束后不保留任何帧 ⇒ .ev-page:hover 的 translateY(-2px)
+   及其 --d12 过渡逐字存活（若用 both/forwards，动画终值会压住 hover 声明）。
+   作用域钉在 :not(.hidden) 上（48 的防御性先例：闭层时动画实例移除、页面回落
+   自然态；narrow 夹具与一切闭层探针态零影响）。注意：基础规则有意只用 animation
+   的长手属性（不用 animation 简写）——简写会把 animation-delay 一并重置为 0，
+   其特异性高于下面的 nth-child 阶梯从而吃掉错峰；delay 只由阶梯声明。 */
+#docModal:not(.hidden) .m-pages .ev-page { animation-name: blockIn; animation-duration: var(--d3); animation-timing-function: var(--ease-out); animation-fill-mode: backwards; }
+.m-pages .ev-page:nth-child(1) { animation-delay: var(--d12); }
+.m-pages .ev-page:nth-child(2) { animation-delay: 150ms; }
+.m-pages .ev-page:nth-child(3) { animation-delay: 180ms; }
+.m-pages .ev-page:nth-child(4) { animation-delay: 210ms; }
+.m-pages .ev-page:nth-child(5) { animation-delay: 240ms; }
+.m-pages .ev-page:nth-child(6) { animation-delay: 270ms; }
+.m-pages .ev-page:nth-child(7) { animation-delay: 300ms; }
+.m-pages .ev-page:nth-child(8) { animation-delay: 330ms; }
+.m-pages .ev-page:nth-child(9) { animation-delay: 360ms; }
+.m-pages .ev-page:nth-child(10) { animation-delay: 390ms; }
+.m-pages .ev-page:nth-child(11) { animation-delay: 420ms; }
+.m-pages .ev-page:nth-child(12) { animation-delay: 450ms; }
+.m-pages .ev-page:nth-child(13) { animation-delay: 480ms; }
+.m-pages .ev-page:nth-child(14) { animation-delay: 510ms; }
+.m-pages .ev-page:nth-child(15) { animation-delay: 540ms; }
+.m-pages .ev-page:nth-child(16) { animation-delay: 570ms; }
+/* 第 72 次数据重锚 13→16 页后追 3 级（30ms/步同带）：本阶梯是机械追加式
+   （机制见上方注释）——页数超出已声明级数时超出页 delay 回落 0 = 反序落定，
+   故级数必须覆盖实际页数；页数再增时继续在此追加同级。 */
+
+/* ---------- lightbox ---------- */
+/* iteration 48: the lightbox's reveal beat — overlay language instance 2 (the
+   doc modal in modal.css is instance 1: same window, same curve, same exit
+   asymmetry, same mother-box/ surface-child discipline). The mother box
+   .lightbox carries the single fade for scrim + image + caption + close
+   together (one fade channel, one focal point: the surface); the surface
+   beat here is a ZOOM instead of a rise — the enlarged evidence image scales
+   .96 to 1, the restrained end of the scale vocabulary evPop/pushIn already
+   use, which reads as this overlay's own "magnify" semantics. transform on
+   the overlay <img> cannot change offsetWidth/offsetHeight (layout box, not
+   the painted box), so the iteration-8 box-reservation and lbBox ratio gates
+   stay exact. .lb-caption and .lb-close ride the mother fade without their
+   own declarations. EXIT: same asymmetric 150ms as the modal — opacity to 0
+   over --d15 with display behind allow-discrete (the none flip lands at the
+   end of the window; the class-based close/Escape/focus-return semantics in
+   evidence.js are class-level and verbatim), plus pointer-events:none so the
+   150ms fade never intercepts the page behind it. */
+.lightbox { position: fixed; inset: 0; z-index: var(--z-lightbox); display: flex; align-items: center; justify-content: center; flex-direction: column; transition: opacity var(--d3) var(--ease-out), display var(--d15) allow-discrete; }
+.lightbox.hidden { opacity: 0; pointer-events: none; transition: opacity var(--d15) var(--ease-out), display var(--d15) allow-discrete; }
+.lb-backdrop { position: absolute; inset: 0; background: rgba(16,18,30,.8); backdrop-filter: blur(4px); }
+.lightbox img { position: relative; max-width: 92vw; max-height: 82vh; border-radius: var(--r10); box-shadow: var(--shadow-lightbox); transition: transform var(--d3) var(--ease-out), opacity var(--d3) var(--ease-out); }
+/* iteration 48: entrance starting points — see the analogous block in
+   modal.css for the :not(.hidden) scoping rationale (a hidden lightbox never
+   matches; the narrow fixture keeps it hidden, so its 0x0 rect is skipped by
+   the body-wide scan). */
+@starting-style {
+  .lightbox:not(.hidden) { opacity: 0; }
+  .lightbox:not(.hidden) img { transform: scale(.96); }
+}
+.lb-caption { position: relative; color: #e7e9f2; font-size: 12.5px; margin-top: 14px; max-width: 80vw; line-height: 1.6; text-align: center; transition: opacity var(--d3) var(--ease-out); }
+.lb-close { position: absolute; top: 18px; right: 26px; border: none; background: none; color: #cfd4e6; font-size: 30px; z-index: 1; }
+.lb-close:focus-visible { outline: 3px solid #e7e9f2; outline-offset: var(--s2); }
+/* iteration 75: on-screen prev/next — the pointer half of the 30 keyboard
+   contract. Vertically centered on the viewport's left/right edges, the same
+   chrome language as .lb-close (borderless, #cfd4e6 on scrim, house
+   focus-visible outline). Hidden (base .hidden) for a singleton group and
+   disabled at a boundary — a disabled button leaves focus-trap's FOCUSABLE
+   set, so Tab and the keyboard clamp tell the same story. Disabled uses
+   opacity only: a disabled control must not gain a second cue that reads as
+   "the other kind of hidden" (color is the state carrier, 50's ruling). */
+.lb-nav { position: absolute; top: 50%; transform: translateY(-50%); border: none; background: none; color: #cfd4e6; font-size: 44px; line-height: 1; padding: 10px 16px; z-index: 1; cursor: pointer; transition: color var(--d15) var(--ease-out), opacity var(--d15) var(--ease-out); }
+.lb-nav:hover:not(:disabled) { color: #fff; }
+.lb-nav:disabled { opacity: 0.3; cursor: default; }
+.lb-nav:focus-visible { outline: 3px solid #e7e9f2; outline-offset: var(--s2); }
+.lb-prev { left: 20px; }
+.lb-next { right: 20px; }
+[data-lightbox]:focus-visible { outline: var(--outline-focus); outline-offset: var(--s2); }
+
+/* iteration 53: the sequence-replacement beat — the lightbox's last beatless
+   surface. ←/→/Home/End swap (lbNavigate, evidence.js) is no longer a hard
+   src exchange on the same <img>. The held OLD frame is .lightbox::after:
+   lbHold (evidence.js) pins it at the pre-swap box via five custom
+   properties — --lb-gimg and a left/top/width/height quad — and the
+   data-lb-hold attribute turns it on. The pinned quad is where the box WAS,
+   which is also where the box still is for the 13 same-ratio pages; for a
+   changed-ratio member (the ln* gate's synthetic 960x540) the quad is the
+   release target and the transition morphs the held frame into the new box
+   as it fades.
+   Both the old and the new surface run one window, var(--d3) = 300ms, on
+   var(--ease-out): the open (48) and the replace are the two moments of ONE
+   surface, so one window (Atlassian Transitions 150-400ms, "larger elements
+   require longer durations to feel proportional"; PhotoSwipe, the kindred
+   lightbox, defaults to 333ms). Symmetric, single-window, no exit asymmetry —
+   a replacement is a covering state flip, the iteration-50 ruling for
+   nav/speeds applied here; the caption rides the same window (its text is
+   written synchronously in the keypress, then fades in with the image).
+   image and caption fade in. The HOLD state pins with transition: none — the
+   old frame appears instantly instead of fading in, and the live image and
+   caption jump to opacity 0 rather than fading out; the release
+   (lbRelease, after the new image is decodable) then runs the crossfade by
+   taking the attribute off, with the base transition list carrying opacity
+   and the quad in the same 300ms window. No keyframe is added. The state is a data
+   attribute (data-lb-hold), not a class: the dead-rule audit keys off class
+   atoms, and a class that is only ever present mid-swap is indistinguishable
+   from a dead rule there. The pseudo-element is not an element: it is
+   invisible to the body-wide geometry scan, to the contrast scan's
+   parentElement background chain, and to the iteration-27 single-tab-stop
+   count. prefers-reduced-motion is guarded in JS (lbSwap), which skips the
+   hold; the 43 收口块 also carries these rules, so both guards land. */
+.lightbox::after {
+  content: ""; position: absolute; pointer-events: none; border-radius: var(--r10);
+  left: var(--lb-gx, 0px); top: var(--lb-gy, 0px); width: var(--lb-gw, 0px); height: var(--lb-gh, 0px);
+  background: var(--lb-gimg, none) no-repeat center / contain;
+  opacity: 0;
+  transition: opacity var(--d3) var(--ease-out),
+    left var(--d3) var(--ease-out), top var(--d3) var(--ease-out),
+    width var(--d3) var(--ease-out), height var(--d3) var(--ease-out);
+}
+.lightbox[data-lb-hold]::after { opacity: 1; transition: none; }
+.lightbox[data-lb-hold] img, .lightbox[data-lb-hold] .lb-caption { opacity: 0; transition: none; }
+
+::view-transition-group(lb-image),
+::view-transition-old(lb-image),
+::view-transition-new(lb-image),
+::view-transition-group(lb-caption),
+::view-transition-old(lb-caption),
+::view-transition-new(lb-caption) {
+  animation-duration: var(--d3);
+  animation-timing-function: var(--ease-out);
+}
+/* ---------- footer ---------- */
+.footer { border-top: var(--hairline); background: var(--paper); padding: 30px var(--s28) 44px; }
+.footer-cols { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s28); }
+.footer h3 { font-size: var(--f13); margin-bottom: 6px; }
+.footer p { font-size: var(--f12); color: var(--ink-3); line-height: 1.7; }
+
+@media (max-width: 980px) {
+  /* iteration 11: .player-cols.two was missing here — its specificity (0-2-0)
+     beat this rule (0-1-0), so the two-column track survived at <=980px and the
+     fixed 280px aside overflowed the .player box by 32px at 360px. Matching the
+     specificity restores the intended single column.
+     iteration 66: .run-side 追加进同一塔缩选择器列表。
+     iteration 68: .run-side 随组件整体下线而从列表移除（底部数据带已不存在：
+     art-rows 迁入 #runFoot、#runMetrics 删除）；nbRule980 的 selSet 检查只
+     要求含 .run-body / .player-cols.two，移除不破，媒体出现序亦不新增。 */
+  .run-body, .player-cols, .player-cols.two { grid-template-columns: 1fr; }
+  .convert-form { flex-direction: column; }
+  .footer-cols { grid-template-columns: 1fr; }
+  .topbar-right { display: none; }
+}
+
+/* iteration 11: narrow-viewport minimums (driven by measurement, not by a
+   design breakpoint): at <=640px css px the transport's five children
+   (play 76 + gap 12 + speeds 170 + gap 12 + clock 120 = 390, plus a usable
+   scrubber) no longer fit the player's content box (vw - 104); the stage-step
+   names are hard-clipped by their own overflow:hidden at every measured width
+   (360/414/480/560); and the topbar's 28px padding + 32px gap push the nav
+   3px past the bar at 360px. Minimal, layout-preserving fixes only:
+   wrap instead of shrink, cap the flex basis, drop the hard min-width. */
+@media (max-width: 640px) {
+  .topbar { gap: var(--s16); padding: 0 var(--s16); }
+  .transport { flex-wrap: wrap; }
+  /* the scrubber is an operable APG slider (iteration 10): a zero-width slider
+     is unusable, so it gets a floor and a wrap-friendly basis instead of
+     collapsing to nothing */
+  .transport .scrubber { flex: 1 1 140px; min-width: 140px; }
+  .transport .clock { min-width: auto; }
+  .stage-step { min-width: 108px; }
+  .stage-stepper { flex-wrap: wrap; }
+  /* the auto-fill 300px floor overflows a view content box narrower than that
+     (vw - 56 < 300, i.e. vw < 356); min() lets the floor yield to the container
+     while leaving every width >= 356 exactly as before */
+  .doc-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+}
+
+/* iteration 11: the very small phone band (<=360 css px). The topbar's natural
+   need is brand 111 + gap + nav 178; with 16px gap/padding that only fits
+   down to ~355, so tighten both here. Nothing else changes at this width. */
+@media (max-width: 360px) {
+  .topbar { gap: var(--s10); padding: 0 var(--s10); }
+  .nav-item { padding: 7px var(--s10); }
+}
+
+/* iteration 77: 原片回放面的 900px 塌列块随 #view-source 整体删除（check-cascade 的
+   RECORDED_MEDIA 8→7 项同步登记）。同块内 .topbar:has(.nav-item[data-view="source"])
+   实测为死选择器（导航锚从不携带 data-view 属性，第 63 次遗留）——随块清除。顶栏
+   320 css-px 残留（~1.2px 超内宽）仍在 2px 预算内。 */
+
+/* iteration 43: WCAG 2.3.3 (AAA) — interaction-triggered motion must be
+   disableable. Collapsed, not removed: fill modes stay, so a ~0s duration
+   lands on the completed frame (removing the animation would freeze the
+   from-frame and break the layout it resolves to); the infinite typing
+   cursor keeps its visible static state via iteration-count 1. :focus-visible
+   outlines are state indicators, not motion, and carry no transition of
+   their own — untouched. !important + last-in-link-order wins over .fast's
+   important duration overrides in stack.css. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  /* iteration 51: delay 治理面补全。第 43 次本块只收 duration（+ iteration-count），
+     不收 delay ⇒ 错峰阶梯的延迟原样保留：reduced-motion 下内容仍按间隔依次显形
+     （fill: backwards 的延迟窗内保持首帧 = 不可见），「~0s duration lands on the
+     completed frame」的本块自述原则被延迟推开。追加 delay 归零的三条理由：① 这是对
+     本块自身原则的补全而非新治理面（W3C C39 的目标是让用户 prevent animations
+     from being displayed，延迟是错峰本体的组成部分——级联由延迟产生）；② 零回归：
+     全仓仅 .sc-evidence.fast（stack.css）声明过 animation-delay 且值为 0s，
+     transition-delay 零声明 ⇒ 本追加只治理新增的错峰阶梯；③ 媒体序仍 7 项、块位置
+     仍是拼接序最末、!important 权威不变（零新增 @media）。 */
+  *, *::before, *::after {
+    animation-duration: 0.01s !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01s !important;
+    transition-delay: 0s !important;
+  }
+}

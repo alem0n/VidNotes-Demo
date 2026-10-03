@@ -1,0 +1,932 @@
+1
+00:00:31,000 --> 00:01:33,000
+We are warning tonight about the scope of a massive cyber attack already believed to be the largest America under virtual invasion please welcome to the Black Hat main stage the president of Black Hat, Susie Pallett good morning and welcome to the final day of Black Hat.
+
+2
+00:01:33,000 --> 00:01:44,000
+We've made it and I wanted to say start by saying thank you thank you for showing up, for bringing your expertise, your curiosity, and your
+
+3
+00:01:44,000 --> 00:01:57,000
+Willingness to engage. For asking the hard questions, for sharing your research, and for making the connections that turn ideas into action before I say anything else, I want you
+
+4
+00:01:57,000 --> 00:02:05,000
+To look around. Look at the people sitting next to you, behind you, across the aisle these are the people who've been solving
+
+5
+00:02:05,000 --> 00:02:14,000
+Problems with you all week, challenging your assump assumptions, sharing what you've learned, and staying up too late because the conversation was too good to walk away from.
+
+6
+00:02:14,000 --> 00:02:24,000
+This is what Black Hat is really about over the past few days, thousands of people from around the world have come together to do what this community does best.
+
+7
+00:02:24,000 --> 00:02:40,000
+Exchange ideas, challenge assumptions, explore new technologies and build relationships that last long after we leave Las Vegas. From the groundbreaking research presented in briefings to the expert
+
+8
+00:02:40,000 --> 00:02:53,000
+Insights shared at our summits, from the hands-on experiences across the event to the hallway conversations that went deeper than any session ever could, you made this week what it was
+
+9
+00:02:54,000 --> 00:03:08,000
+Black Hat has always been at its best when discovery leads to collaboration and that collaboration leads to growth and this week we've seen that happen over and over again whether you've spent your time learning
+
+10
+00:03:08,000 --> 00:03:19,000
+From researchers or testing tools in Arsenal, exploring emerging technologies, or reconnecting with colleagues or meeting someone new who's going to change the trajectory of your work and how you think.
+
+11
+00:03:19,000 --> 00:03:28,000
+I hope you're leaving with new skills, new insights, and new opportunities but there's one thing that keeps surfing.
+
+12
+00:03:28,000 --> 00:03:44,000
+One question we can't ignore AI is fundamentally changing how we find vulnerabilities how fast threats move, and how we analyze them. Today's keynote will tackle that head on
+
+13
+00:03:44,000 --> 00:03:55,000
+As AI becomes more capable, more autonomous, what happens to vulnerability research? Where does human ingenuity fit in a world where machines can hunt for flaws faster than we ever
+
+14
+00:03:55,000 --> 00:04:04,000
+Could? And what does it mean for this community, for the researchers, the defenders, the builders all in this room when the tools when that we rely on
+
+15
+00:04:04,000 --> 00:04:12,000
+Start to think for themselves? They're not hypothetical questions. They're the reality we're facing live right now
+
+16
+00:04:12,000 --> 00:04:30,000
+But before we bring up today's keynote speaker to explore those questions, please join me in welcoming an amazing person, the founder of Black Hat and president of DEF CON, Jeff Moss
+
+17
+00:04:33,000 --> 00:04:38,000
+Hey, good morning. Glad we all made it here today. I've got just a little bit of a backstory
+
+18
+00:04:38,000 --> 00:04:54,000
+I want to share with you for today's keynote speaker and maybe put it a little bit into context. So about 30 years ago almost 30 years to
+
+19
+00:04:54,000 --> 00:05:07,000
+This month ago the concept of a capture the flag CTF was accidentally invented at DEF CON. The origin of CTF was essentially a network fight that
+
+20
+00:05:07,000 --> 00:05:17,000
+Happened at DEF CON about 31 years ago and since then, CTFs have evolved to like run the world. CTFs everywhere all
+
+21
+00:05:17,000 --> 00:05:24,000
+The time. But it wasn't purpose-built to do that. It's grown because CTFs are
+
+22
+00:05:24,000 --> 00:05:33,000
+Incredibly useful. And due to the nature of how capture the flag started at DEF CON, it was purely an offensive
+
+23
+00:05:33,000 --> 00:05:41,000
+Defensive full combat. Only rule was after the first year, you couldn't take over the scoring system or the router
+
+24
+00:05:41,000 --> 00:05:51,000
+Because that's what the attackers did the first year so we're like, oh, maybe we need rules and it so many lessons were learned right?
+
+25
+00:05:51,000 --> 00:06:00,000
+Because how can you defend if you don't know how people attack? Attack informs defense and so if you don't have a
+
+26
+00:06:00,000 --> 00:06:08,000
+Ground truth of how attacks and exploits are being developed, it's probably going to be pretty hard to create an effective defense.
+
+27
+00:06:08,000 --> 00:06:21,000
+So that's a way of tying into our keynote Yan who as an origin story for his superpowers in reversing.
+
+28
+00:06:21,000 --> 00:06:37,000
+He his mom had a PhD essentially in computer science in Russia before that was really a thing then fall of the wall happened and
+
+29
+00:06:37,000 --> 00:06:44,000
+All of a sudden academics in Russia were starting to be pressured to endorse political candidates. And when the KGB
+
+30
+00:06:44,000 --> 00:06:49,000
+Came around and started pressuring the family to endorse the KGB candidate they fled Russia. He fled to America.
+
+31
+00:06:49,000 --> 00:07:01,000
+He's 8 years old and never thought he'd be an academic like his parents until he gets to University and he starts playing
+
+32
+00:07:02,000 --> 00:07:16,000
+Capture the flag and he loves hacking and he can't stop hacking and then he realizes as a graduate student he's getting paid to essentially hack all the time and he's doing a lot
+
+33
+00:07:16,000 --> 00:07:21,000
+Of these tasks manually. He's like well, what if I automate this as much as I can?
+
+34
+00:07:21,000 --> 00:07:35,000
+So, he goes and he creates this multi-instrument binary analysis framework called angr. And with angr, he and his CTF team, Shellphish, basically run the board
+
+35
+00:07:35,000 --> 00:07:48,000
+Worldwide contests for about two years because angr allowed them to reverse and exploit in other ways that the existing tooling could not do since then, angr's probably been used
+
+36
+00:07:48,000 --> 00:08:12,000
+In over a thousand different research and academic and product tooling this highly contributo mindset of an academic, right, giving away the tooling, advancing the state-of-the-art led team shellfish then to organize and run Order of the Overflow, which was an
+
+37
+00:08:12,000 --> 00:08:20,000
+Organizer of the DEF CON capture the flag. So his whole career started with capture the flag and they ended up
+
+38
+00:08:20,000 --> 00:08:33,000
+Running capture the flag and through this whole process and now being at Arizona State University with his students and graduate students developing new exploits and new agent
+
+39
+00:08:33,000 --> 00:08:44,000
+Tools, he's seeing how the exploit development trajectory has changed from art into science. And so i'm really looking
+
+40
+00:08:44,000 --> 00:08:56,000
+Forward to hearing his story and having him share it with you. It's my pleasure to introduce Yan Shoshitaishvili
+
+41
+00:09:13,000 --> 00:09:24,000
+So, as Jeff said, I have quite an origin in the capture the flag community. In my day job, I am an associate Professor at Arizona State University where the
+
+42
+00:09:24,000 --> 00:09:38,000
+Biggest thing I do, my priority is research into vulnerability analysis and exploitation and repair and so on and then education of the next generation.
+
+43
+00:09:38,000 --> 00:09:49,000
+I'm very excited to talk about this all today from the lens of the agentic age what does it mean to be an academic researcher?
+
+44
+00:09:49,000 --> 00:10:02,000
+Well, it means that I sit around and I have shower thoughts bright ideas that I take and typically pass on to my bright graduate student researchers
+
+45
+00:10:02,000 --> 00:10:21,000
+Who then run with them and produce the research projects, the research papers and the research prototypes that lead to the breakthroughs so what a lot of what Jeff was talking about happened when I was this graduate
+
+46
+00:10:21,000 --> 00:10:31,000
+Student and I was handed the bright idea and has kept going forward beyond that means what i'm talking about today isn't just my work.
+
+47
+00:10:31,000 --> 00:10:40,000
+It is the work of an amazing team of colleagues without whom I would not be here today. I'll try to
+
+48
+00:10:40,000 --> 00:10:46,000
+Acknowledge them as we cover those parts of research where they contributed. They led the research.
+
+49
+00:10:46,000 --> 00:10:53,000
+They were the brilliant graduate student. But i'll acknowledge them all cumulatively right now. The lab SECOM lab and the center for cyber Security and trusted foundations.
+
+50
+00:10:53,000 --> 00:11:06,000
+Coincidentally, the CTF center at Arizona State University awesome group of people. If you're looking for graduate school, talk to Us
+
+51
+00:11:06,000 --> 00:11:12,000
+All right. So these kids implement these brilliant ideas. They're not all brilliant.
+
+52
+00:11:12,000 --> 00:11:17,000
+Sometimes these ideas are terrible. But of course those don't make it into the
+
+53
+00:11:17,000 --> 00:11:23,000
+Talks. They take the ideas, they implement them. They spend a lot of time
+
+54
+00:11:23,000 --> 00:11:32,000
+Working on this and you can probably all start thinking wait a second we're in the agentic age. Instead of the
+
+55
+00:11:32,000 --> 00:11:38,000
+Graduate students we can prompt the agents. The agents will generate really infuriating text but they get results.
+
+56
+00:11:38,000 --> 00:11:51,000
+Realistically this is what happens now the students prompt the agents the students do the agentic prototype. The students
+
+57
+00:11:51,000 --> 00:12:04,000
+Get results and what's really interesting about this is it puts me very far back from the final outcome of our research. In the abstract
+
+58
+00:12:04,000 --> 00:12:31,000
+For this talk, I mentioned my research has led to the discovery of thousands of vulnerabilities and many of them quite recently as the agentic hypercharged everything and many of them allow Us now to start stepping back and thinking about this field in aggregate as modern AI transforms vulnerability
+
+59
+00:12:31,000 --> 00:12:37,000
+Research. Some people might say, okayy let's just paste everything into ChatGPT and solve the problem.
+
+60
+00:12:37,000 --> 00:12:51,000
+Find all of the bugs.' Of course, the reason i'm talking about the agentic and not just the age of LLMs it's because there's a very serious
+
+61
+00:12:51,000 --> 00:12:57,000
+Difference between the two. We start pasting things into GPT, asking it to find bugs, submitting those bugs to
+
+62
+00:12:58,000 --> 00:13:14,000
+Maintainers, and we get things like the headline I read yesterday that Apple is pushing back on their vulnerability research award program because they're being overwhelmed by slop and this slop is a result of AI hallucination of people that don't
+
+63
+00:13:14,000 --> 00:13:22,000
+Really know what they're doing enough to filter that AI hallucination. That's not what i'm going to talk about today
+
+64
+00:13:22,000 --> 00:13:36,000
+Going to make the assumption that we're going to work that out because back in the days of fuzzing, back in every advancement throughout the history of the vulnerability research field, especially the academic the automation of vulnerability research, we ran into
+
+65
+00:13:36,000 --> 00:13:49,000
+Similar issues. What i'm going to be talking today is people that eventually will know what they're doing in this space enough to use these technologies to create highquality bug
+
+66
+00:13:49,000 --> 00:13:57,000
+Submissions to find actual bugs. We're not going to talk about hallucinations we're going to talk about vulnerability
+
+67
+00:13:57,000 --> 00:14:12,000
+Research in the agentic age. We're going to step back and i'm going to show you three ways that we can find vulnerabilities autonomously three things that lead to headlines
+
+68
+00:14:12,000 --> 00:14:25,000
+Where or research papers where approach XYZ finds three, four, five digit bugs in software. There's three ways to do
+
+69
+00:14:25,000 --> 00:14:33,000
+This. One, you can analyze better. You take an analysis that existed before
+
+70
+00:14:33,000 --> 00:14:43,000
+Jeff mentioned angr. It is a base a research base of our research trajectory in static analysis of binary
+
+71
+00:14:43,000 --> 00:14:52,000
+Software and we make it better and so it has fewer false posers. It is more performance faster so that before the
+
+72
+00:14:52,000 --> 00:15:00,000
+Timeouts it can actually find the bugs think a good example in the agentic of this of course is Mythos. It is more
+
+73
+00:15:00,000 --> 00:15:11,000
+Capable models that find bugs that other models would have missed. And we'll talk about this again later. You can analyze more things
+
+74
+00:15:11,000 --> 00:15:21,000
+So you say forget about being better we're just going to make something that is,, better in a way that's more resilient, that might scale farther
+
+75
+00:15:21,000 --> 00:15:27,000
+And we're just going to analyze everything. Before we could analyze eight programs, now we're going to analyze 800.
+
+76
+00:15:27,000 --> 00:15:37,000
+And of course, we're going to find lots and lots of bugs based on that. And I have research in this space
+
+77
+00:15:37,000 --> 00:15:49,000
+One of my awesome former students now Dr. Jay Vadayath created a platform a program an analysis program called arbiter built on top of
+
+78
+00:15:49,000 --> 00:16:01,000
+Angr that could analyze binaries at a scale where we were analyzing for example every program shipped into repositories for vulnerabilities. Now often times you don't actually need to
+
+79
+00:16:01,000 --> 00:16:07,000
+Make this analyzer better. You just need to make it more applicable. And so then
+
+80
+00:16:07,000 --> 00:16:18,000
+By casting a wider net, you find more bugs. Or, and this is the crazy thing, you just analyze things differently than they used to be analyzed.
+
+81
+00:16:18,000 --> 00:16:29,000
+And it turns out if you just tweak how you're analyzing, you find new bugs. Why? Because bugs are everywhere.
+
+82
+00:16:29,000 --> 00:16:45,000
+Let's say we want to make our CVE cookies and we have our rolled out dough of vulnerabilities. This dough is all vulnerabilities in a given program
+
+83
+00:16:46,000 --> 00:16:51,000
+And we take our research prototype angr. It's our angr logo. We build
+
+84
+00:16:51,000 --> 00:17:09,000
+Some static analysis on top of it and we use it to analyze the code for vulnerabilities and it literally takes this substrate of vulnerabilities and stamps out. We find those vulnerabilities that angr finds
+
+85
+00:17:10,000 --> 00:17:17,000
+And we fix them. They're gone for a static analyzer, what this means is if we run this tool again, no new vulnerabilities.
+
+86
+00:17:17,000 --> 00:17:32,000
+Is the code perfect? No we just happen to have found the vulnerabilities that we're going to find with this technique
+
+87
+00:17:32,000 --> 00:17:38,000
+And we can tweak the technique a bit. So we build research prototype a on top of our angr research vehicle.
+
+88
+00:17:38,000 --> 00:17:50,000
+We build research prototype B and it's slightly different and that slight difference will find a tiny additional set of bugs.
+
+89
+00:17:50,000 --> 00:17:54,000
+What does that mean? Does that mean research prototype B is bad or research prototype a is better?
+
+90
+00:17:54,000 --> 00:18:05,000
+No, it means we got unlucky. Research prototype B came in after a. And this is something that
+
+91
+00:18:05,000 --> 00:18:24,000
+Because of the trajectory over time of software development and the development of analyzers to find bugs in that software makes it very difficult to really understand the efficacy of different tools. For example
+
+92
+00:18:24,000 --> 00:18:36,000
+Let's say I go and manually look at every binary in the Ubuntu repositories I would of course also look at that their source code and I go afterwards and I try to find
+
+93
+00:18:36,000 --> 00:18:51,000
+Bugs and I find a bunch of bugs because as a cookie cutter, a vulnerability cutter, I will find different types of vulnerabilities. I'll cut out a different shape in the vulnerability landscape than angr did
+
+94
+00:18:51,000 --> 00:18:55,000
+Does that mean the static analysis was bad? No. It means it was different than
+
+95
+00:18:55,000 --> 00:19:06,000
+Me. If he inverted the ordering, it would be the static analyzer that comes after me and finds a ton of vulnerabilities
+
+96
+00:19:06,000 --> 00:19:12,000
+Now, let's go to something a little more fuzzy. This is dynamic analysis that's very stochastic.
+
+97
+00:19:12,000 --> 00:19:20,000
+Fuzzers. This is the logo of American fuzzy lop, which is the work of another amazing group of
+
+98
+00:19:20,000 --> 00:19:28,000
+People. Nothing to do with Us, but we also do research in the space and if you run a fuzzer on even well
+
+99
+00:19:28,000 --> 00:19:41,000
+Analyzed code that hasn't been fuzzed before in part just because the fuzzer does different things, it will find new vulnerabilities and unlike a static analyzer, because
+
+100
+00:19:41,000 --> 00:19:52,000
+Fuzzing is a very stochastic pro process, you build random inputs and you shove it into software and the software crashes because you're triggering something that people didn't think about fuzzing.
+
+101
+00:19:52,000 --> 00:20:03,000
+Unlike most static analyzers if you just run it again you're going to find something around those corner cases you missed the first time.
+
+102
+00:20:03,000 --> 00:20:14,000
+Okay? And now this brings Us to this question. For the
+
+103
+00:20:14,000 --> 00:20:30,000
+Last decade before the agentic starting from around 2013, 2014, 2015, which was the process of the DARPA cyber Grand challenge, pushing the world really toward autonomy and vulnerability research.
+
+104
+00:20:30,000 --> 00:20:39,000
+Ever since then, we've been experiencing this fuzzing renaissance new fuzzers coming out that say, heyy we fuzzed well fuzzed code. We fuzzed it
+
+105
+00:20:39,000 --> 00:20:51,000
+A little differently. We found new bugs and so now we're claiming that we're better.' It's actually very difficult to measure now after a decade of hearing this new
+
+106
+00:20:51,000 --> 00:21:03,000
+Fuzzer is better, this new fuzzer is better, this new fuzzer is better, we bring in large language models and we apply that to code and that finds tons and tons and tons
+
+107
+00:21:03,000 --> 00:21:13,000
+And tons of vulnerabilities. Now we're saying, ohh large language models, that's the new thing. They're better than fuzzers because they're finding vulnerabilities
+
+108
+00:21:13,000 --> 00:21:23,000
+Fuzzers aren't.' And we ran the fuzzer on the same code and it didn't find more vulnerabilities. And so now we're switching all over to pasting our code into GPT and asking for bugs.
+
+109
+00:21:23,000 --> 00:21:43,000
+This ignores that evolutionary timeline and it ignores this idea that what you really need is to rewind time which is very difficult and probably the subject of a different
+
+110
+00:21:43,000 --> 00:21:50,000
+Keynote at a different conference and then you have to analyze from scratch here's what the fuzzer does. Here's what
+
+111
+00:21:50,000 --> 00:21:53,000
+The LLM would do. Here's the static analysis results. We're trying to do
+
+112
+00:21:53,000 --> 00:22:02,000
+This in the lab right now. It's very difficult to deal with contamination of LLM training because the LLM knows about all the previous
+
+113
+00:22:02,000 --> 00:22:12,000
+Bugs the fuzzer found and so on. We're trying to do this and we are getting very interesting results in that point in this direction
+
+114
+00:22:12,000 --> 00:22:17,000
+That what we're really cutting out isn't just random shapes. Each analysis has a shape of vulnerabilities it cuts out.
+
+115
+00:22:17,000 --> 00:22:35,000
+Those shapes are created from the types of properties of vulnerabilities that implicitly the vulnerabilities have. For example, a
+
+116
+00:22:35,000 --> 00:22:52,000
+Vulnerability might be a result of data flow, a result of injection of attack or control content, might exhibit multi-threaded behavior or require multi-to behavior. These are all properties of a vulnerability and analyses either explicitly in this case
+
+117
+00:22:52,000 --> 00:23:10,000
+Of most static analyses or implicitly in the case of pasting things into GPT and many fuzzing approaches. These analyzers target specific vulnerability properties and my thesis to you today is as
+
+118
+00:23:10,000 --> 00:23:21,000
+We move into the agentic of vulnerability research, we need to move into here with an eye toward what are the properties of the
+
+119
+00:23:21,000 --> 00:23:27,000
+Vulnerabilities we're going to find. We eventually want to find, fix, exploit depending on your line of work, all of
+
+120
+00:23:27,000 --> 00:23:37,000
+Them. And how do we best create analyzers? How do we even extract these vulnerability properties?
+
+121
+00:23:37,000 --> 00:23:46,000
+To maximize the impact we can have in the agentic age. So, let me show you how we think about vulnerability properties. Not just finding the vulnerabilities, but the properties of the
+
+122
+00:23:46,000 --> 00:23:51,000
+Vulnerabilities. And i'll give you an example of a paper we recently published.
+
+123
+00:23:51,000 --> 00:24:00,000
+Actually, it is coming out next week. So, this is a bit of a preview of an analysis we did on
+
+124
+00:24:00,000 --> 00:24:08,000
+Huawei's OpenHarmony. This is the work of my awesome student Hongkai Chen of course, under my brilliant guidance
+
+125
+00:24:08,000 --> 00:24:18,000
+But, let's not kid ourselves who is the brilliant researcher? It's not me. Hongkai
+
+126
+00:24:18,000 --> 00:24:33,000
+Had this idea that we can extract properties from wellstudied software and vulnerabilities that had arisen in that software and then apply these
+
+127
+00:24:33,000 --> 00:24:46,000
+Properties to new software. So, who here runs a phone on Huawei's OpenHarmony? Especially maybe the government contractors
+
+128
+00:24:46,000 --> 00:24:49,000
+Neither do I. But a lot of people use HarmonyOS. HarmonyOS is a relatively new phenomenon.
+
+129
+00:24:49,000 --> 00:25:07,000
+It's a complete reimplementation of an Android inspired operating system completely reimplemented from scratch and it is used by a billion devices in the world a billion devices and up until next week
+
+130
+00:25:07,000 --> 00:25:18,000
+There will have been no major academic studies on the Security of HarmonyOS which is crazy and so what we thought is hey we can bootstrap this field we
+
+131
+00:25:18,000 --> 00:25:29,000
+Looked at the last decade plus of Android research we mind it and this was agentically assisted for this mining component we mind it to extract this recipe book of vulnerability properties.
+
+132
+00:25:29,000 --> 00:25:45,000
+We analyzed those properties manually and we manually guided by those properties. We're now manually looked at
+
+133
+00:25:45,000 --> 00:25:49,000
+The code of open harmony. We're talking about millions and millions of lines of code, tons of different parameters.
+
+134
+00:25:49,000 --> 00:25:58,000
+It is a daunting task to analyze with just a handful of people all this code. And
+
+135
+00:25:58,000 --> 00:26:19,000
+What happened? Well, we found that every vulnerability property applied very specifically, roughly speaking, led to a new zero day vulnerability in OpenHarmony we found dozens of flaws ranging from
+
+136
+00:26:19,000 --> 00:26:41,000
+Bluetooth device takeovers to privacy leaks, location, all of this very fun stuff in open harmony because we started from the vulnerability properties that we extracted from Android bugs and now we're doing this agentically and
+
+137
+00:26:41,000 --> 00:26:55,000
+The results are incredible. I'll save that for a later research talk. But this property extraction and property application, the understanding of vulnerability properties, this is the
+
+138
+00:26:56,000 --> 00:27:02,000
+Way. But then you might say, okay, Yan but I can just tell claude or codeex like go find me the bugs.
+
+139
+00:27:02,000 --> 00:27:07,000
+Do I really need these properties? Especially as the models keep getting better.
+
+140
+00:27:07,000 --> 00:27:15,000
+Maybe it'll be built into the properties. Maybe when we all have Mythos access this will all be irrelevant.
+
+141
+00:27:15,000 --> 00:27:29,000
+And luckily, Arizona State University in their infinite wisdom allowed Us a glimpse into whether this really matters because by accident, and we didn't
+
+142
+00:27:29,000 --> 00:27:42,000
+Realize it was by accident, Arizona State University gave every employee infinite codeex usage before it was cool to do so and it turned out that this was a misconfiguration on their part that we
+
+143
+00:27:42,000 --> 00:27:48,000
+Didn't realize until we spent a couple million dollars of the University's money and hopefully they had a good deal with OpenAI.
+
+144
+00:27:48,000 --> 00:27:59,000
+But anyways, around the same time, Mythos came out and all of these headlines, Mythos is finding hundreds of vulnerabilities in Firefox in the Linux kernel, etc.
+
+145
+00:27:59,000 --> 00:28:12,000
+And we were doing research in vulnerability analysis in the Linux kernel and so we had this question of like okay Mythos is a next generation model. If we
+
+146
+00:28:12,000 --> 00:28:22,000
+Use a last generation model how many of those models can we pile into a box to match Mythos performance? Now the
+
+147
+00:28:22,000 --> 00:28:29,000
+Exact numbers of what Mythos finds, what it doesn't is very hard to come by. But in june there was a Washington
+
+148
+00:28:29,000 --> 00:28:39,000
+Post article that said that Mythos has found 479 vulnerabilities in the Linux kernel. So let's take that as our
+
+149
+00:28:39,000 --> 00:28:55,000
+As our benchmark. Our box of dozens and dozens of GPTs and this was back in the 54 55 days altogether thrown at the Linux kernel produced 300 vulnerabilities
+
+150
+00:28:55,000 --> 00:29:07,000
+Now this is a bit of an apples to oranges comparison because for our vulnerabilities we don't we're very threat model aware. These are all vulnerabilities that are triggerable from as an unprivileged user on a Linux machine.
+
+151
+00:29:07,000 --> 00:29:25,000
+So potential local privilege escalations I don't know if that's the case for the Mythos ones. Typically people also report the root only bugs, but we didn't
+
+152
+00:29:25,000 --> 00:29:31,000
+Beat it. Bummer. But then we looked into this and Mythos part of it according
+
+153
+00:29:31,000 --> 00:29:40,000
+To various reports online part of the trick is a really clever workflow and workflows are the hip latest thing adversarial reviews and all of
+
+154
+00:29:40,000 --> 00:29:48,000
+This and planning and so on and that was one of the secrets of Mythos success. So then we integrated
+
+155
+00:29:48,000 --> 00:29:56,000
+Workflows and we stuffed infinite GPTs into the workflows and ASU caught on to Us and shut off our access. Then we just
+
+156
+00:29:56,000 --> 00:30:22,000
+Got a couple of max plans and it turns out that basically three GPTs in a trench code with a good workflow can outperform those stated numbers that got Us to about 600 local potential local privilege escalation vulnerabilities in the Linux kernel.
+
+157
+00:30:22,000 --> 00:30:27,000
+Triaged them all like these are real vulnerabilities and then we applied the vulnerability properties. We looked at the vulnerabilities we were finding. We looked at the vulnerabilities that historically were found.
+
+158
+00:30:27,000 --> 00:30:50,000
+We extracted these properties and we figured out the correct format, the correct way to present them to our agentic pipeline and all hell broke loose
+
+159
+00:30:50,000 --> 00:31:08,000
+And now we're sitting on well over a thousand local privilege escalation vulnerabilities in the Linux kernel what the hell do we do with that? We are finding them way faster than we can report to them because you don't
+
+160
+00:31:08,000 --> 00:31:16,000
+Want to just send tons of slot. You want to send a proposed fix. You want to send a reasonable analysis
+
+161
+00:31:16,000 --> 00:31:20,000
+We can trigger them. We can have the agents analyze them, but it still takes human effort.
+
+162
+00:31:20,000 --> 00:31:26,000
+And we're finding them at about 10 times the rate that we can actually report them. So what does this
+
+163
+00:31:26,000 --> 00:31:34,000
+Mean for a responsible disclosure in the agentic age? Because it feels like responsible disclosure is screwed and it
+
+164
+00:31:34,000 --> 00:31:44,000
+Was already screwed before the scale that we can achieve. Now we have a paper that we published in
+
+165
+00:31:44,000 --> 00:32:02,000
+May and this is by one of my awesome students Hui jun Tay and the paper basically said even without agents just looking at the responsible disclosure process
+
+166
+00:32:02,000 --> 00:32:26,000
+In the embedded devices space that when you disclose vulnerabilities, you're making people less safe. We analyzed disclosed vulnerabilities on embedded devices and we went and extracted the properties of those reproduced those vulnerabilities on other devices that we had in the lab
+
+167
+00:32:26,000 --> 00:32:37,000
+And we found that basically for every vulnerability that you disclose depending on how you count, depending on what you feel is putting people in danger, you're endangering three times as many devices as you secure.
+
+168
+00:32:37,000 --> 00:32:59,000
+So that's not good and if you're scaling up the number of vulnerabilities that we find by multiple orders of magnitude you very quickly become very upset with the current State of responsible disclosure
+
+169
+00:32:59,000 --> 00:33:06,000
+And we don't have a better solution. So we're dropping all the bugs on Twitter. No, i'm just kidding
+
+170
+00:33:06,000 --> 00:33:18,000
+We're taking small steps to trying to find a replacement, a better solution. Starting with something that's pretty hip nowadays you put all of your bugs on a website
+
+171
+00:33:18,000 --> 00:33:27,000
+And there's over a thousand again local privilege relevant bugs on this too many bugs. WTF website that'll forward
+
+172
+00:33:27,000 --> 00:33:40,000
+You somewhere where we actually the domain we're actually using. And right now we're just putting up the details of the CVS and the hashes of the
+
+173
+00:33:40,000 --> 00:33:48,000
+Rest. We're working with big vendors and big Security groups in the space to try to move forward toward a more proactive defense measure with these vulnerabilities.
+
+174
+00:33:48,000 --> 00:34:05,000
+Maybe this looks like candidate Vibecoded patches that you can apply until the real patches come out maybe it looks like something different
+
+175
+00:34:05,000 --> 00:34:11,000
+Maybe it looks like the old days of full disclosure where we just drop vulnerabilities on this website and all hell breaks loose. Probably not.
+
+176
+00:34:11,000 --> 00:34:23,000
+But we need a solution and we are interested in hearing from you all from the community and pulling you in to work with Us to
+
+177
+00:34:23,000 --> 00:34:29,000
+Adapt to the world of vulnerability research in the agentic age. But then what if you just say, okayy
+
+178
+00:34:29,000 --> 00:34:32,000
+What? Screw it. There's too many bugs we're not fixing all these bugs.
+
+179
+00:34:32,000 --> 00:34:44,000
+Let's throw out all of the code, all this buggy tech debt, and we rewrite everything in Rust. Who's in?
+
+180
+00:34:44,000 --> 00:34:53,000
+Couple of hands. So, the agents are in agents are very good at writing Rust and when I had infinite codecs, I
+
+181
+00:34:53,000 --> 00:34:57,000
+Thought, well, screw it. I'll just rewrite everything in Rust. And I
+
+182
+00:34:57,000 --> 00:35:08,000
+Started with these loadbearing c libraries that we rely on every day. Lib SSL, Lib PNG, Lib XML and so
+
+183
+00:35:08,000 --> 00:35:14,000
+On. Millions of lines of code. And I created this workflow, this pipeline this like a verification pipeline and so on.
+
+184
+00:35:14,000 --> 00:35:25,000
+And I reimplement I blew billions and billions and billions of tokens and I implemented millions of lines of Rust
+
+185
+00:35:25,000 --> 00:35:31,000
+And this stuff works. I accidentally one of my agents went rogue and installed this on my machine and I
+
+186
+00:35:31,000 --> 00:35:34,000
+Ran it for a couple weeks before I had noticed some weird behavior. I'm like ohh, i'm running my own Rust stuff.
+
+187
+00:35:34,000 --> 00:35:51,000
+That's weird.' It doesn't work. Why doesn't it work? Why can't we be free of our tech debt?
+
+188
+00:35:51,000 --> 00:36:14,000
+Well, because when we rewrite stuff in Rust or rewrite re-implement stuff, the vulnerability properties come with Us certain types of code is genetically predisposed to certain types of vulnerabilities I told my agents very sternly, make no error.
+
+189
+00:36:14,000 --> 00:36:30,000
+And they make error given explicit admonitions that these are the old vulnerabilities that weren't memory corruption vulnerabilities that live crypt was vulnerable to classic crypto attacks.
+
+190
+00:36:30,000 --> 00:36:34,000
+I told them make sure these vulnerabilities don't show up. They show up.
+
+191
+00:36:34,000 --> 00:36:42,000
+If I don't tell them to make sure the vulnerabilities don't show up, they show up. And then later I go back
+
+192
+00:36:42,000 --> 00:36:47,000
+Through and I find all these vulnerabilities and now I have to put a big warning on the safe website. Don't
+
+193
+00:36:47,000 --> 00:36:55,000
+Use this stuff. There's like a good way to burn down a couple forests, but it's full of vulnerabilities. They're not memory corruption vulnerabilities
+
+194
+00:36:56,000 --> 00:37:03,000
+Because we're in Rust land. And people can say, yess, but what if you also have the agents do formal verification
+
+195
+00:37:04,000 --> 00:37:11,000
+To eliminate logic errors?' And that's a cool future direction of research, but it's not a reality yet. Not at scale
+
+196
+00:37:11,000 --> 00:37:22,000
+And what's more is this doesn't just affect some crazy person's Rust rewrite pet project. This affects the real world
+
+197
+00:37:22,000 --> 00:37:30,000
+Right as I was doing this, there was a set of 79 CVs that dropped for a Rust rewrite of core utils. Well, after those
+
+198
+00:37:30,000 --> 00:37:42,000
+Core utils had been shipped with Ubuntu, the latest release and it turns out the rush rewrite is great. We don't have memory corruption vulnerabilities
+
+199
+00:37:42,000 --> 00:37:55,000
+But oops, we have all these time check time of use things and critical Linux utilities, etc., etc. And this analysis was, i'm sure, agentically assisted
+
+200
+00:37:55,000 --> 00:38:13,000
+Humanled analysis. We've been looking at the same codebase with our vulnerability property aware engine and we're finding tons more issues. So it's a scary prospect
+
+201
+00:38:13,000 --> 00:38:22,000
+Okay. So what do we do? Do we restrict the models? My opinion is that model restriction is
+
+202
+00:38:22,000 --> 00:38:29,000
+Not the way. I've been doing offensive vulnerability research for over 15 years which is very depressing to say but it's
+
+203
+00:38:30,000 --> 00:38:40,000
+A long time in the space and i've been doing it in the open as Jeff mentioned and every time I get this question of but is it responsible that angr is open
+
+204
+00:38:40,000 --> 00:38:51,000
+Source that you open source your cyber reasoning system for the AI cyber challenge and the cyber Grand challenge and everyone can grab it and everyone can run with it
+
+205
+00:38:51,000 --> 00:39:02,000
+And the answer is yes because you're all the good guys and we need to make sure that you benefit from this technology. And if we
+
+206
+00:39:02,000 --> 00:39:17,000
+Start putting up, oh, you have to be this tall to ride the impact of that, the positive impact is in my opinion more heavily diminished than the negative.
+
+207
+00:39:17,000 --> 00:39:33,000
+So all of this talk about restricting capable openw weight models, restricting next generation models, in my opinion it is misguided. Then what about human learning in the agentic age?
+
+208
+00:39:33,000 --> 00:39:39,000
+Do we still need to know cyber Security? What do you think? Maybe. Yes.
+
+209
+00:39:39,000 --> 00:39:54,000
+I run pawn College, an open cyber Security education platform about 10,000 people learn actively on it every month and the number one question I get is should I still bother
+
+210
+00:39:54,000 --> 00:40:17,000
+In the agent cage or is AI eating cyber Security this impact going from a couple hundred bugs asking GPT to find bugs to having an agent pipeline that's vulnerability aware that finds more much more that requires human innovation, human
+
+211
+00:40:17,000 --> 00:40:23,000
+Understanding of the threat models, of the vulnerability space, of all of this and for the foreseeable future, it will remain so.
+
+212
+00:40:23,000 --> 00:40:36,000
+Until agents do 100% of your work in vulnerability research, all they're doing by eating 90% of your work is letting you do more work letting you have more impact.
+
+213
+00:40:36,000 --> 00:40:51,000
+I think this is the best time to get into cyber Security as a human and it is a great time to dig into research to go back to graduate school because now whereas
+
+214
+00:40:51,000 --> 00:41:00,000
+Before you had to worry about the research paper and the technique and unlike in the industry academic research prototypes often ended up not really
+
+215
+00:41:00,000 --> 00:41:18,000
+Working outside the research paper which was observed by research and academics alike now the implicit assumptions that researchers had to make to get stuff to run on the data sets that they had the
+
+216
+00:41:18,000 --> 00:41:30,000
+Human effort capability to run on leading to this bad behavior. Now the agents can scale. Why?
+
+217
+00:41:30,000 --> 00:41:43,000
+My first paper 15 years ago, well, this one actually was 11 years ago analyzed firmware for memory sorry for authentication bypass vulnerabilities. It had three samples
+
+218
+00:41:43,000 --> 00:41:55,000
+That I evaluated on and with three samples there was quite a lot of implicit assumptions that could slip in if you scale this out, there's a more
+
+219
+00:41:55,000 --> 00:42:06,000
+Modern work by my awesome student Wil Gibbs who might be in the audience he has a booth here artificial booth come check it out it's about their
+
+220
+00:42:06,000 --> 00:42:19,000
+Commercialization of their AIxCC work we scaled out to a thousand firmware much fewer assumptions still many with GPT and with agents that can work a computer
+
+221
+00:42:19,000 --> 00:42:38,000
+To avoid hallucinations to experiment to evaluate to ground the failures of new samples into fixes of research proto prototypes. We're entering a new era of both applicability and result analysis of research prototypes
+
+222
+00:42:38,000 --> 00:42:53,000
+And we can do this autonomously. This is the future of vulnerability research. An autonomous sharpening pipeline where academics that and academic like industry
+
+223
+00:42:53,000 --> 00:43:09,000
+Researchers with a good understanding of the research process of how to evaluate things properly with a good grasp of the data sets can build self-improving systems that scale out both their data sets and
+
+224
+00:43:09,000 --> 00:43:18,000
+Their results. And this over the next couple of years is going to be absolutely revolutionary and it requires all of your brilliant human effort.
+
+225
+00:43:18,000 --> 00:43:35,000
+Thank you right on all right. I just got a couple
+
+226
+00:43:35,000 --> 00:43:48,000
+Housekeeping notes and then I will unleash you. Next session starts here at 10:30 on this stage and all the main briefings talks like yesterday start upstairs at 10:15
+
+227
+00:43:48,000 --> 00:43:55,000
+We've got some new areas at Black Hat this year. We're calling them like interactive spaces and we've got an AI
+
+228
+00:43:55,000 --> 00:44:00,000
+Zone, a cyber district. We've got some places to grab a drink and hang out we've got a photo booth and some other whimsical things.
+
+229
+00:44:00,000 --> 00:44:10,000
+Cool. And then tonight, the last session of the day instead of a lock note, our keynote is
+
+230
+00:44:10,000 --> 00:44:18,000
+Our lock note at 4:15 or 4:30 at level two at oceanside a. And the lock note gives Us a chance to have a conversation
+
+231
+00:44:18,000 --> 00:44:27,000
+And talk about some of the most impressive talks we saw, trends, and we get to hear from the review board members who helped select the content
+
+232
+00:44:27,000 --> 00:44:33,000
+And learn from their expert perspective what they found interesting. So hopefully i'll see you the end of the day at the lock note.
+
+233
+00:44:33,000 --> 00:44:43,000
+Thank you very much. See you
+
